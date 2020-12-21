@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[spanish]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\DeclareMathOperator{\prob}{\mathbb{P}}
+\DeclareMathOperator{\Exp}{\mathbb{E}}
+\newcommand{\symmetric}{\mathbb{S}}
+
+\title{Teoría de Probabilidades\\Prácticas}
+\author{Pablo Brianese}
+\date{Septiembre 2020}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Ejercicio}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}[Coleccionista de cupones]
+Un álbum tiene $N$ figuritas distintas.
+En el quiosco se pueden comprar las figuritas de a una, siempre te dan una figurita totalmente al azar y cualquiera tiene la misma probabilidad de salir. 
+¿Cuál es el número esperado de figuritas que debemos comprar para completar el álbum?
+\end{exercise}
+\begin{proof}[Solución]
+Consideremos las figuritas que compramos como una sucesión de variables aleatorias independientes identicamente distribuídas $F_h$ ($h \in \{1, 2, \dots\}$) con distribución uniforme en el conjunto de las $N$ figuritas del álbum $A = \{f_1, f_2, \dots, f_N\}$.
+Definimos otra sucesión de variables aleatorias $\{C_h\}$, la colección de figuritas que acumulamos después de la compra $h$: $C_h = \{F_1, F_2, \dots, F_h\}$.
+De ese modo, $\#C_h$ es el número de figuritas en nuestra colección después de la compra $h$.
+
+Porque las variables $F_h$ son iid y cada figurita tiene probabilidad positiva, $\#C_h$ es eventualmente (para $h \geq h_0$) igual a $N$.
+Por eso podemos definir algunos \emph{tiempos}.
+Diremos que $T_k = \min \{h : \#C_h = k\}$ para $k \in \{1, 2, \dots, N\}$.
+Nuestro objetivo principal es calcular la esperanza $\mu = \Exp{T_N}$.
+Para hacerlo, formulamos una expresión telescópica 
+\begin{align}
+    \Exp T_N 
+    &= 
+    \Exp \left( (T_N - T_{N - 1}) + (T_{N - 1} - T_{N - 2}) + \cdots + (T_2 - T_1) + T_1 \right)
+    \\
+    &= 
+    \Exp \left( \Delta_{N - 1} + \Delta_{N - 2} + \cdots + \Delta_1 + T_1 \right)
+    \\
+    &= 
+    \Exp \Delta_{N - 1} + \Exp \Delta_{N - 2} + \cdots + \Exp \Delta_1 + 1 
+\end{align}
+de cuyos $\Delta_n$ podemos calcular la distribución.
+En efecto, teniendo $n$ figuritas de la colección $A$, la probabilidad de conseguir una nueva figurita en la siguiente compra es de $(N - n) / N$, y la probabilidad de conseguir una figurita repetida es de $n / N$.
+Por eso $\prob(\Delta_n = t) = (n / N)^{t - 1} \cdot (N - n) / N$ para $t \in \{1, 2, \dots\}$.
+Podemos calcular para cada $n \in \{1, \dots, N - 1\}$
+\begin{align}
+    \Exp \Delta_n
+    &=
+    \sum_{t = 1}^{\infty} t  \cdot \prob(\Delta_n = t)
+    \\
+    &=
+    \sum_{t = 1}^{\infty} t \cdot \left(\frac{n}{N}\right)^{t - 1} \frac{N - n}{N}
+    \\
+    &=
+    \frac{N - n}{N} \sum_{t = 1}^{\infty} t \cdot \left(\frac{n}{N}\right)^{t - 1}
+    \\
+    &=
+    \frac{N - n}{N} \left. \frac{\dd}{\dd p} \sum_{t = 0}^{\infty} p^t \right|_{p = n / N}
+    \\
+    &=
+    \frac{N - n}{N} \left. \frac{\dd}{\dd p} \frac{1}{1 - p} \right|_{p = n / N}
+    \\
+    &=
+    \frac{N - n}{N} \left. \frac{1}{(1 - p)^2} \right|_{p = n / N}
+    \\
+    &=
+    \frac{(N - n) / N}{(1 - n / N)^2}
+    \\
+    &=
+    \frac{1}{1 - n / N}
+\end{align}
+Por lo tanto la esperanza que deseabamos calcular es
+\begin{align}
+    \mu = \sum_{n = 0}^{N - 1} \frac{1}{1 - n / N}
+\end{align}
+
+Como nota de color, observamos que interpretar a $\mu = \mu(N)$ como una integral de Riemann para la función $f_N(x) = 1 / (1 - x / N)$ en el intervalo $[- 1, N - 1]$ nos dá una estimación
+\begin{align}
+    \mu
+    &\geq
+    \int_{- 1}^{N - 1} \frac{1}{1 - x / N} \dd x
+    \\
+    &=
+    N \left(\ln N - \ln \frac{N}{N - 1}\right)
+    \\
+    &=
+    N \ln N - \varepsilon(N)
+\end{align}
+donde $\varepsilon(N) = N \ln \frac{N}{N - 1}$ es pequeño.
+Aún tan pronto como $N \geq 2$ se verifica $\varepsilon(N) < 1.5$, y este error converge a 1 decreciendo cuando $N \rightarrow \infty$.
+Luego, podríamos ofrecer la subestimación $\mu \approx N \ln N$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}[Paradoja del cumpleaños]
+En un grupo aleatorio de 23 personas ¿cuál es la probabilidad de que al menos dos personas de ellas cumplan años el mismo día?
+\end{exercise}
+\begin{proof}[Respuesta]
+Diremos, a modo de aproximación e ignorando las complejidades del calendario, que un año $A$ tiene 365 días.
+Supondremos, a su vez que una persona seleccionada al azar tiene igual probabilidad de haber nacido cualquier día del año.
+Seleccionamos al azar una secuencia de $n$ personas con cumpleaños $b_1, \dots, b_n$.
+Queremos averiguar $\prob(\# \{b_1, \dots, b_n\} = n)$.
+Para iniciar el análisis expresamos esta probabilidad como una suma sobre la familia $A_n$ de conjuntos $S$ formados por exactamente $n$ días del año: 
+\begin{align}
+    \prob(\# \{b_1, \dots, b_n\} = n) 
+    = 
+    \sum_{S \in A_n} \prob(\{b_1, \dots, b_n\} = S)
+\end{align}
+A su vez descompondremos la probabilidad $p_S = \prob(\{b_1, \dots, b_n\} = S)$.
+La secuencia aleatoria de días de cumpleaños $b_1, \dots, b_n$ puede dar origen al conjunto $S$ de tantas formas como biyecciones hay entre $\{1, \dots, n\}$ y $S$.
+Si $B_S$ es el conjunto de estas biyecciones $s : \{1, \dots, n\} \rightarrow S$, entonces
+\begin{align}
+    \prob(\{b_1, \dots, b_n\} = S)
+    =
+    \sum_{s \in B_S} \prob(b_1 = s(1), \dots, b_n = s(n))
+\end{align}
+Por nuestras hipótesis sobre el número de días del año y la uniformidad en la distribución de los días de cumpleaños, para cada $s \in B_S$ \begin{align}
+    \prob(b_1 = s(1), \dots, b_n = s(n))
+    =
+    \frac{1}{365^n}
+\end{align}
+Por su parte $\# B_S = n!$, y $\# A_n = \binom{365}{n}$ son resultados combinatorios.
+En conclusión
+\begin{align}
+    \prob(\# \{b_1, \dots, b_n\} = n)
+    =
+    \binom{365}{n} \frac{n!}{365^n}
+\end{align}
+
+Para el caso $n = 23$, nuestro resultado muestra que la probabilidad de interés es aproximadamente $0.5$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{exercise}[Problema de la secretaria]
+Para un único puesto hay $N$ aspirantes.
+Los candidatos se pueden ordenar de mejor a peor sin ambiguedad.
+Son entrevistados secuencialmente en orden aleatorio.
+El objetivo del reclutador es contratar al mejor candidato.
+Luego de una entrevista el reclutador sólo sabe si el candidato es el mejor de los entrevistados por el momento o no.
+Al finalizar la entrevista debe decidir si contratar a ese candidato o no.
+Una vez que se desecha a un aspirante, este no puede ser contratado más tarde.
+
+El reclutador elige $c$, rechaza a los primeros $c$ aspirantes y luego contrata el primero que sea el mejor entrevistado por el momento.
+Siguiendo esta estrategia ¿cuál es la probabilidad de contratar al mejor candidato?
+¿Qué estrategia debe seguir el reclutador para maximizar la probabilidad de contratar al mejor candidato?
+¿Cuál es el límite de dicha probabilidad?
+\end{exercise}
+
+\begin{proof}[Solución]
+Nuestro desafío puede plantearse del siguiente modo.
+Al poder ordenar de mejor a peor (sin ambiguedad) a los candidatos, y dado que esta relación de orden es lo único que nos interesa, podemos pensar en cada uno de ellos como un número en $\{1, \dots, N\}$, siendo 1 el peor candidato y $N$ el mejor.
+
+Para seguir con esta línea cumplimos con algunos detalles preliminares.
+Primero elegimos representar el orden en el cual se entrevista a los aspirantes con una permutación $\sigma \in \symmetric_N$ ($\Sigma_N : \{1, \dots, N\} \rightarrow \{1, \dots, N\}$ es una biyección).
+Como el orden de las entrevistas es aleatorio, tenemos que tratar con esta permutación como una variable aleatoria $\Sigma_N$ que toma valores en $\symmetric_N$ según una distribución uniforme.
+Nos servirá para razonar el definir, a partir de $\Sigma_N$, nuevas variables aleatorias $C_c = \{\Sigma_N(1), \dots, \Sigma_N(c)\}$ y $M_c = \max C_c$.
+El conjunto aleatorio $C_c$ está formado por aquella parte de los candidatos que vamos a descartar sin más consideraciones.
+La variable $M_c$ indica que tan buenos eran estos candidatos que hemos rechazado, y que tan buenos son los que quedan por entrevistar.
+
+Las variables $C_c$ y $M_c$ serán útiles sólo después de que conozcamos las leyes que las gobiernan.
+La distribución de la variable $C_c$ es uniforme sobre la familia de subconjuntos de $\{1, \dots, N\}$ con $c$ elementos:
+$\prob(C_c = S) = \binom{N}{c}^{- 1}$ para todo $S \subseteq \{1, \dots, N\}$ con $\# S = c$; y esto se debe a que la distribución de $\Sigma_N$ es uniforme sobre $\symmetric_N$.
+Luego, para cada $m \in \{c, \dots, N\}$, la probabilidad del evento $[M_c = m]$ es igual producto de $\binom{N}{c}^{- 1}$ con el número de subconjuntos $S \subseteq \{1, \dots, m\}$ con $\# S = c$ tales que $m \in S$.
+Siendo estos últimos $\binom{m - 1}{c - 1}$ en total, se sigue que la distribución de $M_c$ sobre $\{c, \dots, N\}$ es: $\prob(M_c = m) = \binom{m - 1}{c - 1} \binom{N}{c}^{- 1}$ para todo $m \in \{c, \dots, N\}$.
+
+Las herramientas desarrolladas nos permiten calcular la probabilidad de éxito del reclutador.
+
+El éxito o el fracaso del proceso decisorio se decide en la entrevista aleatoria $I$-ésima, aquella donde el candidato $I$-ésimo es el primero que, no perteneciendo a los primeros $c$ descartados, supera en cualidades a quienes lo precedieron.
+Es decir $I = \min \{i \in \{c + 1, \dots, N\} : \Sigma(i) > M_c\}$.
+Poniendo atención en el primer candidato elegible que destaca $M' = \Sigma(I)$, el éxito
+\end{proof}
+\end{document}

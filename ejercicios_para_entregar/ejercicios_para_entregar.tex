@@ -1,0 +1,73 @@
+\documentclass{article}
+% Text
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumitem}
+% Images
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+% Math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{physics}
+% Math symbols
+\DeclareMathOperator{\prob}{\mathbb{P}}
+\DeclareMathOperator{\Exp}{\mathbb{E}}
+\newcommand{\symmetric}{\mathbb{S}}
+\newcommand{\naturalnum}{\mathbb{N}}
+\newcommand{\realnum}{\mathbb{R}}
+% Math environments
+\theoremstyle{definition}
+\newtheorem{exercise}{Ejercicio}
+
+\title{Ejercicios para entregar}
+\author{Pablo Brianese}
+
+\begin{document}
+\maketitle
+
+\begin{exercise}
+Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 0$, y los cluentes llegan a tasa $\lambda > 0$.
+Sea $X_t$ la cantidad de clientes que hay en la cola a tiempo $t$, con $t \geq 0$.
+Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
+(Este modelo, llamado $M/ M / 1$, lo hemos charlado en la clase práctica 20 y 23).
+\begin{enumerate}[label=\alph*)]
+    \item Probar que el proceso es recurrente positivo si y sólo si $\lambda < \mu$.
+	Con lo cual, empezando con la cola vacía, el tiempo medio que tarda la cola en volver a vaciarse es finito si y sólo si $\lambda < \mu$.
+	\item Asumiendo $\lambda < \mu$, calcular la proporción (asintótica) de tiempo que la cola está vacía.
+\end{enumerate}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{exercise}
+Consideremos un sistema de $n \in \naturalnum$ servidores, en donde cada servidor atiende a tasa $\mu > 0$, y los clientes arriban al sistema a tasa $\lambda > 0$.
+(Los tiempos de duración de los servicios tienen distribución exponencial con parámetro $\mu$, independientes entre sí, e independientes al proceso de llegada de los clientes, que siguen un proceso de Poisson de tasa $\lambda$).
+
+Si un cluente llega y encuentra todos los servidores ocupados, automáticamente se va.
+En caso contrario, el cliente ingresa al sistema, ubicándose en algún servidor que estaba desocupado, y luego de ser atendido, se va del sistema.
+
+Llamemos $X_t$ a la cnatidad de servidores ocupados a tiempo $t$, $t \geq 0$.
+Observemos que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo, donde el espacio de estados es $S = \{0, 1, \dots, n\}$, y el diagrama de las tasas de transición es
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{diagrama_de_las_tasas_de_transicion}
+\end{figure}
+para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
+\begin{enumerate}[\label=\roman*.]
+	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $(X_t)_{t \geq 0}$ pase de $k$ a $k + 1$).
+	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
+	(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
+	\item Hallar el número esperado de servidores ocupados que encuentra el primer cliente que arriba al sistema.
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{exercise}
+Sea $(B_t)_{t \geq 0}$ un Movimiento Browniano estándar en dimensión 1.
+
+Para cada $x \in \realnum$ sea $T_x = \inf \{t \geq 0 : B_t = x\}$.
+(Notar que )
+\end{exercise}
+
+\end{document}
