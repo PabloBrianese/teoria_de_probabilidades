@@ -50,16 +50,16 @@ En caso contrario, el cliente ingresa al sistema, ubicándose en algún servidor
 
 Llamemos $X_t$ a la cnatidad de servidores ocupados a tiempo $t$, $t \geq 0$.
 Observemos que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo, donde el espacio de estados es $S = \{0, 1, \dots, n\}$, y el diagrama de las tasas de transición es
-\begin{figure}
-\centering
+\begin{center}
 \includegraphics[width=0.75\textwidth]{diagrama_de_las_tasas_de_transicion}
-\end{figure}
+\end{center}
 para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
-\begin{enumerate}[\label=\roman*.]
+\begin{enumerate}[label=\roman*.]
 	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $(X_t)_{t \geq 0}$ pase de $k$ a $k + 1$).
 	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
-	(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
+(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
 	\item Hallar el número esperado de servidores ocupados que encuentra el primer cliente que arriba al sistema.
+\end{enumerate}
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +67,13 @@ para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
 Sea $(B_t)_{t \geq 0}$ un Movimiento Browniano estándar en dimensión 1.
 
 Para cada $x \in \realnum$ sea $T_x = \inf \{t \geq 0 : B_t = x\}$.
-(Notar que )
+(Notar que \(T_0 = 0\) a.s.)
+Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la función de distribución acumuladad de \(T_x\), respectivamente.
+\begin{enumerate}[label=\alph*)]
+	\item Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
+	(Sugerencia: puede ser útil observar el \(\sup_{t \geq 0} B_t\) y el \(\inf_{t \geq 0} B_t\))
+	\item
+\end{enumerate}
 \end{exercise}
 
 \end{document}
