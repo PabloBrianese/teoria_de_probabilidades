@@ -12,12 +12,14 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{physics}
+\usepackage{bbm}
 % Math symbols
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Exp}{\mathbb{E}}
 \newcommand{\symmetric}{\mathbb{S}}
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\realnum}{\mathbb{R}}
+\newcommand{\characteristic}{\mathbbm{1}}
 % Math environments
 \theoremstyle{definition}
 \newtheorem{exercise}{Ejercicio}
@@ -72,8 +74,40 @@ Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la funció
 \begin{enumerate}[label=\alph*)]
 	\item Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
 	(Sugerencia: puede ser útil observar el \(\sup_{t \geq 0} B_t\) y el \(\inf_{t \geq 0} B_t\))
-	\item
+	\item Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Exp(T_x) = + \infty\).
 \end{enumerate}
 \end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{exercise}
+Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(x > 0\), \(y > 0\).
+Consideremos el stopping time \(T = T_{- y} \wedge T_x\).
+\begin{itemize}
+	\item Probar que \((B_t^2 - t)_{t \geq 0}\) es una martingala.
+	\item Probar que \(\Exp(T) = xy\)
+\end{itemize}
+\end{exercise}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{exercise}
+(Este ejercicio no es obligatorio)
+
+Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(a > 0\), y \(b > 0\).
+El objetivo es probar que \(\prob(B_t = a + b t \text{ para algún } t > 0) = e^{- 2 a b}\).
+\begin{enumerate}[label=\alph*)]
+	\item Sea \((X_t)_{t \geq 0}\) el proceso definido por \(X_t = e^{2 b B_t - 2 b^2 t}\).
+	Probar que \((X_t)_{t \geq 0}\) es una martingala.
+	\item Consideremos el stopping time \(T = \inf \{t > 0 : B_t = a + b t\}\) (donde \(T\) lo definimos como \(\infty\) si ese conjunto es vacío, es decir, si \(B_t < a + b t\) para todo \(t > 0\)).
+	Probar que \(\Exp(X_T) \characteristic_{T < \infty} = 1\).
+	\item Probar que \(\Exp(X_T \characteristic_{T < \infty}) = e^{2 a b} \prob(T < \infty)\).
+	\item Concluir que \(\prob(B_t = a + b t\text{ para algún } t > 0) = e^{- 2 a b}\).
+\end{enumerate}
+\end{exercise}
+
+
+
+
+
+
 
 \end{document}
