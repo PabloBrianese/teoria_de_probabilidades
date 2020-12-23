@@ -16,6 +16,8 @@
 % Math symbols
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Exp}{\mathbb{E}}
+\DeclareMathOperator{\Exponential}{\text{Exp}}
+\DeclareMathOperator*{\argmin}{\text{argmín}}
 \newcommand{\symmetric}{\mathbb{S}}
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\realnum}{\mathbb{R}}
@@ -55,6 +57,19 @@ Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estad
 
 Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
 Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
+
+Usaremos los siguientes lemas sobre la distribución exponencial:
+\begin{enumerate}
+	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
+	\item Si \(\{X_i\}_{i \in \naturalnum}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum} \lambda_i\), entonces
+	\begin{itemize}
+		\item \(\min_{i \in \naturalnum} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum} \lambda_i\)
+		\item \(\prob(\argmin_{i \in \naturalnum} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum} \lambda_i\), para todo \(j \in \naturalnum\).
+	\end{itemize}
+\end{enumerate}
+
+Usando estos lemas, podemos pensar que estando la cadena en el estado \(i\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
+con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
