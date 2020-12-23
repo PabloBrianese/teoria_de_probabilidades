@@ -2,6 +2,10 @@
 ####################
 *.pdf
 
-# SyncTeX Files #
-#################
+# LaTeX Compilation Files #
+###########################
 *.synctex.gz
+*.aux
+*.fdb_latexmk
+*.fls
+*.log

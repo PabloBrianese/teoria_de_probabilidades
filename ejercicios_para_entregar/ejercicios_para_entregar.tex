@@ -31,7 +31,7 @@
 \maketitle
 
 \begin{exercise}
-Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 0$, y los cluentes llegan a tasa $\lambda > 0$.
+Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 0$, y los clientes llegan a tasa $\lambda > 0$.
 Sea $X_t$ la cantidad de clientes que hay en la cola a tiempo $t$, con $t \geq 0$.
 Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 (Este modelo, llamado $M/ M / 1$, lo hemos charlado en la clase práctica 20 y 23).
@@ -41,6 +41,21 @@ Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 	\item Asumiendo $\lambda < \mu$, calcular la proporción (asintótica) de tiempo que la cola está vacía.
 \end{enumerate}
 \end{exercise}
+
+\begin{proof} a)
+\((X_t)_{t \geq 0}\) es un proceso de Markov a tiempo continuo, con espacio de estados numerable \(I = \naturalnum = \{0, 1, 2, \dots\}\).
+Sea \(T_i = \inf\{t > J_1 : X_t = i\}\) para cada \(i \in I\).
+Un estado \(i \in I\) será recurrente si \(\prob^i(T_i<\infty)=1\).
+Será recurrente positivo si además \(\Exp^i T_i < \infty\).
+
+% Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf
+Vamos a ver que \(\Exp T_0 < \infty \Leftrightarrow \lambda < \mu\).
+
+Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
+
+Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
+Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{exercise}
@@ -103,11 +118,5 @@ El objetivo es probar que \(\prob(B_t = a + b t \text{ para algún } t > 0) = e^
 	\item Concluir que \(\prob(B_t = a + b t\text{ para algún } t > 0) = e^{- 2 a b}\).
 \end{enumerate}
 \end{exercise}
-
-
-
-
-
-
 
 \end{document}
