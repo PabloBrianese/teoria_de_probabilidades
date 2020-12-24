@@ -45,13 +45,41 @@ Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 \end{exercise}
 
 \begin{proof} a)
-\((X_t)_{t \geq 0}\) es un proceso de Markov a tiempo continuo, con espacio de estados numerable \(I = \naturalnum = \{0, 1, 2, \dots\}\).
+Elaboramos el punto según el cual \((X_t)_{t \geq 0}\) es un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
+
+Si esta cadena esta en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
+Y esto sucede cuando suena un reloj exponencial de parámetro \(\lambda\).
+Por el contrario, si su estado es \(i > 0\) (hay \(i\) clientes esperando a ser atendidos), puede saltar a \(i - 1\) (un cliente es atendido y se retira) o a \(i + 1\) (un nuevo cliente se suma a la cola).
+Y esta transición obedece a la competencia de dos relojes exponenciales, uno a tasa \(\lambda\) (que indica la llegada de una persona), y otro a tasa \(\mu\) (que indica que una se va).
+Por lo tanto, la matriz \(Q = (q_{i j})_{i, j \in I}\) de tasas de transición de la cadena está dada por
+\begin{align}
+	Q
+	&=
+	\begin{pmatrix}
+		- \lambda &\lambda \\
+		\mu &- (\lambda + \mu) &\lambda \\
+		 &\mu &- (\lambda + \mu) &\lambda \\
+		 & &\mu &- (\lambda + \mu) &\lambda \\
+		 & & &\ddots &\ddots &\ddots
+	\end{pmatrix}
+\end{align}
+\begin{align}
+	q_{0 0} &= - \lambda & &q_{0 1} = \lambda,
+	\\
+	q_{i i} &= - (\lambda + \mu) & &\begin{aligned}q_{i, i-1} &= \mu,\\ q_{i, i+1} &= \lambda \end{aligned} &&(\forall i > 0)
+\end{align}
+siendo nulas las entradas que no figuran en esta descripción.
+
+% teorica22.pdf <-- por acá empieza la relación entre las matrices Q y Pi.
+
+% Para probar este teorema es clave el teorema de teorica24.pdf Pág. 1 sobre recurrencia positiva y matrices generadoras irreducibles.
+
 Sea \(T_i = \inf\{t > J_1 : X_t = i\}\) para cada \(i \in I\).
 Un estado \(i \in I\) será recurrente si \(\prob^i(T_i<\infty)=1\).
-Será recurrente positivo si además \(\Exp^i T_i < \infty\).
+Será recurrente positivo si \(\Exp^i(T_i) < \infty\).
 
 % Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf
-Vamos a ver que \(\Exp T_0 < \infty \Leftrightarrow \lambda < \mu\).
+Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
 
 Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
 
@@ -61,14 +89,14 @@ Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo
 Usaremos los siguientes lemas sobre la distribución exponencial:
 \begin{enumerate}
 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
-	\item Si \(\{X_i\}_{i \in \naturalnum}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum} \lambda_i\), entonces
+	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
 	\begin{itemize}
-		\item \(\min_{i \in \naturalnum} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum} \lambda_i\)
-		\item \(\prob(\argmin_{i \in \naturalnum} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum} \lambda_i\), para todo \(j \in \naturalnum\).
+		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
+		\item \(\prob(\argmin_{i \in \naturalnum_0} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\), para todo \(j \in \naturalnum_0\).
 	\end{itemize}
 \end{enumerate}
 
-Usando estos lemas, podemos pensar que estando la cadena en el estado \(i\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
+Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
 con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
 \end{proof}
 
