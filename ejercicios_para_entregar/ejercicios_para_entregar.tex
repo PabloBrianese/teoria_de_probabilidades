@@ -107,6 +107,46 @@ En cualquiera de los casos la distribución invariante \(\nu\) es igual a
 \end{align}
 donde \(m_i = \Exp^i(T_i)\).
 
+% La matriz generadora es irreducible %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+Sea \(\nu = (\nu_i)_{i \in I}\) un vector con entradas reales nonegativas---una medida sobre \(I\).
+Supongamos que \(\nu^T Q = 0\), es decir que contamos con la ecuación \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
+
+Analizando esta ecuación en el caso \(j = 0\) vemos que \(\nu_0 (- \lambda) + \nu_1 \mu = 0\), y en particular \(\nu_1 = (\lambda / \mu) \nu_0\).
+Digamos que \(\rho = \lambda / \mu\), de modo tal que 
+\begin{align}
+	\nu_1 = \rho \nu_0
+\end{align}
+Para \(j = 1\) tenemos \(\nu_0 \lambda + \nu_1 (- (\lambda + \mu)) + \nu_2 \mu = 0\).
+Dividiendo por \(\mu > 0\), se sigue \(\nu_0 \rho + \nu_2 = \nu_1 (\rho + 1)\).
+Además, usando \(\nu_1 = \rho \nu_0\), obtenemos \(\nu_1 + \nu_2 = \nu_1 (\rho + 1)\).
+Luego 
+\begin{align}
+	\nu_2 = \rho \nu_1
+\end{align}
+Supongamos, a fin de concretar un argumento inductivo, que esta relación \(\nu_{j + 1} = \rho \nu_j\) se sostiene para \(j \in \{0, 1, \dots, k\}\) con \(k \geq 1\).
+Entonces la ecuación \(\sum_{i \in I} \nu_i q_{i, k} = 0\) dice \(\nu_{k - 1} \lambda + \nu_k (- (\lambda + \mu)) + \nu_{k + 1} \mu = 0\), porque \(k \geq 1\).
+Dividiendo por \(\mu > 0\), se sigue \(\nu_{k - 1} \rho + \nu_{k + 1} = \nu_k (\rho + 1)\).
+Usando nuestra hipótesis inductiva para \(k - 1 \leq k\) obtenemos la ecuación \(\nu_k = \rho \nu_{k - 1}\), y con esta deducimos \(\nu_k + \nu_{k + 1} = \nu_k (\rho + 1)\).
+Luego
+\begin{align}
+	\nu_{k + 1} = \rho \nu_k
+\end{align}
+Lo cual lleva el conjunto de valores \(j \in I\) que verifican la relación \(\nu_{j + 1} = \rho \nu_j\) a \(\{0, 1, \dots, k, k + 1\}\).
+Por inducción, \(\nu_{j + 1} = \rho \nu_j\) para todo \(j \in I\).
+% Acá tengo que poner la ecuación nu = rho^i nu0
+% De esa ecuación se deducirá la doble equivalencia con mu > lambda.
+Esta investigación nos dice que la medida \(\nu\), cuando satisface la ecuación \(\nu^T Q = 0\), está completamente determinada por los valores \(\nu_0\) y \(\rho\) mediante la ecuación \(\)\(\nu_{j + 1} = \rho \nu_j\) para \(j \in I\).
+Si \(\nu_0 = 0\), entonces \(\nu = 0\) y la ecuación \(\nu^T Q = 0\) resulta trivial.
+Consideremos el caso contrario en que \(\nu_0 > 0\).
+Aquí corresponde analizar el efecto de \(\rho\).
+Si \(\rho = 1\), entonces \(\nu = (\nu_0)_{i \in I}\) es una medida infinita sobre \(I\) --- se verifica \(\sum_{i \in I} \nu_i = \infty\).
+Si \(\rho \neq 1\), entonces \(\nu = (\rho^i \nu_0)_{i \in I}\).
+En el caso \(\rho > 1\) se tiene \(\lim_{i \rightarrow \infty} \rho^i = \infty\), lo cual hace de \(\nu\) una medida infinita --- se verifica \(\sum_{i \in I} \nu_i = \infty\).
+En contraste, cuando \(\rho < 1\)
+\end{proof}
+
 \end{theorem}
 
 
