@@ -23,7 +23,9 @@
 \newcommand{\realnum}{\mathbb{R}}
 \newcommand{\characteristic}{\mathbbm{1}}
 % Math environments
+\newtheorem{theorem}{Teorema}
 \theoremstyle{definition}
+\newtheorem{definition}{Definición}
 \newtheorem{exercise}{Ejercicio}
 
 \title{Ejercicios para entregar}
@@ -47,7 +49,7 @@ Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 \begin{proof} a)
 Elaboramos el punto según el cual \((X_t)_{t \geq 0}\) es un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
 
-Si esta cadena esta en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
+Si el proceso está en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
 Y esto sucede cuando suena un reloj exponencial de parámetro \(\lambda\).
 Por el contrario, si su estado es \(i > 0\) (hay \(i\) clientes esperando a ser atendidos), puede saltar a \(i - 1\) (un cliente es atendido y se retira) o a \(i + 1\) (un nuevo cliente se suma a la cola).
 Y esta transición obedece a la competencia de dos relojes exponenciales, uno a tasa \(\lambda\) (que indica la llegada de una persona), y otro a tasa \(\mu\) (que indica que una se va).
@@ -63,6 +65,7 @@ Por lo tanto, la matriz \(Q = (q_{i j})_{i, j \in I}\) de tasas de transición d
 		 & & &\ddots &\ddots &\ddots
 	\end{pmatrix}
 \end{align}
+Es decir:
 \begin{align}
 	q_{0 0} &= - \lambda & &q_{0 1} = \lambda,
 	\\
@@ -78,7 +81,40 @@ Sea \(T_i = \inf\{t > J_1 : X_t = i\}\) para cada \(i \in I\).
 Un estado \(i \in I\) será recurrente si \(\prob^i(T_i<\infty)=1\).
 Será recurrente positivo si \(\Exp^i(T_i) < \infty\).
 
-% Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf
+% teorica23.pdf %
+%%%%%%%%%%%%%%%%%
+\begin{definition}
+Decimos que una matriz generadora \(Q\) es irreducible si para todo par de estados \(i, j \in I\) existe un camino \(i_0, i_1, \dots, i_k\) entre ellos (\(i_0 = i\), \(i_k = j\)) tal que las tasas \(q_{i_0 i_1}, q_{i_1 i_2}, \dots, q_{i_{k - 1} i_k}\) son positivas.
+\end{definition}
+
+% El proceso de Markov es irreducible %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+En virtud de las tasas de transición \(q_{01} = \lambda\), \(q_{i, i + 1} = \mu\), \(q_{i, i + 1} = \lambda\) con \(\mu, \lambda > 0\), se sigue que la matriz generadora \(Q\) de nuestro modelo M/M/1 es irreducible.
+
+% teorica24.pdf %
+%%%%%%%%%%%%%%%%%
+\begin{theorem} % Tengo que cambiar esta \nu por otro símbolo
+Sea \((X_t)_{t \geq 0}\) un proceso de Markov en un espacio de estados \(I\) numerable, con tasas \((\lambda(i))_{i \in I}\) y matriz generadora \(Q\) irreducible.
+Son equivalentes:
+\begin{enumerate}
+	\item todo estado es recurrente positivo;
+	\item existe un estado \(i \in I\) recurrente positivo;
+	\item \(Q\) tiene una distribución \(\nu\) tal que \(\nu^{T} Q = 0\).
+\end{enumerate}
+En cualquiera de los casos la distribución invariante \(\nu\) es igual a
+\begin{align}
+	\nu(i) = \frac{1}{\lambda(i) m_i}
+\end{align}
+donde \(m_i = \Exp^i(T_i)\).
+
+\end{theorem}
+
+
+
+
+
+% Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
 
 Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
@@ -98,6 +134,7 @@ Usaremos los siguientes lemas sobre la distribución exponencial:
 
 Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
 con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
