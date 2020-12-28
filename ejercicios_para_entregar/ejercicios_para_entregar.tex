@@ -110,9 +110,9 @@ donde \(m_i = \Exp^i(T_i)\).
 % La matriz generadora es irreducible %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}
-Sea \(\nu = (\nu_i)_{i \in I}\) un vector con entradas reales nonegativas---una medida sobre \(I\).
-Supongamos que \(\nu^T Q = 0\), es decir que contamos con la ecuación \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
+Sea \(\nu = (\nu_i)_{i \in I}\) un vector.
 
+Supongamos que \(\nu^T Q = 0\), es decir que contamos con la ecuación \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
 Analizando esta ecuación en el caso \(j = 0\) vemos que \(\nu_0 (- \lambda) + \nu_1 \mu = 0\), y en particular \(\nu_1 = (\lambda / \mu) \nu_0\).
 Digamos que \(\rho = \lambda / \mu\), de modo tal que 
 \begin{align}
@@ -135,9 +135,21 @@ Luego
 \end{align}
 Lo cual lleva el conjunto de valores \(j \in I\) que verifican la relación \(\nu_{j + 1} = \rho \nu_j\) a \(\{0, 1, \dots, k, k + 1\}\).
 Por inducción, \(\nu_{j + 1} = \rho \nu_j\) para todo \(j \in I\).
+De esta relación de recurrencia se sigue la identidad 
+\begin{align}
+	&\nu_i = \rho^i \nu_0 &&(\forall i \in I)
+\end{align}
+
 % Acá tengo que poner la ecuación nu = rho^i nu0
 % De esa ecuación se deducirá la doble equivalencia con mu > lambda.
-Esta investigación nos dice que la medida \(\nu\), cuando satisface la ecuación \(\nu^T Q = 0\), está completamente determinada por los valores \(\nu_0\) y \(\rho\) mediante la ecuación \(\)\(\nu_{j + 1} = \rho \nu_j\) para \(j \in I\).
+Recíprocamente, supongamos que \(\nu = (\rho^i \nu_0)_{i \in I}\) y probemos \(\nu^T Q = 0\).
+Tenemos que probar \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
+En el caso \(j = 0\) tenemos que probar \(\nu_0 (- \lambda) + (\rho \nu_0) \mu = 0\), y esta ecuación se sigue fácilmente de la definición \(\rho = \lambda / \mu\).
+En el caso \(j \geq 1\) tenemos que probar \((\rho^{j - 1} \nu_0) \lambda + (\rho^j \nu_0) (- (\lambda + \mu)) + (\rho^{j + 1} \nu_0) \mu = 0\).
+Dividiendo por \(\mu\) esto se transforma en \(\rho^j \nu_0 + \rho^{j + 2} \nu_0 \mu = \rho^{j + 1} \nu_0 (\rho + 1)\)
+
+
+
 Si \(\nu_0 = 0\), entonces \(\nu = 0\) y la ecuación \(\nu^T Q = 0\) resulta trivial.
 Consideremos el caso contrario en que \(\nu_0 > 0\).
 Aquí corresponde analizar el efecto de \(\rho\).
