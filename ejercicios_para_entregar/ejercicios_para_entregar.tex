@@ -24,6 +24,7 @@
 \newcommand{\characteristic}{\mathbbm{1}}
 % Math environments
 \newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lema}
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}
 \newtheorem{exercise}{Ejercicio}
@@ -47,13 +48,13 @@ Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 \end{exercise}
 
 \begin{proof} a)
-Elaboramos el punto según el cual \((X_t)_{t \geq 0}\) es un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
+Comezamos analizando este proceso como lo hicimos en la clase práctica número 20.
 
 Si el proceso está en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
 Y esto sucede cuando suena un reloj exponencial de parámetro \(\lambda\).
 Por el contrario, si su estado es \(i > 0\) (hay \(i\) clientes esperando a ser atendidos), puede saltar a \(i - 1\) (un cliente es atendido y se retira) o a \(i + 1\) (un nuevo cliente se suma a la cola).
 Y esta transición obedece a la competencia de dos relojes exponenciales, uno a tasa \(\lambda\) (que indica la llegada de una persona), y otro a tasa \(\mu\) (que indica que una se va).
-Por lo tanto, la matriz \(Q = (q_{i j})_{i, j \in I}\) de tasas de transición de la cadena está dada por
+Por lo tanto, la matriz \(Q = (q_{i j})_{i, j \in I}\) de tasas de transición del proceso está dada por
 \begin{align}
 	Q
 	&=
@@ -73,62 +74,74 @@ Es decir:
 \end{align}
 siendo nulas las entradas que no figuran en esta descripción.
 
-% teorica22.pdf <-- por acá empieza la relación entre las matrices Q y Pi.
-
-% Para probar este teorema es clave el teorema de teorica24.pdf Pág. 1 sobre recurrencia positiva y matrices generadoras irreducibles.
-
-Sea \(T_i = \inf\{t > J_1 : X_t = i\}\) para cada \(i \in I\).
-Un estado \(i \in I\) será recurrente si \(\prob^i(T_i<\infty)=1\).
-Será recurrente positivo si \(\Exp^i(T_i) < \infty\).
-
-% teorica23.pdf %
-%%%%%%%%%%%%%%%%%
+La siguiente noción fue introducida en la clase teórica número 23.
 \begin{definition}
 Decimos que una matriz generadora \(Q\) es irreducible si para todo par de estados \(i, j \in I\) existe un camino \(i_0, i_1, \dots, i_k\) entre ellos (\(i_0 = i\), \(i_k = j\)) tal que las tasas \(q_{i_0 i_1}, q_{i_1 i_2}, \dots, q_{i_{k - 1} i_k}\) son positivas.
 \end{definition}
+Y esta es útil para nosotros porque se deduce de las tasa de transición \(q_{01} = \lambda\), \(q_{i, i + 1} = \mu\), \(q_{i, i + 1} = \lambda\) con \(\mu, \lambda > 0\) que
+\begin{lemma}
+La matriz generadora \(Q\) de nuestro modelo M/M/1 es irreducible.
+\end{lemma}
 
-% El proceso de Markov es irreducible %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-En virtud de las tasas de transición \(q_{01} = \lambda\), \(q_{i, i + 1} = \mu\), \(q_{i, i + 1} = \lambda\) con \(\mu, \lambda > 0\), se sigue que la matriz generadora \(Q\) de nuestro modelo M/M/1 es irreducible.
+Partiendo de la descripción de \((X_t)_{t \geq 0}\) como un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
+Luego este pequeño lema nos pone el las condiciones de un teorema visto en la clase teórica 24.
 
-% teorica24.pdf %
+% teorica24.pdf %	
 %%%%%%%%%%%%%%%%%
-\begin{theorem} % Tengo que cambiar esta \nu por otro símbolo
+\begin{theorem}
+\label{theorem:PositiveRecurrentMarkovProcesses}
 Sea \((X_t)_{t \geq 0}\) un proceso de Markov en un espacio de estados \(I\) numerable, con tasas \((\lambda(i))_{i \in I}\) y matriz generadora \(Q\) irreducible.
 Son equivalentes:
 \begin{enumerate}
 	\item todo estado es recurrente positivo;
 	\item existe un estado \(i \in I\) recurrente positivo;
-	\item \(Q\) tiene una distribución \(\nu\) tal que \(\nu^{T} Q = 0\).
+	\item existe una medida de probabilidad \(\nu\) tal que \(\nu^{T} Q = 0\).
 \end{enumerate}
 En cualquiera de los casos la distribución invariante \(\nu\) es igual a
 \begin{align}
 	\nu(i) = \frac{1}{\lambda(i) m_i}
 \end{align}
 donde \(m_i = \Exp^i(T_i)\).
+\end{theorem}
 
-% La matriz generadora es irreducible %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{proof}
-Sea \(\nu = (\nu_i)_{i \in I}\) un vector.
+Para poder utilizar este teorema vamos a introducir y probar un nuevo lema que caracteriza los vectores \(\nu\) tales que \(\nu^T Q = 0\).
+Antes definimos \(\rho = \lambda / \mu\), usando que \(\mu > 0\), para simplificar la notación.
+\begin{lemma}
+\label{lemma:LeftNullspaceOfGeneratorMatrix}
+La ecuación \(\nu^T Q = 0\) es equivalente a la identidad \(\nu = (\rho^i \nu_0)_{i \in I}\), para todo vector \(\nu = (\nu_i)_{i \in I}\).
+\end{lemma}
+Para la prueba fijemos un vector arbitrario \(\nu = (\nu_i)_{i \in I}\).
+Usando \(\mu > 0\), definimos
+\begin{align}
+	Q'
+	=
+	Q / \mu
+	=
+	\begin{pmatrix}
+		- \rho &\rho \\
+		1 &- (\rho + 1) &\rho \\
+		 &1 &- (\rho + 1) &\rho \\
+		 & &1 &- (\rho + 1) &\rho \\
+		 & & &\ddots &\ddots &\ddots
+	\end{pmatrix}
+\end{align}
+de modo tal que \(\nu^T Q = 0\) si y solo si \(\nu^T Q' = 0\).
 
-Supongamos que \(\nu^T Q = 0\), es decir que contamos con la ecuación \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
-Analizando esta ecuación en el caso \(j = 0\) vemos que \(\nu_0 (- \lambda) + \nu_1 \mu = 0\), y en particular \(\nu_1 = (\lambda / \mu) \nu_0\).
-Digamos que \(\rho = \lambda / \mu\), de modo tal que 
+Supongamos que \(\nu^T Q' = 0\), es decir \(\sum_{i \in I} \nu_i q'_{i j} =0\) para todo \(j \in I\).
+Analizando esta ecuación en el caso \(j = 0\) vemos que \(\nu_0 (- \rho) + \nu_1 = 0\).
+Así
 \begin{align}
 	\nu_1 = \rho \nu_0
 \end{align}
-Para \(j = 1\) tenemos \(\nu_0 \lambda + \nu_1 (- (\lambda + \mu)) + \nu_2 \mu = 0\).
-Dividiendo por \(\mu > 0\), se sigue \(\nu_0 \rho + \nu_2 = \nu_1 (\rho + 1)\).
-Además, usando \(\nu_1 = \rho \nu_0\), obtenemos \(\nu_1 + \nu_2 = \nu_1 (\rho + 1)\).
+Para \(j = 1\) tenemos \(\nu_0 \rho + \nu_1 (- (\rho + 1)) + \nu_2 = 0\).
+Usando \(\nu_1 = \rho \nu_0\), obtenemos \(\nu_1 + \nu_1 (- (\rho + 1)) + \nu_2 = 0\).
 Luego 
 \begin{align}
 	\nu_2 = \rho \nu_1
 \end{align}
 Supongamos, a fin de concretar un argumento inductivo, que esta relación \(\nu_{j + 1} = \rho \nu_j\) se sostiene para \(j \in \{0, 1, \dots, k\}\) con \(k \geq 1\).
-Entonces la ecuación \(\sum_{i \in I} \nu_i q_{i, k} = 0\) dice \(\nu_{k - 1} \lambda + \nu_k (- (\lambda + \mu)) + \nu_{k + 1} \mu = 0\), porque \(k \geq 1\).
-Dividiendo por \(\mu > 0\), se sigue \(\nu_{k - 1} \rho + \nu_{k + 1} = \nu_k (\rho + 1)\).
-Usando nuestra hipótesis inductiva para \(k - 1 \leq k\) obtenemos la ecuación \(\nu_k = \rho \nu_{k - 1}\), y con esta deducimos \(\nu_k + \nu_{k + 1} = \nu_k (\rho + 1)\).
+Entonces la ecuación \(\sum_{i \in I} \nu_i q_{i k} = 0\) dice \(\nu_{k - 1} \rho + \nu_k (- (\rho + 1)) + \nu_{k + 1} = 0\), porque \(k \geq 1\).
+Usando nuestra hipótesis inductiva para \(k - 1 \leq k\) obtenemos la ecuación \(\nu_k = \rho \nu_{k - 1}\), y con esta deducimos \(\nu_k + \nu_k (- (\rho + 1)) + \nu_{k + 1} = 0\).
 Luego
 \begin{align}
 	\nu_{k + 1} = \rho \nu_k
@@ -137,30 +150,29 @@ Lo cual lleva el conjunto de valores \(j \in I\) que verifican la relación \(\n
 Por inducción, \(\nu_{j + 1} = \rho \nu_j\) para todo \(j \in I\).
 De esta relación de recurrencia se sigue la identidad 
 \begin{align}
-	&\nu_i = \rho^i \nu_0 &&(\forall i \in I)
+	\nu = (\rho^i \nu_0)_{i \in I}
 \end{align}
 
-% Acá tengo que poner la ecuación nu = rho^i nu0
-% De esa ecuación se deducirá la doble equivalencia con mu > lambda.
-Recíprocamente, supongamos que \(\nu = (\rho^i \nu_0)_{i \in I}\) y probemos \(\nu^T Q = 0\).
-Tenemos que probar \(\sum_{i \in I} \nu_i q_{i j} = 0\) para todo \(j \in I\).
-En el caso \(j = 0\) tenemos que probar \(\nu_0 (- \lambda) + (\rho \nu_0) \mu = 0\), y esta ecuación se sigue fácilmente de la definición \(\rho = \lambda / \mu\).
-En el caso \(j \geq 1\) tenemos que probar \((\rho^{j - 1} \nu_0) \lambda + (\rho^j \nu_0) (- (\lambda + \mu)) + (\rho^{j + 1} \nu_0) \mu = 0\).
-Dividiendo por \(\mu\) esto se transforma en \(\rho^j \nu_0 + \rho^{j + 2} \nu_0 \mu = \rho^{j + 1} \nu_0 (\rho + 1)\)
+Recíprocamente, supongamos que \(\nu = (\rho^i \nu_0)_{i \in I}\) y probemos \(\nu^T Q' = 0\).
+Es decir \(\sum_{i \in I} \nu_i q'_{i j} = 0\) para todo \(j \in I\).
+Todos los casos son inmediatos.
+Si \(j = 0\) debemos verificar que \(\nu_0 (- \rho) + \rho \nu_0 = 0\).
+Y si \(j \geq 1\), la ecuación que correspode analizar es \((\rho^{j - 1} \nu_0) \rho + (\rho^j \nu_0) (- (\rho + 1)) + (\rho^{j + 1} \nu_0) = 0\).
+Ambas son ciertas por propiedades algebráicas básicas.
 
+Por lo tanto \(\nu^T Q = 0\) si y solo si \(\nu = (\rho^i \nu_0)_{i \in I}\), para todo vector \(\nu = (\nu_i)_{i \in I}\).
 
+\medskip
+Haber probado estos lema \ref{}  El proceso \((X_t)_{t \geq 0}\) con matriz irreducible y espacio de estados numerable entra en las hipótesis del teorema \ref{theorem:PositiveRecurrentMarkovProcesses}.
+Luego, suponiendo \(\rho < 1\), la construcción del vector \((\rho^i \nu_0)_{i \in I}\) con \(\nu_0 = \left(\sum_{i \in I} \rho^i\right)^{- 1}\) nos da una medida de probabilidad tal que \(\nu^T Q = 0\) y el proceso es recurrente positivo.
+Por otro lado, si suponemos \(\rho \geq 1\) vemos que ningún vector \(\nu\) con entradas nonegativas tal que \(\nu^T Q = 0\) puede ser una medida de probabilidad.
+Si \(\nu_0 = 0\), entonces \(\nu = (\rho^i \cdot 0)_{i \in I} = 0\) no es una medida de probabilidad.
+Y si \(\nu_0 > 0\), entonces \(\rho \geq 1\) implica la desigualdad \(\sum_{i \in I} \rho^i \nu_0 \geq \sum_{i \in I} \nu_0 = \infty\) e impide que \(\nu\) sea una medida de probabilidad.
+En cualquier caso no existen medidas de probabilidad \(\nu\) con \(\nu^T Q = 0\) y el proceso no es recurrente positivo.
 
-Si \(\nu_0 = 0\), entonces \(\nu = 0\) y la ecuación \(\nu^T Q = 0\) resulta trivial.
-Consideremos el caso contrario en que \(\nu_0 > 0\).
-Aquí corresponde analizar el efecto de \(\rho\).
-Si \(\rho = 1\), entonces \(\nu = (\nu_0)_{i \in I}\) es una medida infinita sobre \(I\) --- se verifica \(\sum_{i \in I} \nu_i = \infty\).
-Si \(\rho \neq 1\), entonces \(\nu = (\rho^i \nu_0)_{i \in I}\).
-En el caso \(\rho > 1\) se tiene \(\lim_{i \rightarrow \infty} \rho^i = \infty\), lo cual hace de \(\nu\) una medida infinita --- se verifica \(\sum_{i \in I} \nu_i = \infty\).
-En contraste, cuando \(\rho < 1\)
+Por lo tanto \(\rho < 1\) si y solo si el proceso es recurrente positivo.
+Este es el resultado que buscábamos.
 \end{proof}
-
-\end{theorem}
-
 
 
 
@@ -187,7 +199,6 @@ Usaremos los siguientes lemas sobre la distribución exponencial:
 Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
 con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{exercise}
