@@ -50,6 +50,9 @@ Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
 \begin{proof} a)
 Comezamos analizando este proceso como lo hicimos en la clase práctica número 20.
 
+% Cálculo de la matriz generadora del proceso %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Podría llegar a tener que explicar esta parte un poco más
 Si el proceso está en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
 Y esto sucede cuando suena un reloj exponencial de parámetro \(\lambda\).
 Por el contrario, si su estado es \(i > 0\) (hay \(i\) clientes esperando a ser atendidos), puede saltar a \(i - 1\) (un cliente es atendido y se retira) o a \(i + 1\) (un nuevo cliente se suma a la cola).
@@ -80,6 +83,7 @@ Decimos que una matriz generadora \(Q\) es irreducible si para todo par de estad
 \end{definition}
 Y esta es útil para nosotros porque se deduce de las tasa de transición \(q_{01} = \lambda\), \(q_{i, i + 1} = \mu\), \(q_{i, i + 1} = \lambda\) con \(\mu, \lambda > 0\) que
 \begin{lemma}
+\label{lemma:GeneratorMatrixIsIrreducible}
 La matriz generadora \(Q\) de nuestro modelo M/M/1 es irreducible.
 \end{lemma}
 
@@ -135,7 +139,7 @@ Así
 \end{align}
 Para \(j = 1\) tenemos \(\nu_0 \rho + \nu_1 (- (\rho + 1)) + \nu_2 = 0\).
 Usando \(\nu_1 = \rho \nu_0\), obtenemos \(\nu_1 + \nu_1 (- (\rho + 1)) + \nu_2 = 0\).
-Luego 
+Luego
 \begin{align}
 	\nu_2 = \rho \nu_1
 \end{align}
@@ -160,45 +164,48 @@ Si \(j = 0\) debemos verificar que \(\nu_0 (- \rho) + \rho \nu_0 = 0\).
 Y si \(j \geq 1\), la ecuación que correspode analizar es \((\rho^{j - 1} \nu_0) \rho + (\rho^j \nu_0) (- (\rho + 1)) + (\rho^{j + 1} \nu_0) = 0\).
 Ambas son ciertas por propiedades algebráicas básicas.
 
-Por lo tanto \(\nu^T Q = 0\) si y solo si \(\nu = (\rho^i \nu_0)_{i \in I}\), para todo vector \(\nu = (\nu_i)_{i \in I}\).
+Por lo tanto \(\nu^T Q = 0\) (equivalentemente \(\nu^T Q' = 0\)) si y solo si \(\nu = (\rho^i \nu_0)_{i \in I}\), para todo vector \(\nu = (\nu_i)_{i \in I}\).
 
 \medskip
-Haber probado estos lema \ref{}  El proceso \((X_t)_{t \geq 0}\) con matriz irreducible y espacio de estados numerable entra en las hipótesis del teorema \ref{theorem:PositiveRecurrentMarkovProcesses}.
-Luego, suponiendo \(\rho < 1\), la construcción del vector \((\rho^i \nu_0)_{i \in I}\) con \(\nu_0 = \left(\sum_{i \in I} \rho^i\right)^{- 1}\) nos da una medida de probabilidad tal que \(\nu^T Q = 0\) y el proceso es recurrente positivo.
+Haber probado estos lemas \ref{lemma:GeneratorMatrixIsIrreducible} y \ref{lemma:LeftNullspaceOfGeneratorMatrix} nos pone bajo las hipótesis del teorema \ref{theorem:PositiveRecurrentMarkovProcesses}.
+Luego el proceso \((X_t)_{t \geq 0}\) será recurrente positivo si y solo si existe una medida de probabilidad \(\nu\) tal que \(\nu^T Q = 0\).
+Esta última condición es la que se relacionaremos con la desigualdad \(\lambda < \mu\).
+
+Suponiendo \(\rho < 1\), la construcción del vector \((\rho^i \nu_0)_{i \in I}\) con \(\nu_0 = \left(\sum_{i \in I} \rho^i\right)^{- 1}\) nos da una medida de probabilidad tal que \(\nu^T Q = 0\) --- el proceso es recurrente positivo.
 Por otro lado, si suponemos \(\rho \geq 1\) vemos que ningún vector \(\nu\) con entradas nonegativas tal que \(\nu^T Q = 0\) puede ser una medida de probabilidad.
 Si \(\nu_0 = 0\), entonces \(\nu = (\rho^i \cdot 0)_{i \in I} = 0\) no es una medida de probabilidad.
 Y si \(\nu_0 > 0\), entonces \(\rho \geq 1\) implica la desigualdad \(\sum_{i \in I} \rho^i \nu_0 \geq \sum_{i \in I} \nu_0 = \infty\) e impide que \(\nu\) sea una medida de probabilidad.
-En cualquier caso no existen medidas de probabilidad \(\nu\) con \(\nu^T Q = 0\) y el proceso no es recurrente positivo.
+En cualquier caso no existen medidas de probabilidad \(\nu\) con \(\nu^T Q = 0\) --- el proceso no es recurrente positivo.
 
 Por lo tanto \(\rho < 1\) si y solo si el proceso es recurrente positivo.
 Este es el resultado que buscábamos.
 \end{proof}
 
-
-
-
 % Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
+% Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
 
-Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
+% Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
 
-Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
-Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
+% Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
+% Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
 
-Usaremos los siguientes lemas sobre la distribución exponencial:
-\begin{enumerate}
-	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
-	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
-	\begin{itemize}
-		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
-		\item \(\prob(\argmin_{i \in \naturalnum_0} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\), para todo \(j \in \naturalnum_0\).
-	\end{itemize}
-\end{enumerate}
+% Usaremos los siguientes lemas sobre la distribución exponencial:
+% \begin{enumerate}
+% 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
+% 	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
+% 	\begin{itemize}
+% 		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
+% 		\item \(\prob(\argmin_{i \in \naturalnum_0} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\), para todo \(j \in \naturalnum_0\).
+% 	\end{itemize}
+% \end{enumerate}
 
-Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
-con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
+% Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
+% con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof} b)
+
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{exercise}
