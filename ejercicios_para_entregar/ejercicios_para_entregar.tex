@@ -52,6 +52,28 @@ Comezamos analizando este proceso como lo hicimos en la clase práctica número 
 
 % Cálculo de la matriz generadora del proceso %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
+
+% Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
+
+% Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
+% Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
+
+% Usaremos los siguientes lemas sobre la distribución exponencial:
+% \begin{enumerate}
+% 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
+% 	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
+% 	\begin{itemize}
+% 		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
+% 		\item \(\prob(\argmin_{i \in \naturalnum_0} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\), para todo \(j \in \naturalnum_0\).
+% 	\end{itemize}
+% \end{enumerate}
+
+% Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
+% con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
+
 % Podría llegar a tener que explicar esta parte un poco más
 Si el proceso está en el estado 0 (no hay clientes en la cola), sólo puede saltar al estado 1 (llega un nuevo cliente). 
 Y esto sucede cuando suena un reloj exponencial de parámetro \(\lambda\).
@@ -181,30 +203,11 @@ Por lo tanto \(\rho < 1\) si y solo si el proceso es recurrente positivo.
 Este es el resultado que buscábamos.
 \end{proof}
 
-% Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
-
-% Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
-
-% Si está en 0, salta al estado 1 cuando suena un reloj exponencial de parámetro \(\lambda\).
-% Si se encuntra en un estado \(i > 0\), hay dos relojes exponenciales compitiendo, uno a tasa \(\lambda\), que indica la llegada de una persona y otra a tasa \(\mu\) que indica que una se va. 
-
-% Usaremos los siguientes lemas sobre la distribución exponencial:
-% \begin{enumerate}
-% 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
-% 	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
-% 	\begin{itemize}
-% 		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
-% 		\item \(\prob(\argmin_{i \in \naturalnum_0} X_i = j) = \lambda_j / \lambda\), con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\), para todo \(j \in \naturalnum_0\).
-% 	\end{itemize}
-% \end{enumerate}
-
-% Usando estos lemas, podemos pensar que estando la cadena en el estado \(i > 0\), su cambio responde a un único reloj exponencial con tasa \(\lambda + \mu\), y al sonar este reloj se tira una moneda cargada:
-% con probabilidad \(\lambda / (\lambda + \mu)\) salta al estado \(i + 1\), y con probabilidad \(\mu / (\lambda + \mu)\) salta al estado \(i - 1\).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{proof} b)
-
+\begin{proof}[Cálculo] b)
+% Esta parece ser la ley fuerte de los grandes números
+% También se le llama Teorema Ergódico
+% En el libro Markov chains and jump processes está.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
