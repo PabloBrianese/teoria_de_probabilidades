@@ -22,6 +22,7 @@
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\realnum}{\mathbb{R}}
 \newcommand{\characteristic}{\mathbbm{1}}
+\newcommand{\almostSurely}{\text{ctp}}
 % Math environments
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lema}
@@ -35,10 +36,11 @@
 \begin{document}
 \maketitle
 
+\newcommand{\queueProcess}{(X_t)_{t \geq 0}}
 \begin{exercise}
 Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 0$, y los clientes llegan a tasa $\lambda > 0$.
 Sea $X_t$ la cantidad de clientes que hay en la cola a tiempo $t$, con $t \geq 0$.
-Notar que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo.
+Notar que $\queueProcess$ es un proceso de Markov a tiempo continuo.
 (Este modelo, llamado $M/ M / 1$, lo hemos charlado en la clase práctica 20 y 23).
 \begin{enumerate}[label=\alph*)]
     \item Probar que el proceso es recurrente positivo si y sólo si $\lambda < \mu$.
@@ -109,7 +111,7 @@ Y esta es útil para nosotros porque se deduce de las tasa de transición \(q_{0
 La matriz generadora \(Q\) de nuestro modelo M/M/1 es irreducible.
 \end{lemma}
 
-Partiendo de la descripción de \((X_t)_{t \geq 0}\) como un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
+Partiendo de la descripción de \(\queueProcess\) como un proceso de Markov a tiempo continuo con espacio de estados numerable \(I =  \naturalnum_0 = \{0, 1, 2, \dots\}\).
 Luego este pequeño lema nos pone el las condiciones de un teorema visto en la clase teórica 24.
 
 % teorica24.pdf %	
@@ -190,10 +192,18 @@ Por lo tanto \(\nu^T Q = 0\) (equivalentemente \(\nu^T Q' = 0\)) si y solo si \(
 
 \medskip
 Haber probado estos lemas \ref{lemma:GeneratorMatrixIsIrreducible} y \ref{lemma:LeftNullspaceOfGeneratorMatrix} nos pone bajo las hipótesis del teorema \ref{theorem:PositiveRecurrentMarkovProcesses}.
-Luego el proceso \((X_t)_{t \geq 0}\) será recurrente positivo si y solo si existe una medida de probabilidad \(\nu\) tal que \(\nu^T Q = 0\).
+Luego el proceso \(\queueProcess\) será recurrente positivo si y solo si existe una medida de probabilidad \(\nu\) tal que \(\nu^T Q = 0\).
 Esta última condición es la que se relacionaremos con la desigualdad \(\lambda < \mu\).
 
-Suponiendo \(\rho < 1\), la construcción del vector \((\rho^i \nu_0)_{i \in I}\) con \(\nu_0 = \left(\sum_{i \in I} \rho^i\right)^{- 1}\) nos da una medida de probabilidad tal que \(\nu^T Q = 0\) --- el proceso es recurrente positivo.
+Suponiendo \(\rho < 1\), la construcción del vector 
+\begin{align}
+	\left( \rho^i \nu_0 \right)_{i \in I}
+	=
+	\left( \rho^i \left(\sum_{i \in I} \rho^i\right)^{- 1} \right)_{i \in I}
+	=
+	\left( \frac{\rho^i}{1 - \rho} \right)_{i \in I}
+\end{align}
+nos da una medida de probabilidad tal que \(\nu^T Q = 0\) --- el proceso es recurrente positivo.
 Por otro lado, si suponemos \(\rho \geq 1\) vemos que ningún vector \(\nu\) con entradas nonegativas tal que \(\nu^T Q = 0\) puede ser una medida de probabilidad.
 Si \(\nu_0 = 0\), entonces \(\nu = (\rho^i \cdot 0)_{i \in I} = 0\) no es una medida de probabilidad.
 Y si \(\nu_0 > 0\), entonces \(\rho \geq 1\) implica la desigualdad \(\sum_{i \in I} \rho^i \nu_0 \geq \sum_{i \in I} \nu_0 = \infty\) e impide que \(\nu\) sea una medida de probabilidad.
@@ -208,6 +218,31 @@ Este es el resultado que buscábamos.
 % Esta parece ser la ley fuerte de los grandes números
 % También se le llama Teorema Ergódico
 % En el libro Markov chains and jump processes está.
+La proporción asintótica de tiempo que la cola está vacía viene dada por el promedio \(P_t = {\displaystyle \frac{1}{t} \int_0^t \characteristic_{\displaystyle [X_s = 0]} \dd s}\) en el límite \(t \rightarrow \infty\).
+En el ejercicio 1.a) establecimos que el espacio de estados de nuestro proceso es numerable, y que su matriz generadora es irreducible.
+Luego, podemos aplicar el Teorema Ergódico al cálculo de esta proporción asintótica. 
+% teorica24.pdf %
+%%%%%%%%%%%%%%%%%
+\begin{theorem}[Teorema Ergódico]
+\label{theorem:ErgodicTheoremForMarkovProcesses}
+Sea \((X_t)_{t \geq 0}\) un proceso de Markov a tiempo continuo, con espacio de estados \(I\) numerable y matriz generadora \(Q\) irreducible.
+Entonces, si \(\phi\) es su distribución invariante, resulta que
+\begin{align}
+	&\frac{1}{t} \int_0^t \characteristic_{\displaystyle [X_s = i]} \dd s
+	\xrightarrow[t \rightarrow \infty]{\almostSurely}
+	\phi(i)
+	&&(\forall i \in I)
+\end{align}
+Además, si \(f : I \rightarrow \realnum\) es acotada
+\begin{align}
+	&\frac{1}{t} \int_0^t f(X_s) \dd s
+	\xrightarrow[t \rightarrow \infty]{\almostSurely}
+	\Exp^{\phi}(f) = \sum_{i \in I} f(i) \phi(i)
+	&&(\forall i \in I)
+\end{align}
+\end{theorem}
+También en el ejercicio 1.a), probamos que la distribución invariante del modelo M/M/1 es \((\rho^i / (1 - \rho))_{i \in I}\).
+Por lo tanto \(P_t \rightarrow 1 / (1 - \rho)\) cuando \(t \rightarrow \infty\) casi seguramente.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -218,7 +253,7 @@ Consideremos un sistema de $n \in \naturalnum$ servidores, en donde cada servido
 Si un cluente llega y encuentra todos los servidores ocupados, automáticamente se va.
 En caso contrario, el cliente ingresa al sistema, ubicándose en algún servidor que estaba desocupado, y luego de ser atendido, se va del sistema.
 
-Llamemos $X_t$ a la cnatidad de servidores ocupados a tiempo $t$, $t \geq 0$.
+Llamemos $X_t$ a la cantidad de servidores ocupados a tiempo $t$, $t \geq 0$.
 Observemos que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo, donde el espacio de estados es $S = \{0, 1, \dots, n\}$, y el diagrama de las tasas de transición es
 \begin{center}
 \includegraphics[width=0.75\textwidth]{diagrama_de_las_tasas_de_transicion}
