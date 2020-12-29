@@ -1,19 +1,23 @@
 \documentclass{article}
-% Text
+% Text %
+%%%%%%%%
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{enumitem}
-% Images
+% Images %
+%%%%%%%%%%
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
-% Math
+% Math packages %
+%%%%%%%%%%%%%%%%%
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{physics}
 \usepackage{bbm}
-% Math symbols
+% Math symbols %
+%%%%%%%%%%%%%%%%
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Exp}{\mathbb{E}}
 \DeclareMathOperator{\Exponential}{\text{Exp}}
@@ -23,7 +27,8 @@
 \newcommand{\realnum}{\mathbb{R}}
 \newcommand{\characteristic}{\mathbbm{1}}
 \newcommand{\almostSurely}{\text{ctp}}
-% Math environments
+% Math environments %
+%%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lema}
 \theoremstyle{definition}
@@ -36,7 +41,11 @@
 \begin{document}
 \maketitle
 
+\begingroup
+% Group variables %
+%%%%%%%%%%%%%%%%%%%
 \newcommand{\queueProcess}{(X_t)_{t \geq 0}}
+
 \begin{exercise}
 Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 0$, y los clientes llegan a tasa $\lambda > 0$.
 Sea $X_t$ la cantidad de clientes que hay en la cola a tiempo $t$, con $t \geq 0$.
@@ -244,8 +253,15 @@ Además, si \(f : I \rightarrow \realnum\) es acotada
 También en el ejercicio 1.a), probamos que la distribución invariante del modelo M/M/1 es \((\rho^i / (1 - \rho))_{i \in I}\).
 Por lo tanto \(P_t \rightarrow 1 / (1 - \rho)\) cuando \(t \rightarrow \infty\) casi seguramente.
 \end{proof}
+\endgroup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begingroup
+% Group variables %
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\markovProcess}{(X_t)_{t \geq 0}}
+\newcommand{\stateSpace}{S}
+
 \begin{exercise}
 Consideremos un sistema de $n \in \naturalnum$ servidores, en donde cada servidor atiende a tasa $\mu > 0$, y los clientes arriban al sistema a tasa $\lambda > 0$.
 (Los tiempos de duración de los servicios tienen distribución exponencial con parámetro $\mu$, independientes entre sí, e independientes al proceso de llegada de los clientes, que siguen un proceso de Poisson de tasa $\lambda$).
@@ -254,18 +270,98 @@ Si un cluente llega y encuentra todos los servidores ocupados, automáticamente 
 En caso contrario, el cliente ingresa al sistema, ubicándose en algún servidor que estaba desocupado, y luego de ser atendido, se va del sistema.
 
 Llamemos $X_t$ a la cantidad de servidores ocupados a tiempo $t$, $t \geq 0$.
-Observemos que $(X_t)_{t \geq 0}$ es un proceso de Markov a tiempo continuo, donde el espacio de estados es $S = \{0, 1, \dots, n\}$, y el diagrama de las tasas de transición es
+Observemos que $\markovProcess$ es un proceso de Markov a tiempo continuo, donde el espacio de estados es $\stateSpace = \{0, 1, \dots, n\}$, y el diagrama de las tasas de transición es
 \begin{center}
 \includegraphics[width=0.75\textwidth]{diagrama_de_las_tasas_de_transicion}
 \end{center}
 para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
-\begin{enumerate}[label=\roman*.]
-	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $(X_t)_{t \geq 0}$ pase de $k$ a $k + 1$).
-	\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
-(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
-	\item Hallar el número esperado de servidores ocupados que encuentra el primer cliente que arriba al sistema.
+\begin{enumerate}
+	\item Mostrar que \(\alpha_i = i \mu\) para todo \(1 \leq i \leq n\).
+	\item Escribir la matriz de tasas de transición \(Q\) y la matriz de probabilidades de transición asociadas.
+	\item Supongamos que \(X_0 = k\) a.s., con \(k \in \{0, 1, \dots, n - 1\}\) (es decir, a tiempo inicial hay \(k\) servidores ocupados).
+	\begin{enumerate}[label=\roman*.]
+		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $\markovProcess$ pase de $k$ a $k + 1$).
+		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
+	(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
+		\item Hallar el número esperado de servidores ocupados que encuentra el primer cliente que arriba al sistema.
+	\end{enumerate}
 \end{enumerate}
 \end{exercise}
+
+\begin{proof} 1.
+Supongamos que el proceso se encuentra en un estado \(i \in \{1, \dots, n\}\).
+Por definición, el proceso saltará al estado \(i - 1\) siguiendo a un reloj \(T \sim \Exp(\alpha_i)\).
+
+Encontrarse en el estado \(i\) equivale a que \(i\) de los \(n\) servidores que forman el sistema se encuentren ocupados atendiendo a un cliente.
+Visto de esta manera, el cambio del estado \(i\) al estado \(i - 1\) se dá cuando uno de los \(i\) servidores ocupados finaliza su tarea.
+Luego, el cambio del estado \(i\) al estado \(i - 1\) depende de la competencia entre estos servidores.
+El tiempo que tarda el \(h\)--ésimo servidor en liberarse es una variable aleatoria \(T_h \sim \Exp(\mu)\);
+y el tiempo que transcurre hasta que uno de ellos lo hace es \(\min \{T_1, \dots, T_i\}\).
+En particular se sigue \(T = \min \{T_1, \dots, T_i\}\)
+Nuestras hipótesis dicen que \(T_1, \dots, T_i\) son mutuamente independientes.
+Entonces \(T \sim \Exp(i \mu)\), porque la tasa del mínimo es la suma de las tasas para una familia finita e independiente de distribuciones exponenciales.
+
+La identidad \(\alpha_i  = i \mu\) se sigue de \(T \sim \Exp(\alpha_i)\) y \(T \sim \Exp(i \mu)\).
+\end{proof}
+
+% Supongamos que el proceso se encuentra en un estado \(i \in \{1, \dots, n - 1\}\).
+% Es decir que de los \(n\) servidores que forman el sistema, \(i\) de ellos se encuentran ocupados atendiendo a un cliente y \(n - i\) estan ociosos.
+% Desde este estado, el proceso puede saltar al estado \(i + 1\) o al estado \(i - 1\).
+% Saltará al estado \(i + 1\) respondiendo a la llegada de un nuevo cliente.
+% Y saltará al estado \(i - 1\) cuando uno de los servidores ocupados finalice su tarea.
+% Luego, el cambio partiendo del estado \(i\) depende de la competencia entre \(i + 1\) relojes exponenciales.
+% Uno de estos relojes, \(R \sim \Exp(\lambda)\), describe la llegada de nuevos clientes al sistema, y suena a tasa \(\lambda\).
+% Los demás \(i\) relojes, \(T_i \sim \Exp(\mu)\) describen los tiempos de duración de las tareas que se encuentran ejecutando los \(i\) servidores activos, y suenan a tasa \(\mu\).
+% Por hipótesis todos estos relojes son independientes entre sí.
+% Entonces, por las propiedades particulares de las ditribuciones exponenciales, la variable \(\min (T_1, \dots, T_i, R)\) tiene distribución exponencial y su tasa es la suma de las tasas de los relojes \(T_1, \dots, T_i, R\).
+% Es decir que el 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}[Cálculo]
+Sea \(Q = (q_{i j})_{0 \leq i, j \leq n}\) la matriz generadora del proceso.
+Por la definición del proceso mediante el diagrama de las tasas de transición, sabemos que \(Q\) es
+\begin{align}
+	\begin{pmatrix}
+		- \lambda & \lambda \\
+		\alpha_1 & -(\lambda + \alpha_1) & \lambda \\
+		 & \alpha_2 & -(\lambda + \alpha_2) & \lambda \\
+		 & & \ddots & \ddots & \ddots \\
+		 & & & \alpha_{n - 2} & -(\lambda + \alpha_{n - 2}) & \lambda \\
+		 & & & &\alpha_{n - 1} & -(\lambda + \alpha_{n - 1}) & \lambda \\
+		 & & & & &\alpha_n & - \alpha_n
+	\end{pmatrix}
+\end{align}
+Por el ejercicio 2.1., sabemos que \(\alpha_i = i \mu\) para todo \(i \in \{1, 2, \dots, n\}\).
+Esto completa la descripción de la matriz \(Q\).
+
+% Nota 7 dic. 2020 Teo de proba práctica clase 23.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% En este documento está la relación entre Q y Pi
+
+Por su parte, la matriz de transición de probabilidad \(\Pi\) de la cadena de Markov asociada al proceso viene dada por \(\pi_{i i} = 0\) para todo \(i \in \{0, 1, \dots, n\}\) porque \(Q \neq 0\), y por \(\pi_{i j} = q_{i j} / Q_i = q_{i j} \left( \sum_{h \in S \setminus j} q_{i h} \right)^{- 1}\) para todo par \(i, j \in \{0, 1, \dots, n\}\) de estados distintos.
+Para \(i = 0\), tenemos \(Q_0 = \lambda\).
+Para \(i \in \{1, \dots, n - 1\}\), tenemos \(Q_i = i \mu + \lambda\).
+Para \(i = n\), tenemos \(Q_n = n \mu\).
+Luego \(\Pi\) es
+\begin{align}
+	\begin{pmatrix}
+		 & 1  \\
+		\frac{\mu}{\mu + \lambda} & & \frac{\lambda}{ \lambda + \mu} \\ 
+		 & \frac{2 \mu}{2 \mu + \lambda} & & \frac{\lambda}{\lambda + 2 \mu} \\
+		 & & \frac{3 \mu}{3 \mu + \lambda} & & \frac{\lambda}{\lambda + 3 \mu} \\
+		 & & & \ddots & & \ddots \\
+		 & & & & \frac{(n - 1) \mu}{(n - 1) \mu + \lambda} & & \frac{\lambda}{\lambda + (n - 1) \mu} \\
+		 & & & & & 1
+	\end{pmatrix}
+\end{align}
+
+\end{proof}
+
+
+
+
+
+\endgroup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{exercise}
