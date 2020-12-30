@@ -1,8 +1,8 @@
-\documentclass{article}
+	\documentclass{article}
 % Text %
 %%%%%%%%
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-lcroman]{babel}
 \usepackage{enumitem}
 % Images %
 %%%%%%%%%%
@@ -279,7 +279,7 @@ para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
 	\item Mostrar que \(\alpha_i = i \mu\) para todo \(1 \leq i \leq n\).
 	\item Escribir la matriz de tasas de transición \(Q\) y la matriz de probabilidades de transición asociadas.
 	\item Supongamos que \(X_0 = k\) a.s., con \(k \in \{0, 1, \dots, n - 1\}\) (es decir, a tiempo inicial hay \(k\) servidores ocupados).
-	\begin{enumerate}[label=\roman*.]
+	\begin{enumerate}[label= \roman*.]
 		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $\markovProcess$ pase de $k$ a $k + 1$).
 		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
 	(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
@@ -317,7 +317,7 @@ La identidad \(\alpha_i  = i \mu\) se sigue de \(T \sim \Exp(\alpha_i)\) y \(T \
 % Es decir que el 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{proof}[Cálculo]
+\begin{proof}[Cálculo] 2.
 Sea \(Q = (q_{i j})_{0 \leq i, j \leq n}\) la matriz generadora del proceso.
 Por la definición del proceso mediante el diagrama de las tasas de transición, sabemos que \(Q\) es
 \begin{align}
