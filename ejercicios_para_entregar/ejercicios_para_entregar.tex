@@ -1,4 +1,4 @@
-	\documentclass{article}
+\documentclass{article}
 % Text %
 %%%%%%%%
 \usepackage[utf8]{inputenc}
@@ -19,14 +19,14 @@
 % Math symbols %
 %%%%%%%%%%%%%%%%
 \DeclareMathOperator{\prob}{\mathbb{P}}
-\DeclareMathOperator{\Exp}{\mathbb{E}}
-\DeclareMathOperator{\Exponential}{\text{Exp}}
-\DeclareMathOperator*{\argmin}{\text{argmín}}
+\DeclareMathOperator{\Expectation}{\mathbb{E}}
+\DeclareMathOperator{\Exponential}{\textnormal{Exp}}
+\DeclareMathOperator*{\argmin}{\textnormal{argmín}}
+\DeclareMathOperator{\characteristic}{\mathbbm{1}}
 \newcommand{\symmetric}{\mathbb{S}}
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\realnum}{\mathbb{R}}
-\newcommand{\characteristic}{\mathbbm{1}}
-\newcommand{\almostSurely}{\text{ctp}}
+\newcommand{\almostSurely}{\textnormal{ctp}}
 % Math environments %
 %%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Teorema}
@@ -65,7 +65,7 @@ Comezamos analizando este proceso como lo hicimos en la clase práctica número 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Nota 25 nov. 2020 teoría de proba  clase práctica 20.pdf %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Vamos a ver que \(\Exp(T_0) < \infty\) si y solo si \(\lambda < \mu\).
+% Vamos a ver que \(\Expectation(T_0) < \infty\) si y solo si \(\lambda < \mu\).
 
 % Si la cadena está en el estado 0, sólo puede saltar al 1; si está en un estado \(i > 0\), puede saltar a \(i - 1\) o a \(i + 1\).
 
@@ -138,7 +138,7 @@ En cualquiera de los casos la distribución invariante \(\nu\) es igual a
 \begin{align}
 	\nu(i) = \frac{1}{\lambda(i) m_i}
 \end{align}
-donde \(m_i = \Exp^i(T_i)\).
+donde \(m_i = \Expectation^i(T_i)\).
 \end{theorem}
 
 Para poder utilizar este teorema vamos a introducir y probar un nuevo lema que caracteriza los vectores \(\nu\) tales que \(\nu^T Q = 0\).
@@ -222,7 +222,6 @@ Por lo tanto \(\rho < 1\) si y solo si el proceso es recurrente positivo.
 Este es el resultado que buscábamos.
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}[Cálculo] b)
 % Esta parece ser la ley fuerte de los grandes números
 % También se le llama Teorema Ergódico
@@ -246,7 +245,7 @@ Además, si \(f : I \rightarrow \realnum\) es acotada
 \begin{align}
 	&\frac{1}{t} \int_0^t f(X_s) \dd s
 	\xrightarrow[t \rightarrow \infty]{\almostSurely}
-	\Exp^{\phi}(f) = \sum_{i \in I} f(i) \phi(i)
+	\Expectation^{\phi}(f) = \sum_{i \in I} f(i) \phi(i)
 	&&(\forall i \in I)
 \end{align}
 \end{theorem}
@@ -257,6 +256,7 @@ Por lo tanto \(P_t \rightarrow 1 / (1 - \rho)\) cuando \(t \rightarrow \infty\) 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begingroup
+\newpage
 % Group variables %
 %%%%%%%%%%%%%%%%%%%
 \newcommand{\markovProcess}{(X_t)_{t \geq 0}}
@@ -281,43 +281,42 @@ para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
 	\item Supongamos que \(X_0 = k\) a.s., con \(k \in \{0, 1, \dots, n - 1\}\) (es decir, a tiempo inicial hay \(k\) servidores ocupados).
 	\begin{enumerate}[label= \roman*.]
 		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $\markovProcess$ pase de $k$ a $k + 1$).
-		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in S$.
-	(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
+		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in \{0, 1, \dots, k\}$.
+		(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
 		\item Hallar el número esperado de servidores ocupados que encuentra el primer cliente que arriba al sistema.
 	\end{enumerate}
 \end{enumerate}
 \end{exercise}
 
-\begin{proof} 1.
+\begin{proof} \textit{a})
 Supongamos que el proceso se encuentra en un estado \(i \in \{1, \dots, n\}\).
-Por definición, el proceso saltará al estado \(i - 1\) siguiendo a un reloj \(T \sim \Exp(\alpha_i)\).
+Por definición, el proceso saltará al estado \(i - 1\) siguiendo a un reloj \(T \sim \Exponential(\alpha_i)\).
 
 Encontrarse en el estado \(i\) equivale a que \(i\) de los \(n\) servidores que forman el sistema se encuentren ocupados atendiendo a un cliente.
 Visto de esta manera, el cambio del estado \(i\) al estado \(i - 1\) se dá cuando uno de los \(i\) servidores ocupados finaliza su tarea.
 Luego, el cambio del estado \(i\) al estado \(i - 1\) depende de la competencia entre estos servidores.
-El tiempo que tarda el \(h\)--ésimo servidor en liberarse es una variable aleatoria \(T_h \sim \Exp(\mu)\);
+El tiempo que tarda el \(h\)--ésimo servidor ocupado en liberarse es una variable aleatoria \(T_h \sim \Exponential(\mu)\);
 y el tiempo que transcurre hasta que uno de ellos lo hace es \(\min \{T_1, \dots, T_i\}\).
 En particular se sigue \(T = \min \{T_1, \dots, T_i\}\)
 Nuestras hipótesis dicen que \(T_1, \dots, T_i\) son mutuamente independientes.
-Entonces \(T \sim \Exp(i \mu)\), porque la tasa del mínimo es la suma de las tasas para una familia finita e independiente de distribuciones exponenciales.
+Entonces \(T \sim \Exponential(i \mu)\), porque la tasa del mínimo es la suma de las tasas para una familia finita e independiente de distribuciones exponenciales.
 
-La identidad \(\alpha_i  = i \mu\) se sigue de \(T \sim \Exp(\alpha_i)\) y \(T \sim \Exp(i \mu)\).
+La identidad \(\alpha_i  = i \mu\) se sigue de \(T \sim \Exponential(\alpha_i)\) y \(T \sim \Exponential(i \mu)\).
 \end{proof}
-
+% \begin{}
 % Supongamos que el proceso se encuentra en un estado \(i \in \{1, \dots, n - 1\}\).
 % Es decir que de los \(n\) servidores que forman el sistema, \(i\) de ellos se encuentran ocupados atendiendo a un cliente y \(n - i\) estan ociosos.
 % Desde este estado, el proceso puede saltar al estado \(i + 1\) o al estado \(i - 1\).
 % Saltará al estado \(i + 1\) respondiendo a la llegada de un nuevo cliente.
 % Y saltará al estado \(i - 1\) cuando uno de los servidores ocupados finalice su tarea.
 % Luego, el cambio partiendo del estado \(i\) depende de la competencia entre \(i + 1\) relojes exponenciales.
-% Uno de estos relojes, \(R \sim \Exp(\lambda)\), describe la llegada de nuevos clientes al sistema, y suena a tasa \(\lambda\).
-% Los demás \(i\) relojes, \(T_i \sim \Exp(\mu)\) describen los tiempos de duración de las tareas que se encuentran ejecutando los \(i\) servidores activos, y suenan a tasa \(\mu\).
+% Uno de estos relojes, \(R \sim \Exponential(\lambda)\), describe la llegada de nuevos clientes al sistema, y suena a tasa \(\lambda\).
+% Los demás \(i\) relojes, \(T_i \sim \Exponential(\mu)\) describen los tiempos de duración de las tareas que se encuentran ejecutando los \(i\) servidores activos, y suenan a tasa \(\mu\).
 % Por hipótesis todos estos relojes son independientes entre sí.
 % Entonces, por las propiedades particulares de las ditribuciones exponenciales, la variable \(\min (T_1, \dots, T_i, R)\) tiene distribución exponencial y su tasa es la suma de las tasas de los relojes \(T_1, \dots, T_i, R\).
 % Es decir que el 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{proof}[Cálculo] 2.
+% \end{}
+\begin{proof}[Cálculo] \textit{b})
 Sea \(Q = (q_{i j})_{0 \leq i, j \leq n}\) la matriz generadora del proceso.
 Por la definición del proceso mediante el diagrama de las tasas de transición, sabemos que \(Q\) es
 \begin{align}
@@ -345,25 +344,113 @@ Para \(i = n\), tenemos \(Q_n = n \mu\).
 Luego \(\Pi\) es
 \begin{align}
 	\begin{pmatrix}
-		 & 1  \\
-		\frac{\mu}{\mu + \lambda} & & \frac{\lambda}{ \lambda + \mu} \\ 
-		 & \frac{2 \mu}{2 \mu + \lambda} & & \frac{\lambda}{\lambda + 2 \mu} \\
-		 & & \frac{3 \mu}{3 \mu + \lambda} & & \frac{\lambda}{\lambda + 3 \mu} \\
+		0 & 1  \\
+		\frac{\mu}{\mu + \lambda} & 0 & \frac{\lambda}{ \lambda + \mu} \\ 
+		 & \frac{2 \mu}{2 \mu + \lambda} & 0 & \frac{\lambda}{\lambda + 2 \mu} \\
+		 & & \frac{3 \mu}{3 \mu + \lambda} & 0 & \frac{\lambda}{\lambda + 3 \mu} \\
 		 & & & \ddots & & \ddots \\
-		 & & & & \frac{(n - 1) \mu}{(n - 1) \mu + \lambda} & & \frac{\lambda}{\lambda + (n - 1) \mu} \\
-		 & & & & & 1
+		 & & & & \frac{(n - 1) \mu}{(n - 1) \mu + \lambda} & 0 & \frac{\lambda}{\lambda + (n - 1) \mu} \\
+		 & & & & & 1 & 0
 	\end{pmatrix}
 \end{align}
-
 \end{proof}
+\begin{proof}[Cálculo] \textit{c}) i.
+Sea \(\tau \sim \Exponential(\lambda + k \mu)\) el reloj que marca el primer cambio de estado del sistema.
+Si los relojes \(T_h \sim \Exponential(\mu)\) con \(h \in \{1, \dots, k\}\) registran la duración de las tareas de los \(k\) servidores que se encuentran ocupados a tiempo \(t = 0\), y el reloj \(C \sim \Exponential(\lambda)\) avisa de la llegada de un cliente, entonces \(\tau = \min \{T_1, \dots, T_k, C\}\).
+El evento \([X_{\tau} = k + 1]\) en el cual el proceso \(\markovProcess\) pasa de \(k\) a \(k + 1\) cuando se produce un cambio de estado puede escribirse como \([\tau = C]\).
+Para calcular la probabilidad de este, nos desvíamos a mencionar un teorema sobre distribuciones exponenciales independientes que probamos en la clase práctica número 20.
 
+\begingroup
+\newcommand{\exponentialVariable}{X}
+\newcommand{\exponentialParameter}{\lambda}
+\begin{theorem}
+Supongamos \(\exponentialVariable_i \sim \Exponential(\exponentialParameter_i)\), para \(i \in \naturalnum\), son variables aleatorias independientes con \(\exponentialParameter = \sum_{i \in \naturalnum} \exponentialParameter_i < \infty\).
+Entonces la distribución de su mínimo es exponencial con parámetro \(\exponentialParameter\)
+\begin{align}
+	\min_{i \in \naturalnum} \exponentialVariable_i \sim \Exponential(\exponentialParameter)
+\end{align}
+y la ley que determina cuál de las variables \(X_i\) alcanza este valor mínimo es la medida \((\exponentialParameter_j / \exponentialParameter)_{j \in \naturalnum}\)
+\begin{align}
+	\argmin_{i \in \naturalnum} X_i \sim \left( \frac{\exponentialParameter_j}{\exponentialParameter} \right)_{j \in \naturalnum}
+\end{align}
+\end{theorem}
+\endgroup
+De este teorema se sigue \(\prob[\min \{T_1, \dots, T_k, C\} = C] = \lambda / (\lambda + k \mu)\) porque las variables exponenciales \(T_1, \dots, T_k, C\) son mutuamente independientes.
+Entonces la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente \(k\) servidores ocupados es \(\lambda / (\lambda + k \mu)\).
+\end{proof}
+\begin{proof}[Cálculo] \textit{c}) ii.
+% teorica22.pdf %
+%%%%%%%%%%%%%%%%%
+% mi salvación
+Vamos a reconstruir nuestro proceso de Markov, pero esta vez de un modo distinto.
+Seguiremos el trabajo realizado en la clase teórica número 22.
 
+Consideremos dos procesos mutuamente independientes: una cadena de Markov \((Y_m)_{m \in \naturalnum_0}\) con espacio de estados \(\stateSpace\) y matriz de transición \(\Pi\); y una sucesión de variables aleatorias iid \((Z_m)_{m \in \naturalnum}\) con distribución \(\Exponential(1)\).
+Para cada estado \(i \in \stateSpace\), escribimos su flujo de salida como \(f(i) = - q_{ii}\).
+Como este flujo siempre es positivo, para cada \(m \in \naturalnum\) podemos definir el tiempo de espera \(\tau_m = Z_m / f(Y_{m - 1})\), y resulta que su distribución es \(\Exponential(f(Y_{m - 1}))\).
+A partir de estas esperas definimos los tiempos de salto \(J_0 = 0\), \(J_m = \tau_1 + \tau_2 + \cdots + \tau_m\) para \(m \in \naturalnum\).
+Utilizando estos datos recuperamos nuestro proceso de Markov a tiempo continuo usando la fórmula \(X_t = Y_m\) para \( t \in [J_m, J_{m + 1}[\).
 
+Esta representación tiene la ventaja de desacoplar los estados y los tiempos de espera del sistema, resaltando la importancia de la matriz \(\Pi\).
 
+Desde este punto de vista, la probabilidad de que el primer cliente en arribar al sistema encuentre \(i\) servidores ocupados puede pensarse del siguiente modo.
+Los cambios en la cadena \((Y_m)_{m \in \naturalnum_0}\) dados por \(\nabla Y_m = Y_m - Y_{m - 1}\) --- que ocurren en el \(m\)--ésimo paso, a tiempo \(J_m\) --- nos indican si ha llegado un nuevo cliente: \(\nabla Y_m = 1\); o si uno de los servidores que se encontraba ocupado se ha liberado: \(\nabla Y_m = - 1\).
+Luego, el instante en el que arriba el primer cliente puede escribirse como \(C = J_M\) donde \(M \in \naturalnum\) es aleatorio y viene dado por \(M = \min \{m \in \naturalnum : \nabla Y_m = 1\}\), y el estado en el que entra el sistema cuando llega el primer cliente puede escribirse como \(X_C = X_{J_M} = Y_M\) porque \(J_M \in [J_M, J_{M + 1}[\).
+Por lo tanto, la probabilidad de que el primer cliente en arribar al sistema encuentre \(i\) servidores ocupados es igual a \(\prob(Y_M = i + 1)\).
 
+Esta representación del proceso también hace evidente cuan rígido es.
+De la definición de \(M\) se deduce \(\nabla Y_1 = \nabla Y_2 = \cdots = \nabla Y_{M - 1} = - 1\) (cuando esto tiene sentido y \(M > 1\)).
+A su vez de estos cambios se sigue que \(Y_M = i + 1\) implica \(Y_{M - 1} = i\), \(Y_{M - 2} = i + 1\), \(Y_{M - 3} = i + 2\), \dots, \(Y_{M - h} = i + h - 1\), \dots, \(Y_0 = i + M - 1\).
+Y restringida por la condición inicial \(Y_0 = k\), la ecuación \(Y_M = i + 1\) implica \(M = k - i + 1\).
+
+Dada esta sucesión de estados de la cadena \((Y_m)_{m \in \naturalnum_0}\), hacemos uso de su propiedad de Markov y de la estacionaridad de sus probabilidades de transición --- \(\Pi\) no depende de \(m \in \naturalnum_0\) --- para calcular la probabilidad de \([Y_M = i + 1]\).
+Para ser precisos escribimos \(\prob_k = \prob(\;\cdot\; | X_0 = k) = \prob(\;\cdot\; | Y_0 = k)\) y similar para los demás estados.
+Así
+\begin{align}
+	&\prob_k(Y_M = i + 1) 
+	\\
+	&=
+		\prob_k(Y_1 = k - 1, Y_2 = k - 2, \dots, Y_{k - i} = i, Y_{k - i + 1} = i + 1)
+	\\
+	&=
+		\prob_k(Y_1 = k - 1, Y_2 = k - 2, \dots, Y_{k - i} = i) \times \prob_i(Y_1 = i + 1)
+	\\
+	&=
+		\prob_k(Y_1 = k - 1) \prob_{k - 1}(Y_1 = k - 2) \cdots \prob_{i + 1}(Y_1 = i) \times \prob_i(Y_1 = i + 1)
+\end{align}
+Expresada en términos de la matriz de transición de probabilidad \(\Pi = (p_{a b})_{a,b \in \stateSpace}\), esta igualdad se lee
+\begin{align}
+	\prob_k(Y_M = i + 1)
+	&=
+		p_{k, k - 1} p_{k - 1, k - 2} \cdots p_{i + 1, 1} \times p_{i, i + 1}
+		\\
+	&= 
+		\frac{k \mu}{k \mu + \lambda} \frac{(k - 1) \mu}{(k - 1) \mu + \lambda} \cdots \frac{(i + 1) \mu}{(i + 1) \mu + \lambda} \times \frac{\lambda}{\lambda + i \mu}
+	\\
+	&= 
+		\frac{k!}{i!} \frac{ \mu}{k \mu + \lambda} \frac{\mu}{(k - 1) \mu + \lambda} \cdots \frac{\mu}{(i + 1) \mu + \lambda} \times \frac{\lambda}{\lambda + i \mu}
+	\\
+	&= 
+		\frac{k!}{i!} \frac{1}{k + \lambda / \mu} \frac{1}{(k - 1) + \lambda / \mu} \cdots \frac{1}{i + \lambda / \mu} \times \frac{\lambda}{\lambda + i \mu}
+	\\
+	&= 
+		\frac{k!}{i!} \frac{1}{(k + \lambda / \mu)^{\underline{i}}} \frac{\lambda}{\lambda + i \mu}
+	\\
+	&= 
+		\frac{k^{\underline{i}}}{(k + \lambda / \mu)^{\underline{i}}} \frac{\lambda}{\lambda + i \mu}
+\end{align}
+
+Por lo tanto, la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente \(i\) servidores ocupados es \(\displaystyle \frac{k^{\underline{i}}}{(k + \lambda / \mu)^{\underline{i}}} \frac{\lambda}{\lambda + i \mu}\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}[Cálculo] \textit{c}) iii.
+	% mi intuición me dice que es algo del optional stopping
+\end{proof}
 \endgroup
 
+% \begin{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \begin{exercise}
 Sea $(B_t)_{t \geq 0}$ un Movimiento Browniano estándar en dimensión 1.
 
@@ -373,21 +460,23 @@ Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la funció
 \begin{enumerate}[label=\alph*)]
 	\item Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
 	(Sugerencia: puede ser útil observar el \(\sup_{t \geq 0} B_t\) y el \(\inf_{t \geq 0} B_t\))
-	\item Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Exp(T_x) = + \infty\).
+	\item Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Expectation(T_x) = + \infty\).
 \end{enumerate}
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \begin{exercise}
 Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(x > 0\), \(y > 0\).
 Consideremos el stopping time \(T = T_{- y} \wedge T_x\).
 \begin{itemize}
 	\item Probar que \((B_t^2 - t)_{t \geq 0}\) es una martingala.
-	\item Probar que \(\Exp(T) = xy\)
+	\item Probar que \(\Expectation(T) = xy\)
 \end{itemize}
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \begin{exercise}
 (Este ejercicio no es obligatorio)
 
@@ -397,10 +486,11 @@ El objetivo es probar que \(\prob(B_t = a + b t \text{ para algún } t > 0) = e^
 	\item Sea \((X_t)_{t \geq 0}\) el proceso definido por \(X_t = e^{2 b B_t - 2 b^2 t}\).
 	Probar que \((X_t)_{t \geq 0}\) es una martingala.
 	\item Consideremos el stopping time \(T = \inf \{t > 0 : B_t = a + b t\}\) (donde \(T\) lo definimos como \(\infty\) si ese conjunto es vacío, es decir, si \(B_t < a + b t\) para todo \(t > 0\)).
-	Probar que \(\Exp(X_T) \characteristic_{T < \infty} = 1\).
-	\item Probar que \(\Exp(X_T \characteristic_{T < \infty}) = e^{2 a b} \prob(T < \infty)\).
+	Probar que \(\Expectation(X_T) \characteristic_{T < \infty} = 1\).
+	\item Probar que \(\Expectation(X_T \characteristic_{T < \infty}) = e^{2 a b} \prob(T < \infty)\).
 	\item Concluir que \(\prob(B_t = a + b t\text{ para algún } t > 0) = e^{- 2 a b}\).
 \end{enumerate}
 \end{exercise}
 
+% \end{}
 \end{document}
