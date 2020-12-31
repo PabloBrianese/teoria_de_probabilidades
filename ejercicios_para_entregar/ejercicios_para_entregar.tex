@@ -23,6 +23,7 @@
 \DeclareMathOperator{\Exponential}{\textnormal{Exp}}
 \DeclareMathOperator*{\argmin}{\textnormal{argmín}}
 \DeclareMathOperator{\characteristic}{\mathbbm{1}}
+\newcommand{\placeholderParameter}{-}
 \newcommand{\symmetric}{\mathbb{S}}
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\realnum}{\mathbb{R}}
@@ -404,7 +405,7 @@ A su vez de estos cambios se sigue que \(Y_M = i + 1\) implica \(Y_{M - 1} = i\)
 Y restringida por la condición inicial \(Y_0 = k\), la ecuación \(Y_M = i + 1\) implica \(M = k - i + 1\).
 
 Dada esta sucesión de estados de la cadena \((Y_m)_{m \in \naturalnum_0}\), hacemos uso de su propiedad de Markov y de la estacionaridad de sus probabilidades de transición --- \(\Pi\) no depende de \(m \in \naturalnum_0\) --- para calcular la probabilidad de \([Y_M = i + 1]\).
-Para ser precisos escribimos \(\prob_k = \prob(\;\cdot\; | X_0 = k) = \prob(\;\cdot\; | Y_0 = k)\) y similar para los demás estados.
+Para ser precisos escribimos \(\prob_k = \prob(\placeholderParameter | X_0 = k) = \prob(\placeholderParameter | Y_0 = k)\) y similar para los demás estados.
 Así
 \begin{align}
 	&\prob_k(Y_M = i + 1) 
@@ -418,11 +419,11 @@ Así
 	&=
 		\prob_k(Y_1 = k - 1) \prob_{k - 1}(Y_1 = k - 2) \cdots \prob_{i + 1}(Y_1 = i) \times \prob_i(Y_1 = i + 1)
 \end{align}
-Expresada en términos de la matriz de transición de probabilidad \(\Pi = (p_{a b})_{a,b \in \stateSpace}\), esta igualdad se lee
+Expresada en términos de la matriz de transición de probabilidad \(\Pi = (\pi_{a b})_{a,b \in \stateSpace}\), esta igualdad se lee
 \begin{align}
 	\prob_k(Y_M = i + 1)
 	&=
-		p_{k, k - 1} p_{k - 1, k - 2} \cdots p_{i + 1, 1} \times p_{i, i + 1}
+		\pi_{k, k - 1} \pi_{k - 1, k - 2} \cdots \pi_{i + 1, 1} \times \pi_{i, i + 1}
 		\\
 	&= 
 		\frac{k \mu}{k \mu + \lambda} \frac{(k - 1) \mu}{(k - 1) \mu + \lambda} \cdots \frac{(i + 1) \mu}{(i + 1) \mu + \lambda} \times \frac{\lambda}{\lambda + i \mu}
@@ -444,7 +445,66 @@ Por lo tanto, la probabilidad de que el primer cliente en arribar al sistema enc
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}[Cálculo] \textit{c}) iii.
-	% mi intuición me dice que es algo del optional stopping
+% mi intuición me dice que es algo del optional stopping
+% mi segunda hipótesis es que sale variando el estado inicial y encontrando una relación entre las distintas esperanzas.
+Sea \(\Expectation_h\) la esperanza determinada por la medida \(\prob_k\).
+Definamos como \(O\) al estado del sistema previo a la llegada del primer cliente.
+Siguiendo los razonamientos del ejercicio anterior, puede decirse que \(O = Y_{M - 1}\).
+Eso hace de \(O\) una variable aleatoria medible según la \(\sigma\)--álgebra de la cadena \((Y_m)_{m \in \naturalnum_0}\), y permite determinar el valor de \(O\) usando los caminos trazados por \((Y_m)_{m \in \naturalnum_0}\).
+Escribamos \(e_h = \Expectation_h(O)\), \(h \in \{0, 1, \dots, n\}\), para analizar estos valores como una sucesión.
+Al final, calcularemos estas esperanzas de forma indirecta resolviendo una relación de recurrencia.
+Como valores de borde tenemos \(e_0 = 0\) por un lado y \(e_n = e_{n - 1}\) por el otro.
+La primera ecuación se debe a que cuando el estado inicial del sistema tiene a todos los servidores ociosos la única posibilidad de cambio es la llegada de un cliente, y al llegar este al sistema encontrará 0 servidores ocupados.
+La segunda ecuación se debe a la propiedad de Markov de la cadena \((Y_m)_{m \in \naturalnum_0}\), y a que \(\pi_{n, n - 1} = 1\).
+Estas dos informaciones nos permiten deducir \(\Expectation_n(O) = \Expectation_{n - 1}(O) \pi_{n, n - 1} = \Expectation_{n - 1}(O)\).
+En los casos intermedios sucede lo siguiente.
+Fijamos \(h \in \{1, 2, \dots, n - 1\}\).
+Descomponemos \(e_h\) en una suma de dos términos
+\begin{align}
+	\Expectation_h(O)
+	&=
+	\Expectation_h(O \characteristic_{Y_1 = h + 1})
+	+ \Expectation_h(O \characteristic_{Y_1 = h - 1})
+\end{align}
+En el evento que \(Y_0 = h, Y_1 = h + 1\), sucede que \(O = h\).
+Entonces 
+\begin{align}
+	\Expectation_h(O \characteristic_{Y_1 = h + 1}) 
+	= 
+	\Expectation_h(h \characteristic_{Y_1 = h + 1}) 
+	= 
+	h \prob_h(Y_1 = h + 1) 
+	= 
+	h \pi_{h, h + 1}
+\end{align}
+Por otro lado, si desagregamos el segundo término usando la propiedad de Markov y la estacionaridad de \(\Pi\)
+\begin{align}
+	&\Expectation_h(O \characteristic_{Y_1 = h - 1}) 
+	\\
+	&= 
+		\sum_{o = 0}^{h - 1} o \cdot \prob_h(Y_1 = h - 1, Y_2 = h - 2, \dots, Y_{h - o} = o, Y_{h - o + 1} = o + 1)
+	\\
+	&=
+		\sum_{o = 0}^{h - 1} o \cdot \prob_h(Y_1 = h - 1) \prob_{h - 1}(Y_1 = h - 2, \dots, Y_{h - o - 1} = o, Y_{h - o} = o + 1)
+	\\
+	&=
+		\prob_h(Y_1 = h - 1)
+	\\
+		&\hspace{1em} \times \sum_{o = 0}^{h - 1} o \cdot \prob_{h - 1}(Y_1 = h - 2, \dots, Y_{h - o - 1} = o, Y_{h - o} = o + 1)
+	\\
+	&=
+		\prob_h(Y_1 = h - 1) \Expectation_{h - 1}(O)
+	\\
+	&=
+		\pi_{h, h - 1} e_{h - 1}
+\end{align}
+
+Por lo tanto \(e_h = e_{h - 1} \pi_{h, h - 1} + h \pi_{h, h + 1}\).
+Es decir
+\begin{align}
+	e_h = e_{h - 1} \frac{\mu}{\lambda / h + \mu} + \frac{\lambda}{\lambda / h + \mu}
+\end{align}
+Esta fórmula nos permite calcular las esperanzas que queríamos.
 \end{proof}
 \endgroup
 
