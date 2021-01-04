@@ -42,6 +42,7 @@
 \begin{document}
 \maketitle
 
+% \begin{}
 \begingroup
 % Group variables %
 %%%%%%%%%%%%%%%%%%%
@@ -507,8 +508,7 @@ Es decir
 Esta fórmula nos permite calcular las esperanzas que queríamos.
 \end{proof}
 \endgroup
-
-% \begin{}
+% \end{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \begin{exercise}
@@ -516,14 +516,21 @@ Sea $(B_t)_{t \geq 0}$ un Movimiento Browniano estándar en dimensión 1.
 
 Para cada $x \in \realnum$ sea $T_x = \inf \{t \geq 0 : B_t = x\}$.
 (Notar que \(T_0 = 0\) a.s.)
-Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la función de distribución acumuladad de \(T_x\), respectivamente.
+Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la función de distribución acumulada de \(T_x\), respectivamente.
 \begin{enumerate}[label=\alph*)]
-	\item Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
+	\item \label{exercise:3.a)} Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
 	(Sugerencia: puede ser útil observar el \(\sup_{t \geq 0} B_t\) y el \(\inf_{t \geq 0} B_t\))
+	\item Probar que \(\prob(T_x \leq t) = \prob(\abs{B_t} \geq \abs{x}) = 2 - 2 F_{B_1} \left( \abs{x} / \sqrt{t} \right)\) para todo \(x \in \realnum\) y para todo \(t \geq 0\).
+	(Sugerencia: Principio de Reflexión)
 	\item Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Expectation(T_x) = + \infty\).
 \end{enumerate}
 \end{exercise}
+\begin{proof} \ref{exercise:3.a)}
 
+\end{proof}
+
+
+% \begin{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \begin{exercise}
