@@ -577,8 +577,10 @@ Por lo tanto \(T_x(\omega) \leq t_x < \infty\) para todo \(x \in \realnum\) y pa
 %%%%%%%%%%%%%%%%%%%
 \begin{proof} \ref{exercise:3.b)}
 La Propiedad 1.\textit{i}) de las notas sobre el Movimiento Browniano dice
-\begin{property}[1]
-\label{NotasMovimientoBrowniano_property:1}
+% Notas Movimiento Browniano.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{property}[1.\textit{i}]
+\label{NotasMovimientoBrowniano_property:1.i)}
 Sea \((\brownian_t)_{t \geq 0}\) un movimiento Browniano estándar en \(\realnum^d\).
 A partir de este definimos \(\wienerProcess = (A \brownian_t)_{t \geq 0}\) con \(A \in \realnum^{n \times n}\) matriz ortogonal (o sea \(A \transpose{A} = \identity\)).
 Entonces, el proceso \(\wienerProcess\) es MBE en \(\realnum^d\).
@@ -604,30 +606,41 @@ La segunda ecuación es verdadera porque la identidad de las leyes y la continui
 	&= 
 	\prob(\brownian_t \geq \abs{x}) + \prob(\brownian_t \geq \abs{x})
 \end{align}
-
+Juntas, ambas consecuencias de la invarianza por rotaciones de la familia de los MBE nos sugienren probar la igualdad
+\begin{align}
+	\prob(T_y \leq t)
+	=
+	2 \prob(B_ t \geq y)
+\end{align}
+donde \(y = \abs{x}\).
 
 Por otro lado, el Principio de Reflexión probado en las notas sobre el Movimiento Browniano nos dice:
 % Notas Movimiento Browniano.pdf %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tengo que cambiar este principio de reflexión por el otro, menos pulenta
 \begin{theorem}[Principio de Reflexión]
 \label{theorem:ReflexionPrincipleForBrownianMotion}
 Sea \(\brownianProcess\) MBE en \(\realnum^d\) y sea \(T\) un tiempo de parada finito (es decir: \(\prob(T < \infty) = 1\)).
 Entonces, el proceso definido por \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T) + (2 \brownian_T - \brownian_t) \characteristic(t > T)\) para \(t \geq 0\), es también un MBE (se lo llama \emph{movimiento Browniano reflejado en \(T\)}).
 \end{theorem}
-En nuestro caso, probamos la hipótesis \(\prob(T_x < \infty) = 1\) en el ejercicio \ref{exercise:3.a)}.
-Luego \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T_x) + (2 \brownian_{T_x} - \brownian_t) \characteristic(t > T_x)\) con \(t \geq 0\) es MBE.
+En nuestro caso, probamos la hipótesis \(\prob(T_y < \infty) = 1\) en el ejercicio \ref{exercise:3.a)}.
+Luego \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T_y) + (2 \brownian_{T_y} - \brownian_t) \characteristic(t > T_y)\) con \(t \geq 0\) es MBE.
 Esta reflexión del proceso es relevante porque podemos probar 
 \begin{align}
-	[T_x \leq t] 
+	[T_y \leq t] 
 	= 
-	[\brownian_t \geq \abs{x}] \cup \left[ \reflectedBrownian_t > \abs{x} \right]
+	[\brownian_t \geq y] \cup \left[ \reflectedBrownian_t > y \right]
 \end{align}
 Para hacerlo observemos
+
+
 \begin{align}
-	[T_x \leq t]
+	[T_y \leq t]
 	&=
-	[T_x \leq t, B_t \geq 0]
+	[T_y \leq t, B_t \geq y] \sqcup [T_y \leq t, B_t < y]
 \end{align}
+La continuidad de las trayectorias del MBE \(\brownianProcess\) hace que, al comenzar en \(\brownian_0 = 0\) y superar a \(y \geq 0\) al llegar a \(B_t \geq y\), necesariamente alcance el valor \(y\) en el intervalo de tiempo \([0, t]\).
+Luego \([T_y \leq t, B_t \geq y] = [B_t \geq y]\).
 
 \end{proof}
 \endgroup
