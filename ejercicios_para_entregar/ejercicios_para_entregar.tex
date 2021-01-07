@@ -3,7 +3,6 @@
 %%%%%%%%
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-lcroman]{babel}
-\usepackage{enumitem}
 % Images %
 %%%%%%%%%%
 \usepackage{graphicx}
@@ -21,6 +20,7 @@
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
 \DeclareMathOperator{\Exponential}{\textnormal{Exp}}
+\DeclareMathOperator{\normal}{N}
 \DeclareMathOperator*{\argmin}{\textnormal{argmín}}
 \DeclareMathOperator{\characteristic}{\mathbbm{1}}
 \DeclareMathOperator{\identity}{\textnormal{Id}}
@@ -38,6 +38,11 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}
 \newtheorem{exercise}{Ejercicio}
+% Lists %
+%%%%%%%%%
+\usepackage{enumitem}
+% Counters %
+%%%%%%%%%%%%
 
 \title{Ejercicios para entregar}
 \author{Pablo Brianese}
@@ -56,7 +61,7 @@ Consideremos un sistema que tiene un único servidor, que atiende a tasa $\mu > 
 Sea $X_t$ la cantidad de clientes que hay en la cola a tiempo $t$, con $t \geq 0$.
 Notar que $\queueProcess$ es un proceso de Markov a tiempo continuo.
 (Este modelo, llamado $M/ M / 1$, lo hemos charlado en la clase práctica 20 y 23).
-\begin{enumerate}[label=\alph*)]
+\begin{enumerate}[label=\alph*), ref=\theexercise.\labelenumi]
     \item Probar que el proceso es recurrente positivo si y sólo si $\lambda < \mu$.
 	Con lo cual, empezando con la cola vacía, el tiempo medio que tarda la cola en volver a vaciarse es finito si y sólo si $\lambda < \mu$.
 	\item Asumiendo $\lambda < \mu$, calcular la proporción (asintótica) de tiempo que la cola está vacía.
@@ -280,11 +285,11 @@ Observemos que $\markovProcess$ es un proceso de Markov a tiempo continuo, donde
 \includegraphics[width=0.75\textwidth]{diagrama_de_las_tasas_de_transicion}
 \end{center}
 para ciertos valores $\alpha_1, \alpha_2, \dots, \alpha_n$.
-\begin{enumerate}
+\begin{enumerate}[ref=\theexercise.\labelenumi]
 	\item Mostrar que \(\alpha_i = i \mu\) para todo \(1 \leq i \leq n\).
 	\item Escribir la matriz de tasas de transición \(Q\) y la matriz de probabilidades de transición asociadas.
 	\item Supongamos que \(X_0 = k\) a.s., con \(k \in \{0, 1, \dots, n - 1\}\) (es decir, a tiempo inicial hay \(k\) servidores ocupados).
-	\begin{enumerate}[label= \roman*.]
+	\begin{enumerate}[label= \roman*., ref=\theexercise.\labelenumi.\labelenumii]
 		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $k$ servidores ocupados (es decir, que al instante en el que arriba el primer cliente, el proceso $\markovProcess$ pase de $k$ a $k + 1$).
 		\item Hallar la probabilidad de que el primer cliente en arribar al sistema encuentre exactamente $i$ servidores ocupados, con $i \in \{0, 1, \dots, k\}$.
 		(Pensar primero el caso $i = k - 1$, $i = k - 2$, ect.)
@@ -518,6 +523,7 @@ Esta fórmula nos permite calcular las esperanzas que queríamos.
 \newcommand{\events}{\mathcal{F}}
 \newcommand{\brownian}{B}
 \newcommand{\brownianProcess}{(\brownian_t)_{t \geq 0}}
+\newcommand{\reflectedBrownian}{\widetilde{\brownian}}
 \newcommand{\wiener}{W}
 \newcommand{\wienerProcess}{(\wiener_t)_{t \geq 0}}
 \begin{exercise}
@@ -526,7 +532,7 @@ Sea $\brownianProcess$ un Movimiento Browniano Estándar (abreviado MBE) en dime
 Para cada $x \in \realnum$ sea $T_x = \inf \{t \geq 0 : \brownian_t = x\}$.
 (Notar que \(T_0 = 0\) a.s.)
 Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la función de distribución acumulada de \(T_x\), respectivamente.
-\begin{enumerate}[label=\alph*)]
+\begin{enumerate}[label=\alph*), ref=\theexercise.\labelenumi]
 	\item \label{exercise:3.a)} 
 	Probar que \(\prob(T_x < + \infty) = 1\) para todo \(x \in \realnum\).
 	(Sugerencia: puede ser útil observar el \(\sup_{t \geq 0} \brownian_t\) y el \(\inf_{t \geq 0} \brownian_t\))
@@ -570,6 +576,58 @@ Por lo tanto \(T_x(\omega) \leq t_x < \infty\) para todo \(x \in \realnum\) y pa
 \end{proof}
 %%%%%%%%%%%%%%%%%%%
 \begin{proof} \ref{exercise:3.b)}
+La Propiedad 1.\textit{i}) de las notas sobre el Movimiento Browniano dice
+\begin{property}[1]
+\label{NotasMovimientoBrowniano_property:1}
+Sea \((\brownian_t)_{t \geq 0}\) un movimiento Browniano estándar en \(\realnum^d\).
+A partir de este definimos \(\wienerProcess = (A \brownian_t)_{t \geq 0}\) con \(A \in \realnum^{n \times n}\) matriz ortogonal (o sea \(A \transpose{A} = \identity\)).
+Entonces, el proceso \(\wienerProcess\) es MBE en \(\realnum^d\).
+En particular, eligiendo \(A = - \identity\) nos queda que \((- \brownian_t)_{t \geq 0}\) es MBE.
+\end{property}
+Para nosotros es importante su corolario, según el cual las leyes que rigen a \(\brownianProcess\) y a \((- \brownian_t)_{t \geq 0}\) son idénticas.
+De este se siguen \(\prob(T_x \leq t) = \prob(T_{\abs{x}} \leq t)\) y \(\prob(\abs{\brownian_t} \geq \abs{x}) = 2 \prob(\brownian_t \geq \abs{x})\).
+El caso no trivial \(x < 0\) de la primera ecuación se satisface porque el corolario implica
+\begin{align}
+	\prob(\inf\{s : B_s = x\} \leq t)
+	&=
+	\prob(\inf\{s : - B_s = \abs{x}\} \leq t)
+	\\
+	&=
+	\prob(\inf\{s : B_s = \abs{x}\} \leq t)
+\end{align}
+La segunda ecuación es verdadera porque la identidad de las leyes y la continuidad absoluta de la variable \(B_t \sim \normal (0, t)\) que se deriva de la definición del MBE implican
+\begin{align}
+	\prob(\abs{\brownian_t} \geq \abs{x})
+	&=
+	\prob(\brownian_t \geq \abs{x}) + \prob(- \brownian_t \geq \abs{x})
+	\\
+	&= 
+	\prob(\brownian_t \geq \abs{x}) + \prob(\brownian_t \geq \abs{x})
+\end{align}
+
+
+Por otro lado, el Principio de Reflexión probado en las notas sobre el Movimiento Browniano nos dice:
+% Notas Movimiento Browniano.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Principio de Reflexión]
+\label{theorem:ReflexionPrincipleForBrownianMotion}
+Sea \(\brownianProcess\) MBE en \(\realnum^d\) y sea \(T\) un tiempo de parada finito (es decir: \(\prob(T < \infty) = 1\)).
+Entonces, el proceso definido por \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T) + (2 \brownian_T - \brownian_t) \characteristic(t > T)\) para \(t \geq 0\), es también un MBE (se lo llama \emph{movimiento Browniano reflejado en \(T\)}).
+\end{theorem}
+En nuestro caso, probamos la hipótesis \(\prob(T_x < \infty) = 1\) en el ejercicio \ref{exercise:3.a)}.
+Luego \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T_x) + (2 \brownian_{T_x} - \brownian_t) \characteristic(t > T_x)\) con \(t \geq 0\) es MBE.
+Esta reflexión del proceso es relevante porque podemos probar 
+\begin{align}
+	[T_x \leq t] 
+	= 
+	[\brownian_t \geq \abs{x}] \cup \left[ \reflectedBrownian_t > \abs{x} \right]
+\end{align}
+Para hacerlo observemos
+\begin{align}
+	[T_x \leq t]
+	&=
+	[T_x \leq t, B_t \geq 0]
+\end{align}
 
 \end{proof}
 \endgroup
@@ -580,10 +638,10 @@ Por lo tanto \(T_x(\omega) \leq t_x < \infty\) para todo \(x \in \realnum\) y pa
 \begin{exercise}
 Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(x > 0\), \(y > 0\).
 Consideremos el stopping time \(T = T_{- y} \wedge T_x\).
-\begin{itemize}
+\begin{enumerate}[ref=\theexercise.\labelenumi]
 	\item Probar que \((B_t^2 - t)_{t \geq 0}\) es una martingala.
 	\item Probar que \(\Expectation(T) = xy\)
-\end{itemize}
+\end{enumerate}
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -593,7 +651,7 @@ Consideremos el stopping time \(T = T_{- y} \wedge T_x\).
 
 Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(a > 0\), y \(b > 0\).
 El objetivo es probar que \(\prob(B_t = a + b t \text{ para algún } t > 0) = e^{- 2 a b}\).
-\begin{enumerate}[label=\alph*)]
+\begin{enumerate}[label=\alph*), ref=\theexercise.\alph*)]
 	\item Sea \((X_t)_{t \geq 0}\) el proceso definido por \(X_t = e^{2 b B_t - 2 b^2 t}\).
 	Probar que \((X_t)_{t \geq 0}\) es una martingala.
 	\item Consideremos el stopping time \(T = \inf \{t > 0 : B_t = a + b t\}\) (donde \(T\) lo definimos como \(\infty\) si ese conjunto es vacío, es decir, si \(B_t < a + b t\) para todo \(t > 0\)).
