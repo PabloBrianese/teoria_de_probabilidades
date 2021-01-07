@@ -34,6 +34,7 @@
 %%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lema}
+\newtheorem{corollary}{Corolario}
 \newtheorem{property}{Propiedad}
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}
@@ -49,6 +50,7 @@
 
 \begin{document}
 \maketitle
+
 
 % \begin{}
 \begingroup
@@ -539,7 +541,9 @@ Denotamos con \(f_{T_x}\) y \(F_{T_x}\) a la función de densidad y a la funció
 	\item \label{exercise:3.b)}
 	Probar que \(\prob(T_x \leq t) = \prob(\abs{\brownian_t} \geq \abs{x}) = 2 - 2 F_{\brownian_1} \left( \abs{x} / \sqrt{t} \right)\) para todo \(x \in \realnum\) y para todo \(t \geq 0\).
 	(Sugerencia: Principio de Reflexión)
-	\item Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Expectation(T_x) = + \infty\).
+	\item 
+	\label{exercise:3.c)}
+	Para cada \(x \in \realnum \setminus \{0\}\), calcular \(f_{T_x}\) y verificar que \(\Expectation(T_x) = + \infty\).
 \end{enumerate}
 \end{exercise}
 \begin{proof} \ref{exercise:3.a)}
@@ -590,14 +594,14 @@ Para nosotros es importante su corolario, según el cual las leyes que rigen a \
 De este se siguen \(\prob(T_x \leq t) = \prob(T_{\abs{x}} \leq t)\) y \(\prob(\abs{\brownian_t} \geq \abs{x}) = 2 \prob(\brownian_t \geq \abs{x})\).
 El caso no trivial \(x < 0\) de la primera ecuación se satisface porque el corolario implica
 \begin{align}
-	\prob(\inf\{s : B_s = x\} \leq t)
+	\prob(\inf\{s : \brownian_s = x\} \leq t)
 	&=
-	\prob(\inf\{s : - B_s = \abs{x}\} \leq t)
+	\prob(\inf\{s : - \brownian_s = \abs{x}\} \leq t)
 	\\
 	&=
-	\prob(\inf\{s : B_s = \abs{x}\} \leq t)
+	\prob(\inf\{s : \brownian_s = \abs{x}\} \leq t)
 \end{align}
-La segunda ecuación es verdadera porque la identidad de las leyes y la continuidad absoluta de la variable \(B_t \sim \normal (0, t)\) que se deriva de la definición del MBE implican
+La segunda ecuación es verdadera porque la identidad de las leyes y la continuidad absoluta de la variable \(\brownian_t \sim \normal (0, t)\) que se deriva de la definición del MBE implican
 \begin{align}
 	\prob(\abs{\brownian_t} \geq \abs{x})
 	&=
@@ -606,41 +610,51 @@ La segunda ecuación es verdadera porque la identidad de las leyes y la continui
 	&= 
 	\prob(\brownian_t \geq \abs{x}) + \prob(\brownian_t \geq \abs{x})
 \end{align}
-Juntas, ambas consecuencias de la invarianza por rotaciones de la familia de los MBE nos sugienren probar la igualdad
+Juntas, ambas consecuencias de la invarianza por rotaciones de la familia de los MBE nos sugieren fijar \(y = \abs{x}\) y probar la igualdad
 \begin{align}
 	\prob(T_y \leq t)
 	=
-	2 \prob(B_ t \geq y)
+	2 \prob(\brownian_t \geq y)
 \end{align}
-donde \(y = \abs{x}\).
 
-Por otro lado, el Principio de Reflexión probado en las notas sobre el Movimiento Browniano nos dice:
+Pensando que las trayectorias que han alcanzado el valor \(y\) antes de tiempo \(t\) se parten en dos partes iguales según superen o no el valor \(y\) a tiempo \(t\), resaltamos la ecuación
+\begin{align}
+	\prob(T_y \leq t)
+	&=
+	\prob(T_y \leq t, \brownian_t \geq y) + \prob(T_y \leq t, \brownian_t < y)
+\end{align}
+La continuidad de las trayectorias del MBE \(\brownianProcess\) hace que, al comenzar en \(\brownian_0 = 0\) y superar a \(y \geq 0\) al llegar a \(\brownian_t \geq y\), necesariamente se alcance el valor \(y\) en el intervalo de tiempo \([0, t]\).
+Luego \(\prob(T_y \leq t, \brownian_t \geq y) = \prob(\brownian_t \geq y)\).
+Esta misma continuidad implica que alcanzar el valor \(y \geq 0\) antes de tiempo \(t\) es equivalente a que el supremo \(S_t\) supere al valor \(y\).
+Luego \(\prob(T_y {\leq} t, \brownian_t {<} y) = \prob(S_t {\geq} t, \brownian_t {<} y)\).
+Por otro lado, la continuidad absoluta de la variable \(\brownian_t \sim N(0, t)\) implica \(\prob(S_t \geq y, \brownian_t < y) = \prob(S_t \geq y, \brownian_t \leq y)\).
+Finalmente, el Principio de Reflexión pequeño probado en las notas sobre el Movimiento Browniano nos prueba que \(\prob(S_t \geq y, \brownian_t \leq y) = \prob(\brownian_t \geq y)\).
 % Notas Movimiento Browniano.pdf %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tengo que cambiar este principio de reflexión por el otro, menos pulenta
-\begin{theorem}[Principio de Reflexión]
-\label{theorem:ReflexionPrincipleForBrownianMotion}
-Sea \(\brownianProcess\) MBE en \(\realnum^d\) y sea \(T\) un tiempo de parada finito (es decir: \(\prob(T < \infty) = 1\)).
-Entonces, el proceso definido por \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T) + (2 \brownian_T - \brownian_t) \characteristic(t > T)\) para \(t \geq 0\), es también un MBE (se lo llama \emph{movimiento Browniano reflejado en \(T\)}).
-\end{theorem}
-En nuestro caso, probamos la hipótesis \(\prob(T_y < \infty) = 1\) en el ejercicio \ref{exercise:3.a)}.
-Luego \(\reflectedBrownian_t = \brownian_t \characteristic(t \leq T_y) + (2 \brownian_{T_y} - \brownian_t) \characteristic(t > T_y)\) con \(t \geq 0\) es MBE.
-Esta reflexión del proceso es relevante porque podemos probar 
+\begin{corollary}[Principio de Reflexión pequeño]
+\label{corollary:SmallReflectionPrincipleForBrownianMotion}
+Sea \(\brownianProcess\) MBE en \(\realnum\), sean \(a, b \in \realnum\) con \(a \leq b\) y \(b > 0\).
+Sea \(S_t = \sup_{0 \leq s \leq t} \brownian_s\).
+Entonces, para todo \(t \geq 0\) vale que \(\prob(S_t \geq b, \brownian_t \leq a) = \prob(\brownian_t \geq 2 b - a)\).
+\end{corollary}
+Estas observaciones bastan para decir que
 \begin{align}
-	[T_y \leq t] 
-	= 
-	[\brownian_t \geq y] \cup \left[ \reflectedBrownian_t > y \right]
+	\prob(T_x \leq t)
+	=
+	\prob(T_y \leq t)
+	=
+	2 \prob(\brownian_t \geq y)
+	=
+	\prob(\abs{\brownian_t} \geq \abs{x})
 \end{align}
-Para hacerlo observemos
 
-
-\begin{align}
-	[T_y \leq t]
-	&=
-	[T_y \leq t, B_t \geq y] \sqcup [T_y \leq t, B_t < y]
-\end{align}
-La continuidad de las trayectorias del MBE \(\brownianProcess\) hace que, al comenzar en \(\brownian_0 = 0\) y superar a \(y \geq 0\) al llegar a \(B_t \geq y\), necesariamente alcance el valor \(y\) en el intervalo de tiempo \([0, t]\).
-Luego \([T_y \leq t, B_t \geq y] = [B_t \geq y]\).
+Para cerrar observamos que las distribuciones de \(\brownian_t\) y de \(\sqrt{t} \brownian_1\) son idénticas porque \(\brownian_t \sim \normal(0, t)\).
+En consecuencia \(2 \prob(\brownian_t \geq y) = 2 \prob \left( \brownian_1 \geq y / \sqrt{t} \right) = 2 \left(1 - \prob \left(\brownian_1 \leq y / \sqrt{t} \right)\right)\).
+De aquí se desprende la fórmula \(\prob(\abs{\brownian_t} \geq \abs{x}) = 2 - 2 F_{\brownian_1} \left( \abs{x} / \sqrt{t} \right)\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+\ref{exercise:3.c)}
 
 \end{proof}
 \endgroup
