@@ -21,6 +21,7 @@
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
 \DeclareMathOperator{\Exponential}{\textnormal{Exp}}
 \DeclareMathOperator{\normal}{N}
+\DeclareMathOperator{\PhiDistribution}{\Phi}
 \DeclareMathOperator*{\argmin}{\textnormal{argmín}}
 \DeclareMathOperator{\characteristic}{\mathbbm{1}}
 \DeclareMathOperator{\identity}{\textnormal{Id}}
@@ -617,6 +618,7 @@ Juntas, ambas consecuencias de la invarianza por rotaciones de la familia de los
 	2 \prob(\brownian_t \geq y)
 \end{align}
 
+% Este párrafo merece un dibujito 
 Pensando que las trayectorias que han alcanzado el valor \(y\) antes de tiempo \(t\) se parten en dos partes iguales según superen o no el valor \(y\) a tiempo \(t\), resaltamos la ecuación
 \begin{align}
 	\prob(T_y \leq t)
@@ -648,14 +650,108 @@ Estas observaciones bastan para decir que
 	\prob(\abs{\brownian_t} \geq \abs{x})
 \end{align}
 
-Para cerrar observamos que las distribuciones de \(\brownian_t\) y de \(\sqrt{t} \brownian_1\) son idénticas porque \(\brownian_t \sim \normal(0, t)\).
+Para cerrar observamos que las distribuciones de \(\brownian_t\) y de \(\sqrt{t} \brownian_1\) son idénticas porque \(\brownian_t \sim \normal(0, t)\) y \(\brownian_1 \sim \normal(0, 1)\).
 En consecuencia \(2 \prob(\brownian_t \geq y) = 2 \prob \left( \brownian_1 \geq y / \sqrt{t} \right) = 2 \left(1 - \prob \left(\brownian_1 \leq y / \sqrt{t} \right)\right)\).
-De aquí se desprende la fórmula \(\prob(\abs{\brownian_t} \geq \abs{x}) = 2 - 2 F_{\brownian_1} \left( \abs{x} / \sqrt{t} \right)\).
+De aquí se desprende la fórmula \(\prob(\abs{\brownian_t} \geq \abs{x}) = 2 - 2 F_{\brownian_1} \left( \abs{x} / \sqrt{t} \right)\), donde \(F_{\brownian_1} = \PhiDistribution\) es la función de distribución acumulada de la distribución normal estándar sobre \(\realnum\).
+Por las simetrías de \(\PhiDistribution\), podemos decir que \(1 - \PhiDistribution \left( \abs{x} / \sqrt{t} \right) = \PhiDistribution \left( - \abs{x} / \sqrt{t} \right)\) y concluir
+\begin{align}
+	\prob(T_x \leq t)
+	=
+	2 \PhiDistribution \left( - \frac{\abs{x}}{\sqrt{t}} \right)
+\end{align}
+
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}
 \ref{exercise:3.c)}
+Tenemos que calcular \(f_{T_x} = \left(F_{T_x}\right)'\).
+Escribimos \(\abs{x} = y\), como antes, y abreviamos \(f = f_{T_x}\), \(F = F_{T_x}\).
+Por el resultado del ejercico \ref{exercise:3.b)} la función de distribución acumulada es \(F{(t)} = \prob(T_x \leq t) = 2 \PhiDistribution \left(- y / \sqrt{t} \right)\), y la función de densidad de probabilidad es \(f{(t)} = (\dd / \dd t) 2 \PhiDistribution \left(- y / \sqrt{t} \right)\).
+Definimos \(\tau = y / \sqrt{t}\), y calculamos 
+\begin{align}
+	\frac{\dd \tau}{\dd t} 
+	= 
+	\frac{- y}{2 t^{3 / 2}} 
+	= 
+	\frac{- y^3}{2 y^2 \sqrt{t}^3}
+	=
+	\frac{- \tau^3}{2 y^2}
+\end{align}
+La regla de la cadena nos permite identificar a la función de densidad de probabilidad
+\begin{align}
+	f 
+	= 
+	2 \frac{\dd}{\dd t} \Phi(- \tau)
+	=
+	2 \phi(- \tau) \frac{\tau^3}{2 y^2}
+	=
+	\frac{\tau^3}{y^2} \phi(\tau)
+\end{align}
+donde \(\phi\) es la densidad de probabilidad de la distribución normal estándar en \(\realnum\) (una función simétrica en el sentido \(\phi \circ (- \identity) = \phi\)).
 
+En cuanto a la esperanza \(\Expectation(T_x)\), esta puede calcularse como \(\int_0^{\infty} t f(t) \dd t\).
+Por una parte \(t = \sqrt{t}^2 = y^2 / \tau^2\), y ya tenemos una fórmula para \(f\).
+Entonces
+\begin{align}
+	t f(t)
+	=
+	\frac{y^2}{\tau^2} \frac{\tau^3}{y^2} \phi(\tau)
+	=
+	\tau \phi(\tau)	
+\end{align}
+Por otra parte, una nueva consecuencia de la regla de la cadena es
+\begin{align}
+	\dd t
+	=
+	\frac{\dd t}{\dd \tau} \dd \tau
+	=
+	\left( \frac{\dd}{\dd \tau} \frac{y^2}{\tau^2} \right) \dd \tau
+	=
+	\frac{- 2 y^2}{\tau^3} \dd \tau
+\end{align}
+Juntando ambas ecuaciones llegamos a
+\begin{align}
+	t f(t) \dd t
+	=
+	\tau \phi(\tau) \left( \frac{- 2 y^2}{\tau^3} \right) \dd \tau
+	=
+	- 2 y^2 \frac{\phi(\tau)}{\tau^2} \dd \tau
+\end{align}
+Si nos detenemos un momento vemos que \(\tau\) invierte el orden de \(t\), dejando \(\tau(0) = \infty\) y \(\tau(\infty) = 0\).
+Por lo tanto
+\begin{align}
+	\int\limits_0^{\infty} t f(t) \dd t
+	=
+	\int\limits_{\infty}^0 - 2 y^2 \frac{\dd \tau}{\tau^2}
+	=
+	2 y^2 \int\limits_0^{\infty} \frac{\phi(\tau)}{\tau^2} \dd \tau
+\end{align}
+Esta ecuación es fatal, e implica que \(\Expectation(T_x) = \infty\).
+Para probarlo, truncamos la integral de la derecha a distancia \(\varepsilon > 0\) del origen y usamos que \(\phi, \tau^{- 2}\) crecen cuando \(\tau \rightarrow 0\).
+Obtenemos la cota
+\begin{align}
+	\int\limits_0^{\infty} \frac{\phi(\tau)}{\tau^2} \dd \tau
+	\geq
+	\int\limits_0^{\varepsilon} \frac{\phi(\tau)}{\tau^2} \dd \tau
+	\geq
+	\int\limits_0^{\varepsilon} \frac{\phi(\varepsilon)}{\varepsilon^2} \dd \tau
+	\geq
+	\varepsilon \frac{\phi(\varepsilon)}{\varepsilon^2}
+	\geq
+	\frac{\phi(\varepsilon)}{\varepsilon}
+\end{align}
+El límite \( \lim_{\varepsilon \rightarrow 0}\phi(\varepsilon) / \varepsilon = \infty\) puede deducirse porque \(\phi(\varepsilon) \rightarrow 1 / \sqrt{2 \pi}\) y \(1 / \varepsilon \rightarrow \infty\) cuando \(\varepsilon \rightarrow 0\).
+Por lo tanto, siendo que para todo \(\varepsilon > 0\)
+\begin{align}
+	\Expectation(T_x)
+	= 
+	\int\limits_0^{\infty} t f(t) \dd t
+	=
+	2 y^2 \int\limits_0^{\infty} \frac{\phi(\tau)}{\tau^2} \dd \tau
+	\geq
+	2 y^2 \frac{\phi(\varepsilon)}{\varepsilon}
+\end{align}
+concluimos \(\Expectation(T_x) = \infty\).
 \end{proof}
 \endgroup
 
