@@ -15,10 +15,13 @@
 \usepackage{amssymb}
 \usepackage{physics}
 \usepackage{bbm}
+\usepackage{mathrsfs}
 % Math symbols %
 %%%%%%%%%%%%%%%%
+\DeclareMathOperator{\borel}{\mathscr{B}}
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
+\DeclareMathOperator{\Variance}{\mathbb{V}}
 \DeclareMathOperator{\Exponential}{\textnormal{Exp}}
 \DeclareMathOperator{\normal}{N}
 \DeclareMathOperator{\PhiDistribution}{\Phi}
@@ -31,6 +34,9 @@
 \newcommand{\realnum}{\mathbb{R}}
 \newcommand{\almostSurely}{\textnormal{ctp}}
 \newcommand{\transpose}[1]{#1^T}
+\newcommand{\brownian}{B}
+\newcommand{\wiener}{W}
+\newcommand{\events}{\mathcal{F}}
 % Math environments %
 %%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Teorema}
@@ -87,7 +93,7 @@ Comezamos analizando este proceso como lo hicimos en la clase práctica número 
 
 % Usaremos los siguientes lemas sobre la distribución exponencial:
 % \begin{enumerate}
-% 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s | X > s) = \prob(X > t)\).
+% 	\item Si \(X \sim \Exponential(\lambda)\), entonces \(\prob(X > t + s \mid X > s) = \prob(X > t)\).
 % 	\item Si \(\{X_i\}_{i \in \naturalnum_0}\) son v.a. independientes con distribuciones \(X_i \sim \Exponential(\lambda_i)\) tales que \(\sum_{i \in \naturalnum_0} \lambda_i\), entonces
 % 	\begin{itemize}
 % 		\item \(\min_{i \in \naturalnum_0} X_i \sim \Exponential(\lambda)\) con \(\lambda = \sum_{i \in \naturalnum_0} \lambda_i\)
@@ -417,7 +423,7 @@ A su vez de estos cambios se sigue que \(Y_M = i + 1\) implica \(Y_{M - 1} = i\)
 Y restringida por la condición inicial \(Y_0 = k\), la ecuación \(Y_M = i + 1\) implica \(M = k - i + 1\).
 
 Dada esta sucesión de estados de la cadena \((Y_m)_{m \in \naturalnum_0}\), hacemos uso de su propiedad de Markov y de la estacionaridad de sus probabilidades de transición --- \(\Pi\) no depende de \(m \in \naturalnum_0\) --- para calcular la probabilidad de \([Y_M = i + 1]\).
-Para ser precisos escribimos \(\prob_k = \prob(\placeholderParameter | X_0 = k) = \prob(\placeholderParameter | Y_0 = k)\) y similar para los demás estados.
+Para ser precisos escribimos \(\prob_k = \prob(\placeholderParameter \mid X_0 = k) = \prob(\placeholderParameter \mid Y_0 = k)\) y similar para los demás estados.
 Así
 \begin{align}
 	&\prob_k(Y_M = i + 1) 
@@ -519,15 +525,11 @@ Es decir
 Esta fórmula nos permite calcular las esperanzas que queríamos.
 \end{proof}
 \endgroup
-% \end{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \begingroup
-\newcommand{\events}{\mathcal{F}}
-\newcommand{\brownian}{B}
 \newcommand{\brownianProcess}{(\brownian_t)_{t \geq 0}}
 \newcommand{\reflectedBrownian}{\widetilde{\brownian}}
-\newcommand{\wiener}{W}
 \newcommand{\wienerProcess}{(\wiener_t)_{t \geq 0}}
 \begin{exercise}
 Sea $\brownianProcess$ un Movimiento Browniano Estándar (abreviado MBE) en dimensión 1.
@@ -755,18 +757,138 @@ concluimos \(\Expectation(T_x) = \infty\).
 \end{proof}
 \endgroup
 
-% \begin{}
+% \end{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
+\begingroup
+\newcommand{\wienerProcess}{(\wiener_t)_{t \geq 0}}
 \begin{exercise}
-Sea \((B_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(x > 0\), \(y > 0\).
+Sea \((\brownian_t)_{t \geq 0}\) un Movimiento Browniano estándar en dimensión 1, y sean \(x > 0\), \(y > 0\).
 Consideremos el stopping time \(T = T_{- y} \wedge T_x\).
 \begin{enumerate}[ref=\theexercise.\labelenumi]
-	\item Probar que \((B_t^2 - t)_{t \geq 0}\) es una martingala.
-	\item Probar que \(\Expectation(T) = xy\)
+	\item 
+	\label{exercise:4.1}
+	Probar que \((\brownian_t^2 - t)_{t \geq 0}\) es una martingala.
+	\item 
+	\label{exercise:4.2}
+	Probar que \(\Expectation(T) = xy\).
 \end{enumerate}
 \end{exercise}
+\begin{proof} \ref{exercise:4.1}
+Escribimos \(\wiener_t = \brownian_t^2 - t\), para todo \(t \geq 0\).
+En tanto proceso a tiempo continuo, \((\wiener_t)_{t \geq 0}\) será una martinagala respecto a la filtración natural \((\events_t)_{t \geq 0}\) del Movimiento Browniano \((\brownian_t)_{t \geq 0}\) si
+\begin{enumerate}[label=\roman*., ref=Paso \labelenumi]
+	\item 
+	\label{step:martingaleMeasurability}
+	\(\wiener_t \in \events_t\) \((\forall\: t \geq 0)\)
+	\item 
+	\label{step:martingaleIntegrability}
+	\(\Expectation(\abs{\wiener_t}) < \infty\) \((\forall\: t \geq 0)\)
+	% Filtración aumentada del Movimiento Browniano
+	% Alternar entre las sigma álgebras naturales y aumentadas puede cambiar alguna esperanza?
+	% En las notas no se menciona nada en este sentido.
+	%Filtración aumentada. \(\events^+_t = \bigcap_{s > t} \events^{\brownian}_s\)
+	\item
+	\label{step:martingaleProperty}
+	\(\Expectation(\wiener_t \mid \events_s) = \wiener_s\) \((\forall\: 0 \leq s \leq t)\)
+\end{enumerate}
 
+\ref{step:martingaleMeasurability}
+Para cada \(t \geq 0\), la función \(\wiener_t : \Omega \rightarrow \realnum\) puede escribirse como composión de funciones medibles
+\begin{align}
+	\left( \Omega, \events_t \right) 
+	\xrightarrow[]{\displaystyle \quad \brownian_t \quad}
+	\left( \realnum, \borel \right)
+	\xrightarrow[]{\displaystyle \quad x \mapsto x^2 - t \quad}
+	\left( \realnum, \borel \right)
+\end{align}
+Donde \(\borel = \borel(\realnum)\) es la \(\sigma\)--álgebra de Borel de \(\realnum\).
+Luego, \(\wiener_t\) es medible como flecha entre los espacios \((\Omega, \events_t)\) y \((\realnum, \borel)\).
+
+\ref{step:martingaleIntegrability}
+Sea \(t \geq 0\).
+Por definión de MBE la variable \(\brownian_t\) tiene ditribución \(\normal(0, t)\).
+En particular tiene varianza finita \(\Variance(\brownian_t) = \Expectation(\brownian_t^2)\).
+Luego
+\begin{align}
+	\Expectation \left( \abs{\wiener_t} \right)
+	=
+	\Expectation \left( \abs{\brownian_t^2 - t} \right)
+	\leq
+	\Expectation \left( \abs{\brownian_t^2} + t \right)
+	=
+	\Expectation \left( \brownian_t^2 \right) + t
+	=
+	\Expectation \left( \brownian_t^2 \right) + t
+	<
+	\infty
+\end{align}
+
+\ref{step:martingaleProperty}
+Sean \(t, s\) tales que \(0 \leq s \leq t\).
+Por la propiedad de los incrementos independientes incluída en la definición de MBE, sabemos que \(B_t - B_s\) es independiente de \(\events_s\).
+Por eso consideramos su cuadrado
+\((\brownian_t - \brownian_t)^2 = \brownian_t^2 - 2 \brownian_t \brownian_s + \brownian_s^2\) al calcular
+\begin{align}
+	\Expectation(\wiener_t \mid \events_s)
+	&=
+	\Expectation \left( \brownian_t^2 - t \mid \events_s \right)
+	\\
+	&=
+	\Expectation \left( \brownian_t^2 \mid \events_s \right) - t
+	\\
+	&=
+	\Expectation \left( (\brownian_t - \brownian_s)^2 + 2 \brownian_t \brownian_s - \brownian_s^2 \mid \events_s \right) - t
+	\\
+	&=
+	\Expectation \left( (\brownian_t - \brownian_s)^2 \mid \events_s \right) 
+	+ 2 \Expectation \left( \brownian_t \brownian_s \mid \events_s \right) 
+	- \Expectation \left( \brownian_s^2 \mid \events_s \right) 
+	- t
+\end{align}
+
+Porque \(\brownian_t - \brownian_s\) es independiente de \(\events_s\), entonces \(\Expectation \left( (\brownian_t - \brownian_s)^2 \mid \events_s \right) = \Expectation \left( (\brownian_t - \brownian_s)^2\right)\).
+Por definición de MBE tenemos \(\brownian_t - \brownian_s \sim \normal(0, t - s)\).
+Luego \(\Expectation \left( (\brownian_t - \brownian_s)^2\right) = \Variance(\brownian_t - \brownian_s)= t - s\).
+Esto dá
+\begin{align}
+	\Expectation(\wiener_t \mid \events_s)
+	&= 
+	2 \Expectation \left( \brownian_t \brownian_s \mid \events_s \right) 
+	- \Expectation \left( \brownian_s^2 \mid \events_s \right) 
+	- s
+\end{align}
+Porque \(B_s\) es \(\events_s\)--medible (y también funciones borel medibles evaladas sobre ella, como elevar al cuadrado), sale afuera en el cálculo de las esperanzas condicionales \(\Expectation \left( \brownian_t \brownian_s \mid \events_s \right) = \brownian_s \Expectation \left( \brownian_t \mid \events_s \right)\), y \(\Expectation \left( \brownian_s^2 \mid \events_s \right) = \brownian_s^2\).
+Esto dá
+\begin{align}
+	\Expectation(\wiener_t \mid \events_s)
+	&= 
+	2 \brownian_s \Expectation \left( \brownian_t \mid \events_s \right) 
+	- \brownian_s^2 
+	- s
+\end{align}
+Usando que \((\brownian_t)_{t \geq 0}\) es una martingala (como probamos en la Propiedad 3 de las notas sobre el Movimiento Browniano) llegamos al final del cálculo.
+\begin{align}
+	\Expectation(\wiener_t \mid \events_s)
+	= 
+	2 \brownian_s \Expectation \left( \brownian_t \mid \events_s \right) 
+	- \brownian_s^2 
+	- s
+	=
+	2 \brownian_s^2 - \brownian_s^2 - s
+	=
+	\wiener_s
+\end{align}
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof} \ref{exercise:4.2}
+% Notas Movimiento Browniano.pdf %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% página 11
+% Corolario de propiedad de martingala del Movimiento Browniano
+\end{proof}
+
+\endgroup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \begin{exercise}
@@ -784,5 +906,4 @@ El objetivo es probar que \(\prob(B_t = a + b t \text{ para algún } t > 0) = e^
 \end{enumerate}
 \end{exercise}
 
-% \end{}
 \end{document}
