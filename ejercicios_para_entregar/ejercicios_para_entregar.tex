@@ -9,7 +9,7 @@
 \graphicspath{ {./images/} }
 % Math packages %
 %%%%%%%%%%%%%%%%%
-\usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -18,6 +18,7 @@
 \usepackage{mathrsfs}
 % Math symbols %
 %%%%%%%%%%%%%%%%
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 \DeclareMathOperator{\borel}{\mathscr{B}}
 \DeclareMathOperator{\prob}{\mathbb{P}}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
@@ -37,6 +38,7 @@
 \newcommand{\brownian}{B}
 \newcommand{\wiener}{W}
 \newcommand{\events}{\mathcal{F}}
+\newcommand{\sEvents}{\mathscr{S}}
 % Math environments %
 %%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Teorema}
@@ -882,17 +884,117 @@ Usando que \((\brownian_t)_{t \geq 0}\) es una martingala (como probamos en la P
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof} \ref{exercise:4.2}
+Recordamos el Teorema de los Tiempos de Parada
+% Teorema de los tiempos de parada 
+% teorica20.pdf %
+%%%%%%%%%%%%%%%%%
+\begin{theorem}
+\newcommand{\martingale}{M}
+Consideremos una martingala cadlag \((\martingale_t)_{t \geq 0}\) con filtración \((\sEvents_t)_{t \geq 0}\) y tiempos de parada \(R, S\) tales que \(R \leq S\).
+\begin{enumerate}[ref=\textbf{\theexercise.}\textit{\labelenumi}]
+	\item \(\Expectation(\martingale_S \mid \sEvents_R) = \martingale_R\) a.s. si \(R, S\) estan acotados. 
+	\item \(\left( \martingale^S_t \right)_{t \geq 0}\) es una martingala.
+	\item 
+	\label{theorem:OptionalStoppingTheoremForUniformlyIntegrableMartingales}
+	\(\Expectation(\martingale_S \mid \sEvents_R) = \martingale_R\) a.s. si \((\martingale_t)_{t \geq 0}\) es uniformemente integrable.
+\end{enumerate}
+\end{theorem}
 % Notas Movimiento Browniano.pdf %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % página 11
 % Corolario de propiedad de martingala del Movimiento Browniano
-Hay que probar \(\Expectation(T) = xy\) con \(T = T_{- y} \wedge T_x\).
-En el ejercicio \ref{exercise:4.1} probamos que \(\wiener_t = \brownian_t^2 - t\) es una martingala.
-% teorica20.pdf %
-%%%%%%%%%%%%%%%%%
-% Teorema de los tiempos de parada 
+En el ejercicio \ref{exercise:4.1} probamos que \(\wiener_t = \brownian_t^2 - t\) es una martingala, y el teorema de los tiempos de parada deduce de esto que \(\wiener^T_t = \wiener_{t \wedge T}\) también es una martingala.
+Estudiamos la magnitud de \(\wiener^T_t\) para poder acceder a las conclusiones del teorema \ref{theorem:OptionalStoppingTheoremForUniformlyIntegrableMartingales}.
+Estimaciones simples dan como resultado
+\begin{align}
+	\left| \wiener^T_t \right|
+	&=
+	\left| \brownian_{t \wedge T}^2 - t \wedge T \right|
+	\\
+	&=
+	\left| \left| \brownian_{t \wedge T} \right|^2 - \sqrt{t \wedge T}^2 \right|
+	\\
+	&=
+	\left| \left| \brownian_{t \wedge T} \right| - \sqrt{t \wedge T} \right| \left| \left| \brownian_{t \wedge T} \right| + \sqrt{t \wedge T} \right|
+	\\
+	&\leq
+	\left( \left| \brownian_{t \wedge T} \right| + \sqrt{t \wedge T} \right)^2
+	\\
+	&\leq
+	\left( \left| \brownian_{t \wedge T} \right| + \sqrt{T} \right)^2
+\end{align}
+La convexidad de la función \(x \mapsto x^2\) reduce la complejidad de esta cota.
+\begin{align}
+	\left( \left| \brownian_{t \wedge T} \right| + \sqrt{T} \right)^2 
+	&=
+	\left( \frac{2 \left| \brownian_{t \wedge T} \right| + 2 \sqrt{T}}{2} \right)^2
+	\\
+	&\leq
+	\frac{4 \left| \brownian_{t \wedge T} \right|^2 + 4 T}{2}
+	\\
+	&=
+	2 \left| \brownian_{t \wedge T} \right|^2 + 2 T
+\end{align}
+Por el teorema de los valores intermedios que acompaña a la continuidad de las trayectorias del movimiento browniano, y la forma concreta del tiempo de parada \(T = \inf \{t \geq 0 : B_t \in \{-y, x\}\}\), podemos acotar el valor aleatorio \(\left| B_{t \wedge T} \right|\) por una constante determinista \(c = x + y\).
+Luego
+\begin{align}
+	\left| \wiener^T_t \right|
+	\leq
+	2 c^2 + 2 T
+\end{align}
+
+El tiempo de parada \(T\) es integrable porque \(\Expectation T = \int_0^{\infty} \prob(T > t) \dd t\) y este integrando puede estudiarse.
+En efecto
+
+Por el teorema de los valores intermedios que acompaña a la continuidad de las trayectorias del movimiento browniano, y la forma concreta del tiempo de parada \(T = \inf \{t \geq 0 : B_t \in \{-y, x\}\}\),
+\begin{align}
+	\prob(T > t)
+	=
+	\prob(- y < B_s < x \;(\forall s \in [0, t]))
+\end{align}
+
+El evento \(\left[ - y < B_s < x \;(\forall s \in [0, t]) \right]\), en un principio complejo al tratarse de una intersección nonumerable, puede simplificarse si consideramos sólo los valores enteros de \(s\).
+Es decir, que este evento complejo esta contenido en otro \(\left[ - y < B_i < x \;(\forall i \in \{0, 1, \dots, \floor{t}\}) \right]\) expresable usando finitas intersecciones.
+Además, para cada \(i \in \{1, \dots, \floor{t}\}\), el par de desigualdades \(- y < B_{i - 1}, B_i < x\) implica \(\abs{B_i - B_{i - 1}} \leq x + y = c\).
+Luego
+\begin{align}
+	\prob&(- y < B_s < x \;(\forall s \in [0, t]))
+	\\
+	&\leq
+	\prob(- y < B_i < x \;(\forall i \in \{0, 1, \dots, \floor{t}\}))
+	\\
+	&=
+	\prob(- y < B_{i - 1}, B_i < x \;(\forall i \in \{1, \dots, \floor{t}\}))
+	\\
+	&\leq
+	\prob(\abs{B_i - B_{i - 1}} \leq c \;(\forall i \in \{1, \dots, \floor{t}\}))
+\end{align}
+
+Por definición de MBE, los incrementos \(B_i - B_{i - 1}\) son mutuamente independientes entre sí, y tienen distribución \(\normal(0, 1)\).
+Luego existe una constante \(\rho \in ]0, 1[\) tal que \(\rho = \prob(\abs{B_i - B_{i - 1}} \leq c)\) para todo \(i\), y
+\begin{align}
+	\prob(\abs{B_i - B_{i - 1}} \leq c \;(\forall i \in \{1, \dots, \floor{t}\}))
+	\leq
+	\rho^{\floor{t}}
+\end{align}
+En fin, la cota que conseguimos es
+\begin{align}
+	\prob(T > t) \leq \rho^{\floor{t}}
+\end{align}
+Con esta probamos
+\begin{align}
+	\Expectation(T)
+	=
+	\int\limits_0^{\infty} \prob(T > t) \dd t
+	\leq
+	\sum_{i = 0}^{\infty} \rho^i
+	<
+	\infty
+\end{align}
+
+
+
 Aplicando el teorema de los tiempos de parada a	\((\wiener^T_t)_{t \geq 0}\) y \(T = T_x \wedge T_{- y}\) tenemos que \(\Expectation(\wiener^T_T) = \).
-mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 \end{proof}
 
 \endgroup
