@@ -884,16 +884,89 @@ Usando que \((\brownian_t)_{t \geq 0}\) es una martingala (como probamos en la P
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof} \ref{exercise:4.2}
-Recordamos el Teorema de los Tiempos de Parada
+Analizamos con cuidado la martingala \(\wiener_t = \brownian_t^2 - t\), con \(t \geq 0\).
+
+Nuestro primer objetivo es probar que el tiempo de parada \(T\) es integrable.
+Escribimos \(\Expectation T = \int_0^{\infty} \prob(T > t) \dd t\) y estudiamos el integrando.
+Por el teorema de los valores intermedios que acompaña a la continuidad de las trayectorias del movimiento browniano, y la forma concreta del tiempo de parada \(T = \inf \{t \geq 0 : B_t \in \{-y, x\}\}\), para todo \(t \geq 0\)
+\begin{align}
+	\prob(T > t)
+	=
+	\prob(- y < B_s < x \;(\forall s \in [0, t]))
+\end{align}
+El evento \(\left[ - y < B_s < x \;(\forall s \in [0, t]) \right]\), en un principio complejo al tratarse de una intersección nonumerable, puede simplificarse si consideramos sólo valores enteros de \(s\).
+Es decir, que este evento esta contenido en otro expresable usando finitas intersecciones \(\left[ - y < B_i < x \;(\forall i \in \{0, 1, \dots, \floor{t}\}) \right]\).
+Además, para cada entero \(i \in \{1, \dots, \floor{t}\}\), el par de desigualdades \(- y < B_{i - 1}, B_i < x\) implica \(\abs{B_i - B_{i - 1}} \leq x + y\).
+Luego
+\begin{align}
+	\prob([- y < B_s < x \;(\forall s)])
+	&\leq
+	\prob(- y < B_i < x \;(\forall i))
+	\\
+	&=
+	\prob(- y < B_{i - 1}, B_i < x \;(\forall i))
+	\\
+	&\leq
+	\prob(\abs{B_i - B_{i - 1}} \leq x + y \;(\forall i))
+\end{align}
+donde abreviamos \((\forall s) = (\forall s \in [0, t])\) y \((\forall i) = (\forall i \in \{0, 1, \dots, \floor{t}\})\).
+Por definición de MBE, los incrementos \(B_i - B_{i - 1}\) son mutuamente independientes entre sí, y tienen distribución \(\normal(0, 1)\).
+Luego existe una constante \(\rho \in \left]0, 1 \right[\), independiente tanto de \(i\) como de \(t\), tal que \(\rho = \prob(\abs{B_i - B_{i - 1}} \leq c)\) para todo \(i\), y \(\prob(\abs{B_i - B_{i - 1}} \leq c \;(\forall i)) =	\rho^{\floor{t}}\).
+En fin, para todo \(t \geq 0\) conseguimos la cota
+\begin{align}
+	\prob(T > t) \leq \rho^{\floor{t}}
+\end{align}
+Con esta probamos
+\begin{align}
+	\Expectation(T)
+	=
+	\int\limits_0^{\infty} \prob(T > t) \dd t
+	\leq
+	\sum_{i = 0}^{\infty} \rho^i
+	<
+	\infty
+\end{align}
+	
+No solo \(T\) es integrable.
+También \(\brownian_T^2\) lo es.
+En las notas sobre el Movimiento Browniano probamos que \(T = T_x\) con probabilidad \(y /(x + y)\), y \(T = T_y\) con probabilidad \(x / (x + y)\).
+Luego \(B_T^2 = x^2\) con probabilidad \(y / (x + y)\), y \(B_T^2 = y^2\) con probabilidad \(x / (x + y)\).
+Con esos datos podemos calcular
+\begin{align}
+	\Expectation(B_T^2)
+	=
+	x^2 \frac{y}{x + y} + y^2 \frac{x}{x + y}
+	=
+	\frac{x x y + y y x}{x + y}
+	=
+	xy \frac{x + y}{x + y}
+	=
+	xy
+\end{align}
+
+Conociendo que \(\Expectation(T) < \infty\) y que \(\Expectation(\brownian_T^2) = xy\), podemos calcular
+\begin{align}
+	\Expectation(\wiener_T)
+	=
+	\Expectation \left( B_T^2 - T \right)
+	=
+	x y - \Expectation(T)
+\end{align}
+Sería interesante para nosotros saber que \(\Expectation(\wiener_T) = 0\).
+A ese efecto razonamos en lo que sigue.
+
+Recordamos el Teorema de los Tiempos de Parada (Optional Stopping)
 % Teorema de los tiempos de parada 
 % teorica20.pdf %
 %%%%%%%%%%%%%%%%%
 \begin{theorem}
 \newcommand{\martingale}{M}
 Consideremos una martingala cadlag \((\martingale_t)_{t \geq 0}\) con filtración \((\sEvents_t)_{t \geq 0}\) y tiempos de parada \(R, S\) tales que \(R \leq S\).
-\begin{enumerate}[ref=\textbf{\theexercise.}\textit{\labelenumi}]
+\begin{enumerate}[ref=\theexercise.\labelenumi]
 	\item \(\Expectation(\martingale_S \mid \sEvents_R) = \martingale_R\) a.s. si \(R, S\) estan acotados. 
-	\item \(\left( \martingale^S_t \right)_{t \geq 0}\) es una martingala.
+	\item 
+	\label{theorem:OptionalStoppingTheoremStoppedMartingale}
+	\(\left( \martingale^S_t \right)_{t \geq 0}\) es una martingala.
 	\item 
 	\label{theorem:OptionalStoppingTheoremForUniformlyIntegrableMartingales}
 	\(\Expectation(\martingale_S \mid \sEvents_R) = \martingale_R\) a.s. si \((\martingale_t)_{t \geq 0}\) es uniformemente integrable.
@@ -903,7 +976,7 @@ Consideremos una martingala cadlag \((\martingale_t)_{t \geq 0}\) con filtració
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % página 11
 % Corolario de propiedad de martingala del Movimiento Browniano
-En el ejercicio \ref{exercise:4.1} probamos que \(\wiener_t = \brownian_t^2 - t\) es una martingala, y el teorema de los tiempos de parada deduce de esto que \(\wiener^T_t = \wiener_{t \wedge T}\) también es una martingala.
+Su inciso \ref{theorem:OptionalStoppingTheoremStoppedMartingale} nos dice, para empezar, que \(\wiener^T_t = \wiener_{t \wedge T}\) es una martingala al igual que \(\wiener_t\).
 Estudiamos la magnitud de \(\wiener^T_t\) para poder acceder a las conclusiones del teorema \ref{theorem:OptionalStoppingTheoremForUniformlyIntegrableMartingales}.
 Estimaciones simples dan como resultado
 \begin{align}
@@ -935,66 +1008,19 @@ La convexidad de la función \(x \mapsto x^2\) reduce la complejidad de esta cot
 	&=
 	2 \left| \brownian_{t \wedge T} \right|^2 + 2 T
 \end{align}
-Por el teorema de los valores intermedios que acompaña a la continuidad de las trayectorias del movimiento browniano, y la forma concreta del tiempo de parada \(T = \inf \{t \geq 0 : B_t \in \{-y, x\}\}\), podemos acotar el valor aleatorio \(\left| B_{t \wedge T} \right|\) por una constante determinista \(c = x + y\).
-Luego
+Antes arguimos de forma muy similar.
+Por la continuidad de las trayectorias del movimiento browniano, y la definición de \(T\), podemos acotar \(- y < B_s < x\) para todo \(s \in [0, T]\).
+De aquí que el valor aleatorio \(\left| B_{t \wedge T} \right|\) queda acotado por una constante determinista \(m = \max(x, y)\).
+Luego una variable aleatoria integrable acota la magnitud de \(\wiener^T_t\) para todo \(t \geq 0\)
 \begin{align}
 	\left| \wiener^T_t \right|
 	\leq
-	2 c^2 + 2 T
+	2 m^2 + 2 T
 \end{align}
+Esto hace que \(\left( \wiener^T_t \right)_{t \geq 0}\) sea uniformemente integrable.
 
-El tiempo de parada \(T\) es integrable porque \(\Expectation T = \int_0^{\infty} \prob(T > t) \dd t\) y este integrando puede estudiarse.
-En efecto
-
-Por el teorema de los valores intermedios que acompaña a la continuidad de las trayectorias del movimiento browniano, y la forma concreta del tiempo de parada \(T = \inf \{t \geq 0 : B_t \in \{-y, x\}\}\),
-\begin{align}
-	\prob(T > t)
-	=
-	\prob(- y < B_s < x \;(\forall s \in [0, t]))
-\end{align}
-
-El evento \(\left[ - y < B_s < x \;(\forall s \in [0, t]) \right]\), en un principio complejo al tratarse de una intersección nonumerable, puede simplificarse si consideramos sólo los valores enteros de \(s\).
-Es decir, que este evento complejo esta contenido en otro \(\left[ - y < B_i < x \;(\forall i \in \{0, 1, \dots, \floor{t}\}) \right]\) expresable usando finitas intersecciones.
-Además, para cada \(i \in \{1, \dots, \floor{t}\}\), el par de desigualdades \(- y < B_{i - 1}, B_i < x\) implica \(\abs{B_i - B_{i - 1}} \leq x + y = c\).
-Luego
-\begin{align}
-	\prob&(- y < B_s < x \;(\forall s \in [0, t]))
-	\\
-	&\leq
-	\prob(- y < B_i < x \;(\forall i \in \{0, 1, \dots, \floor{t}\}))
-	\\
-	&=
-	\prob(- y < B_{i - 1}, B_i < x \;(\forall i \in \{1, \dots, \floor{t}\}))
-	\\
-	&\leq
-	\prob(\abs{B_i - B_{i - 1}} \leq c \;(\forall i \in \{1, \dots, \floor{t}\}))
-\end{align}
-
-Por definición de MBE, los incrementos \(B_i - B_{i - 1}\) son mutuamente independientes entre sí, y tienen distribución \(\normal(0, 1)\).
-Luego existe una constante \(\rho \in ]0, 1[\) tal que \(\rho = \prob(\abs{B_i - B_{i - 1}} \leq c)\) para todo \(i\), y
-\begin{align}
-	\prob(\abs{B_i - B_{i - 1}} \leq c \;(\forall i \in \{1, \dots, \floor{t}\}))
-	\leq
-	\rho^{\floor{t}}
-\end{align}
-En fin, la cota que conseguimos es
-\begin{align}
-	\prob(T > t) \leq \rho^{\floor{t}}
-\end{align}
-Con esta probamos
-\begin{align}
-	\Expectation(T)
-	=
-	\int\limits_0^{\infty} \prob(T > t) \dd t
-	\leq
-	\sum_{i = 0}^{\infty} \rho^i
-	<
-	\infty
-\end{align}
-
-
-
-Aplicando el teorema de los tiempos de parada a	\((\wiener^T_t)_{t \geq 0}\) y \(T = T_x \wedge T_{- y}\) tenemos que \(\Expectation(\wiener^T_T) = \).
+Aplicando el teorema de los tiempos de parada \ref{theorem:OptionalStoppingTheoremForUniformlyIntegrableMartingales} a la martingala uniformemente integrable \((\wiener^T_t)_{t \geq 0}\) y al tiempo de parada \(T = T_x \wedge T_{- y}\) tenemos que \(\Expectation(\wiener_T) = \Expectation \left( \wiener^T_T \right) = \Expectation \left( \wiener^T_0 \right) = 0\).
+Esto prueba que \(\Expectation(T) = x y - \Expectation(\wiener_T) = x y\).
 \end{proof}
 
 \endgroup
