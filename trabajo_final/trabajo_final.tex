@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\newcommand{\ito}{Itô}
+
+\newcommand{\Expectation}{\mathbb{E}}
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}\newcommand{\complexNumbers}{\mathbb{C}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}
+\theoremstyle{remark}
+\newtheorem{remark}{Observación}
+\begin{document}
+Una función entera evaluada sobre un movimiento browniano planar es un movimiento browniano.
+
+% Book: Brownian Motion
+% Author: Mörters, Peres
+% Page Number: 212
+
+Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es analítica, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f = f_1 + i f_2\) para referirnos a la descomposición de \(f\) en partes real e imaginaria.
+Entonces, por las ecuaciones de Cauchy--Riemann \(\partial_1 f_1 = \partial f_2\) y \(\partial_2 f_1 = - \partial_1 f_2\), tenemos \(\Delta f_1 = \Delta f_2 = 0\).
+Entonces la fórmula de \ito{} (si aplica) afirma que casi seguramente, para todo \(t \geq 0\),
+\begin{align}
+  f(B(t))
+  =
+  \int_0^t f'(B(s)) \dd B(s)
+\end{align}
+donde \(\dd B(s)\) es una abreviación para \(\dd B_1(s) + i \dd B_2(s)\) con \(B(s) = B_1(s) + i B_2(s)\).
+El lado derecho define un proceso continuo con incrementos independientes, y es al menos plausible que sean gaussianos.
+Más aún, su esperanza es nula y
+\begin{align}
+  \Expectation \left[ \left( \int_0^t f'(B(s)) \dd B(s) \right)^2 \right]
+  =
+  \Expectation \int_0^t \abs{f'(B(s))}^2 \dd s
+\end{align}
+sugiriendo que \(\{f(B(t)) : t \geq 0\}\) es un movimiento Browniano `viajando' con la velocidad alterada
+\begin{align}
+  t
+  \mapsto
+  \int_0^t
+\end{align}
+Para pasar de esta eurística a un poderoso teorema permitimos que la función sea una aplicación analítica \(f : U \rightarrow V\) entre dominios en el plano.
+Recordamos que tal aplicación es conforme si es una biyección.
+
+\begin{theorem}
+  Sea \(U\) un dominio en el plano complejo, \(x \in U\), y sea \(f : U \rightarrow V\) analítica.
+  Sea \(\{B(t) : t \geq 0\}\) un movimiento Browniano que comienza en \(x\) y
+  \begin{align}
+    \tau_U
+    =
+    \inf \{ t \geq 0 : B(t) \notin U\}
+  \end{align}
+  su primer tiempo de salida del dominio \(U\).
+  Entonces el proceso \(\{f(B(t)) : 0 \leq t \leq \tau_U\}\) es un movimiento Browniano con velocidad alterada, es decir que existe un movimiento Browniano planar \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) tal que, para todo \(t \in \left[ 0, \tau_U \right[\),
+  \begin{align}
+    & f(B(t)) = \widetilde{B}(\zeta(t))
+    &
+    & \text{donde }
+    \zeta(t) = \int_0^t \abs{f'(B(s))}^2 \dd s
+  \end{align}
+  Si, adicionalmente, \(f\) es conforme, entonces \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por \(\widehat{B}(t) : t \geq 0\).
+\end{theorem}
+\begin{remark}
+  Notar que, al ser \(f\) diferenciable en el sentido complejo, la derivada \(Df(x)\) no es otra cosa que la multiplicación por el número complejo \(f'(x)\), y \(f\) puede aproximarse localmente alrededor de \(x\) por su tangente \(z \mapsto f(x) + f'(x)(z - x)\).
+  La derivada de la alteración temporal es
+  \begin{align}
+    \partial_t \zeta(t)
+    =
+    \abs{f'(B(t))}^2
+    =
+    (\partial_1 f_1(B(t)))^2 + (\partial_2 f_1(B(t)))^2
+  \end{align}
+   
+\end{remark}
+\end{document}
