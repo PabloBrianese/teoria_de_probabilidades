@@ -4,11 +4,13 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
+\newcommand{\placeholderParameter}{-}
 \newcommand{\ito}{Itô}
 
 \newcommand{\Expectation}{\mathbb{E}}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}\newcommand{\complexNumbers}{\mathbb{C}}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\ang}{\langle}{\rangle}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
@@ -47,6 +49,7 @@ Para pasar de esta eurística a un poderoso teorema permitimos que la función s
 Recordamos que tal aplicación es conforme si es una biyección.
 
 \begin{theorem}
+  \label{theorem:ConformalInvarianceOfPlanarBrownianMotion}
   Sea \(U\) un dominio en el plano complejo, \(x \in U\), y sea \(f : U \rightarrow V\) analítica.
   Sea \(\{B(t) : t \geq 0\}\) un movimiento Browniano que comienza en \(x\) y
   \begin{align}
@@ -74,6 +77,60 @@ Recordamos que tal aplicación es conforme si es una biyección.
     =
     (\partial_1 f_1(B(t)))^2 + (\partial_2 f_1(B(t)))^2
   \end{align}
-   
 \end{remark}
+\begin{remark}
+  El famoso \emph{teorema de representación conforme de Riemann} enuncia qeu para cualquier par de conjuntos abiertos simplemente conexos \(U, V \subset \complexNumbers\) existe una aplicación conforme \(f : U \rightarrow V\).
+  Esto asegura que hay ejemplos del teorema \ref{theorem:ConformalInvarianceOfPlanarBrownianMotion} por montones.
+\end{remark}
+\begin{proof}
+  Notemos que la derivada de \(f\) es nonula excepto por un conjunto contable de puntos, que no tiene un punto límite en \(U\).
+  Dado que este conjunto no es tocado por el movimiento Browniano, podemos removerlo de \(U\) y el conjunto resultante aún es abierto.
+  Por lo tanto podemos asumir que la derivada de \(f\) no se desvanece sobre \(U\).
+
+  % Esta parte podría irse
+  También podemos asumir, sin pérdida de generalidad, que \(f\) es una aplicación entre domninios \emph{acotados}.
+  Caso contrario elijamos \(U_n \subseteq K_n \subseteq U\) tales que \(U_n\) es abierto con \(\bigcup_n U_n = U\) y \(K_n\) es compacto, lo cual implica que \(V_n = f(U_n)\) es acotado.
+  Entonces el proceso \(\{f(B(t)) : t \leq \tau_{U_n}\}\) es un movimiento browniano con tiempo alterado para todo \(n\), y esto extiende inmediatamente al proceso \(\{f(B(t)) : t \leq \tau_U\}\).
+
+  El principal argumento de la prueba esta basado en la integración estocástica.
+  Recordemos que las ecuaciones de Cauchy--Riemann implican que los vectores \(\nabla f_1\), \(\nabla f_2\) son ortogonales entre sí y cada uno de magnitud \(\abs{f'}\).
+  Comezamos definiendo para cada \(t \geq 0\), un tiempo de parada
+  \begin{align}
+    \sigma(t) = \inf \{s \geq 0 : \zeta(s) \geq t\}
+  \end{align}
+  que representa la inversa de la alteración temporal.
+  Sea \(\{\widetilde{B}(t) : t \geq 0\}\) un movimiento Browniano independiente de \(\{B(t) : t \geq 0\}\), y definamos un proceso \(\{W(t) : t \geq 0\}\) mediante
+  \begin{align}
+    &W(t)
+    =
+    f(B(\sigma(t) \wedge \tau_U))
+      + \widetilde{B}(t) - \widetilde{B}(t \wedge \zeta(\tau_U))
+    &&\text{para } t \geq 0
+  \end{align}
+  A grades trazos, el proceso \(\{f(B(\sigma(t))) : 0 \leq t \leq \zeta(\tau_U)\}\) llega a su punto final en el instante aleatorio \(\zeta(\tau_U)\) y un movimiento Browniano independiente toma su lugar a partir de ese momento.
+  Denotamos \(\mathcal{G}(t)\) a la \(\sigma\)--álgebra generada por \(\{W(s) : s \leq t\}\).
+  Será suficiente probar que el proceso \(\{W(t) : t \geq 0\}\) es un movimiento Browniano.
+  
+  % No puedo decir que es obvio, hay que ser caradura ...
+  Es obvio que el proceso es continuo casi seguramente y por tanto basta con mostra que sus distribuciones finito--dimensionales coinciden con las del movimiento Browniano.
+  Recordando la transformada de Laplace de la distribución normal bivariada, esto es equivalente a mostrar que, para cualesquiera \(0 \leq s \leq t\) y \(\lambda \in \complexNumbers\),
+  \begin{align}
+    \Expectation\left[ \exp \ang{\lambda, W(t)} \mid \mathcal{G}(s) \right]
+    =
+    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, W(s)} \right)
+  \end{align}
+  donde hemos usado \(\ang{\placeholderParameter , \placeholderParameter}\) para denotar al producto escalar.
+  Esto se sigue directamente una vez que mostremos que, para \(x \in U\),
+  \begin{align}
+    \Expectation\left[ 
+      \exp\ang{\lambda, W(t)} 
+      \mid W(s) = f(x)
+    \right]
+    =
+    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, f(x)} \right)
+  \end{align}
+  Para simplificar la notación podemos asumirr \(s = 0\).
+  Para la prueba, primero evaluamos la experanza con respecto al movimiento Browniano independiente \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) adentro, l
+  
+\end{proof}
 \end{document}
