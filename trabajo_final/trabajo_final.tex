@@ -7,10 +7,14 @@
 \newcommand{\placeholderParameter}{-}
 \newcommand{\ito}{Itô}
 
-\newcommand{\Expectation}{\mathbb{E}}
-\newcommand{\dd}{\mathop{}\!\mathrm{d}}\newcommand{\complexNumbers}{\mathbb{C}}
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\complexNumbers}{\mathbb{C}}
+\DeclareMathOperator{\laplacian}{\Delta}
+\DeclareMathOperator{\grad}{\nabla}
+\DeclareMathOperator{\Expectation}{\mathbb{E}}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
+
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
@@ -122,6 +126,7 @@ Recordamos que tal aplicación es conforme si es una biyección.
   donde hemos usado \(\ang{\placeholderParameter , \placeholderParameter}\) para denotar al producto escalar.
   Esto se sigue directamente una vez que mostremos que, para \(x \in U\),
   \begin{align}
+    \label{equation:ConformalInvarianceOfPlanarBrownianMotion_MainEquation}
     \Expectation\left[ 
       \exp\ang{\lambda, W(t)} 
       \mid W(s) = f(x)
@@ -130,7 +135,86 @@ Recordamos que tal aplicación es conforme si es una biyección.
     \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, f(x)} \right)
   \end{align}
   Para simplificar la notación podemos asumirr \(s = 0\).
-  Para la prueba, primero evaluamos la experanza con respecto al movimiento Browniano independiente \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) adentro, l
-  
+  Para la prueba, primero evaluamos la experanza con respecto al movimiento Browniano independiente \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\), lo cual dá
+  \begin{align}
+    \Expectation &\left[
+      \exp \ang{\lambda, W(t) 
+      \mid 
+      W(0) = f(x)} 
+    \right]
+    \\&=
+    \Expectation_x \exp \left(
+      \ang{\lambda, f(B(\sigma(t), \wedge \tau_U))} 
+      + \frac{1}{2} \abs{\lambda}^2 (t - \zeta(\sigma(t) \wedge \tau_U))
+    \right)
+  \end{align}
+  Usamos la fórmula multidimensional de \ito para la aplicación acotada
+  \begin{align}
+    F(x, u)
+    =
+    \exp\left(
+      \ang{\lambda, f(x)}
+      + \frac{1}{2} \abs{\lambda}^2 (t - u)
+    \right)
+  \end{align}
+  que está definida en \(U \times \left] - 1, \infty \right[\), ver la Observación 7.16.
+  Para preparar esto, observar que \(\partial_{i i} e^g = \partial_{i i} g + (\partial_i g)^2 e^g\) y por lo tanto
+  \begin{align}
+    \label{equation:LaplacianOfExponential}
+    \Delta e^g
+    =
+    (\Delta g + \abs{\nabla g}^2) e^g
+  \end{align}
+  Para \(g = \ang{\lambda , f}\) tenemos \(\nabla g = \sum_{i = 1}^2 \lambda_i \nabla f_i\), lo cual impica \(\abs{\nabla g}^2 = \abs{\lambda}^2 \abs{f'}^2\) dado que los vectores \(\nabla f_i\) son ortogonales con norma \(\abs{f'}\).
+  Más aún, \(\nabla g = 0\) por la analiticidad de \(f\).
+  Aplicar \ref{equation:LaplacianOfExponential} da
+  \begin{align}
+    \laplacian \exp \ang{\lambda, f(x)}
+    =
+    \abs{\lambda}^2 \abs{f'(x)}^2 \exp \ang{\lambda, f(x)}
+  \end{align}
+  Más aún, tenemos
+  \begin{align}
+    \partial_u \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - u) \right)
+    =
+    - \frac{1}{2} \abs{\lambda}^2 \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - u)\right)
+  \end{align}
+  Ahora definimos \(U_n = \{x \in U : \abs{x - y} \geq \frac{1}{n} (\forall y \in \partial U)\}\).
+  Entonces \(\abs{f'(x)}\) se encuentra lejos de cero en \(U_n\) y por lo tanto el tiempo de parada \(T = \sigma(t) \wedge \tau_{U_n}\) es acotado.
+  La fórmula multidimensional de \ito da, casi seguramente,
+  \begin{align}
+    F(B(T), \zeta(T))
+    &=
+    F(B(0), \zeta(0))
+    + \int_0^T \grad_x F(B(s), \zeta(s)) \cdot \dd B(s)
+    \\
+    &+
+    \int_0^T \partial_u F(B(s), \zeta(s)) \dd \zeta(s)
+    + \frac{1}{2} \int_0^T \laplacian_x F(B(s), \zeta(s)) \dd s
+  \end{align}
+  Volviendo sobre las ecuaciones para \(\laplacian \exp\), \(\partial_u \exp\), y recordando que \(\dd \zeta(u) = \abs{f'(B(u))}^2 \dd u\) vemos que los dos términos en la segunda línea se cancelan.
+  Haciendo uso de la convergencia dominada y el hecho que la integral estocástica tiene esperanza nula, ver el Ejercicio 7.2, obtenemos
+  \begin{align}
+    \Expectation \left[
+      \exp \ang{\lambda, W(t)}
+      \mid
+      W(0) = f(x)
+    \right]
+    &=
+    \Expectation_x \left[ F(B(\sigma(t) \wedge \tau_U), \zeta(\sigma(t) \wedge \tau_U))\right]
+    \\
+    &=
+    \lim_{n \rightarrow \infty} \Expectation_x \left[F(B(T), \zeta(T))\right]
+    \\
+    &=
+    F(x, 0)
+    \\
+    &=
+    \exp \left( \frac{1}{2} \abs{\lambda}^2 t + \ang{\lambda, f(x)} \right)
+  \end{align}
+  Esto muestra \eqref{equation:ConformalInvarianceOfPlanarBrownianMotion_MainEquation} y así completa la prueba del enunciado principal.
+  Resta observar que, si \(f\) es conforme entonces cuando \(t \uparrow \tau_u\) el punto \(f(B(t))\) converge a un punto en la frontera de \(V\).
+  Por lo tanto \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por el proceso \(\{\widetilde{B}(t) : t \geq 0\}\).
 \end{proof}
+
 \end{document}
