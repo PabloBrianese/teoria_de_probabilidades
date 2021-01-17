@@ -1,33 +1,59 @@
 \documentclass{article}
+% Document Packages %
+%%%%%%%%%%%%%%%%%%%%%
 \usepackage[spanish]{babel}
+% Mathematics Packages %
+%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
-
-\newcommand{\placeholderParameter}{-}
+% Text Abreviation %
+%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
-
+% Mathematics Notation %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\events}{\mathcal{F}}
+\newcommand{\placeholderParameter}{-}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
 \newcommand{\complexNumbers}{\mathbb{C}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
+% Paired Delimiters %
+%%%%%%%%%%%%%%%%%%%%%
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
-
-
+% Theorem environments %
+%%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
 \theoremstyle{remark}
 \newtheorem{remark}{Observación}
+
+\title{Invarianza conforme del movimiento Browniano planar}
+
 \begin{document}
-Una función entera evaluada sobre un movimiento browniano planar es un movimiento browniano.
+\maketitle
 
-% Book: Brownian Motion
-% Author: Mörters, Peres
-% Page Number: 212
+% Archivo: teorica19.pdf %
+% Número de Página: 4    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definición de tiempo de parada
+\textbf{Tiempo de parada.}
+Sea \((\events_t)_{t \geq 0}\) una filtración en un espacio \(\Omega\).
+Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo de parada si \([T \leq t] \in \events_t\) para todo \(t \geq 0\).
 
-Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es analítica, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f = f_1 + i f_2\) para referirnos a la descomposición de \(f\) en partes real e imaginaria.
+
+
+
+
+\newpage
+% Book: Brownian Motion  %
+% Author: Mörters, Peres %
+% Page Number: 212       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es \emph{analítica}, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f = f_1 + i f_2\) para referirnos a la descomposición de \(f\) en partes real e imaginaria.
 Entonces, por las ecuaciones de Cauchy--Riemann \(\partial_1 f_1 = \partial f_2\) y \(\partial_2 f_1 = - \partial_1 f_2\), tenemos \(\Delta f_1 = \Delta f_2 = 0\).
 Entonces la fórmula de \ito{} (si aplica) afirma que casi seguramente, para todo \(t \geq 0\),
 \begin{align}
@@ -47,10 +73,10 @@ sugiriendo que \(\{f(B(t)) : t \geq 0\}\) es un movimiento Browniano `viajando' 
 \begin{align}
   t
   \mapsto
-  \int_0^t
+  \int_0^t \abs{f'(B(s))}^2 \dd s
 \end{align}
 Para pasar de esta eurística a un poderoso teorema permitimos que la función sea una aplicación analítica \(f : U \rightarrow V\) entre dominios en el plano.
-Recordamos que tal aplicación es conforme si es una biyección.
+Recordamos que tal aplicación es \emph{conforme} si es una biyección.
 
 \begin{theorem}
   \label{theorem:ConformalInvarianceOfPlanarBrownianMotion}
