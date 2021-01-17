@@ -12,7 +12,9 @@
 \newcommand{\ito}{Itô}
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\prob}{\mathbb{P}}
 \newcommand{\events}{\mathcal{F}}
+\newcommand{\borel}{\mathcal{B}}
 \newcommand{\placeholderParameter}{-}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
 \newcommand{\complexNumbers}{\mathbb{C}}
@@ -31,6 +33,7 @@
 \newtheorem{remark}{Observación}
 
 \title{Invarianza conforme del movimiento Browniano planar}
+\author{Pablo Brianese}
 
 \begin{document}
 \maketitle
@@ -43,8 +46,13 @@
 Sea \((\events_t)_{t \geq 0}\) una filtración en un espacio \(\Omega\).
 Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo de parada si \([T \leq t] \in \events_t\) para todo \(t \geq 0\).
 
-
-
+% Archivo: teorica20.pdf %
+% Número de Página: 1    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Tiempos de contacto.}
+Sea \((X_t)_{t \geq 0}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t)_{t \geq 0}\) en la \(\sigma\)--álgebra de Borel \(\borel\).
+Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, E)] = 1\).
+Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t)_{t \geq 0}\).
 
 
 \newpage
