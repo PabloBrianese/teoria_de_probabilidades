@@ -10,13 +10,16 @@
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
+\newcommand{\cadlag}{càdlàg}
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\prob}{\mathbb{P}}
 \newcommand{\events}{\mathcal{F}}
+\newcommand{\eventspp}{\events^+}
 \newcommand{\borel}{\mathcal{B}}
 \newcommand{\placeholderParameter}{-}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
@@ -29,40 +32,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
+\newtheorem{proposition}{Proposición}
+\newtheorem{corollary}{Corolario}
 \theoremstyle{remark}
 \newtheorem{remark}{Observación}
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}
 
 \title{Invarianza conforme del movimiento Browniano planar}
 \author{Pablo Brianese}
 
 \begin{document}
 \maketitle
+% Tengo que mirar la sección:
+% 7.1  Stochastic integrals with respect to Brownian motion
 
-% Archivo: teorica19.pdf %
-% Número de Página: 4    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Definición de tiempo de parada
-\textbf{Tiempo de parada.}
-Sea \((\events_t)_{t \geq 0}\) una filtración en un espacio \(\Omega\).
-Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo de parada si \([T \leq t] \in \events_t\) para todo \(t \geq 0\).
+% \begin{}
 
-% Archivo: teorica20.pdf %
-% Número de Página: 1    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textbf{Tiempos de contacto.}
-Sea \((X_t)_{t \geq 0}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t)_{t \geq 0}\) en la \(\sigma\)--álgebra de Borel \(\borel\).
-Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, E)] = 1\).
-Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t)_{t \geq 0}\).
-
-
-\newpage
 % Book: Brownian Motion  %
 % Author: Mörters, Peres %
 % Page Number: 212       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-
 Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es \emph{analítica}, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f = f_1 + i f_2\) para referirnos a la descomposición de \(f\) en partes real e imaginaria.
-Entonces, por las ecuaciones de Cauchy--Riemann \(\partial_1 f_1 = \partial f_2\) y \(\partial_2 f_1 = - \partial_1 f_2\), tenemos \(\Delta f_1 = \Delta f_2 = 0\).
+Entonces, por las ecuaciones de Cauchy--Riemann \(\partial_1 f_1 = \partial_2 f_2\) y \(\partial_2 f_1 = - \partial_1 f_2\), tenemos \(\Delta f_1 = \Delta f_2 = 0\).
 Entonces la fórmula de \ito{} (si aplica) afirma que casi seguramente, para todo \(t \geq 0\),
 \begin{align}
   f(B(t))
@@ -96,7 +88,9 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
     \inf \{ t \geq 0 : B(t) \notin U\}
   \end{align}
   su primer tiempo de salida del dominio \(U\).
-  Entonces el proceso \(\{f(B(t)) : 0 \leq t \leq \tau_U\}\) es un movimiento Browniano con velocidad alterada, es decir que existe un movimiento Browniano planar \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) tal que, para todo \(t \in \left[ 0, \tau_U \right[\),
+  Entonces el proceso
+  \(\{f(B(t)) : 0 \leq t \leq \tau_U\}\)  % Este tipo de procesos deben ser los detenidos en el tiempo. O sea f(B(t \wedge \tau_U)) con t \geq 0.
+  es un movimiento Browniano con velocidad alterada, es decir que existe un movimiento Browniano planar \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) tal que, para todo \(t \in \left[ 0, \tau_U \right[\),
   \begin{align}
     & f(B(t)) = \widetilde{B}(\zeta(t))
     &
@@ -251,4 +245,201 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
   Por lo tanto \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por el proceso \(\{\widetilde{B}(t) : t \geq 0\}\).
 \end{proof}
 
+% \end{}
+
+\newpage
+{\huge \textbf{Apéndice}}
+
+% \begin{}
+
+% Libro: Funciones analíticas %
+% Autores: Jorge Antezana     %
+% Número de Página: 21        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Funciones analíticas}
+\begin{definition}
+  Sea \(U\) un suconjunto abierto de \(\complexNumbers\) y \(f : U \rightarrow \complexNumbers\) una función.
+  Se dice que \(f\) es \emph{holomorfa} en \(z_0 \in U\) si existe el límite
+  \begin{align}
+    \lim_{h \rightarrow 0} \frac{f(z_0 + h) - f(z_0)}{h}
+  \end{align}
+  En tal caso, al valor del límite lo denotaremos \(f'(z_0)\) y lo denominaremos derivada (compleja) de \(f\) en \(z_0\).
+  La función \(f\) se dice holomorfa en \(U\) si lo es para cada punto de \(U\).
+  Si \(U = \complexNumbers\) entonces la función se denomina \emph{entera}.
+\end{definition}
+
+% Libro: Funciones analíticas %
+% Autores: Jorge Antezana     %
+% Número de Página: 26        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ecuaciones de Cauchy--Riemann
+\begin{theorem}
+  Una función \(f : U \subseteq \realNumbers^2 \rightarrow \realNumbers^2\) --- \((x, y) \mapsto (u(x, y), v(x, y))\) --- pensada como función de variable compleja es holomorfa en un punto \(z_0 \simeq (x_0, y_0) \in U\) si y sólo si es diferenciable y sus derivadas parciales satisfacen las ecuaciones de Cauchy--Riemann \(u_x = v_y\), \(u_y = - v_x\).
+\end{theorem}
+
+% Fuente?
+
+\begin{definition}
+  \(\laplacian f = \partial_1^2 f_1 + \partial_2^2 f_2\)
+\end{definition}
+
+\begin{theorem}
+  Si \(u, v\) satisfacen Cauchy--Riemann, entonces su Laplaciano es nulo.
+\end{theorem}
+
+% \end{}
+
+% \begin{}
+
+% Archivo: teorica19.pdf %
+% Número de Página: 4    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definición de tiempo de parada
+\begin{definition}[Tiempo de parada.]
+Sea \((\events_t)_{t \geq 0}\) una filtración en un espacio \(\Omega\).
+Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo de parada si \([T \leq t] \in \events_t\) para todo \(t \geq 0\).
+\end{definition}
+
+% Archivo: teorica20.pdf %
+% Número de Página: 1    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Tiempos de contacto.}
+
+\begin{proposition}
+  Sea \((X_t)_{t \geq 0}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t)_{t \geq 0}\) en la \(\sigma\)--álgebra de Borel \(\borel\).
+  Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, E)] = 1\).
+  Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t)_{t \geq 0}\).
+\end{proposition}
+
+Otra opción es agrandar la filtración \((\events_t)_{t \geq 0}\).
+Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\events_t \subseteq \eventspp_t\), y consideramos la nueva filtración \((\eventspp_t)_{t \geq 0}\).
+\begin{proposition}
+  Sea \((X_t)_{t \geq 0}\) un proceso \cadlag{} adaptado a \((\eventspp_t)_{t \geq 0}\).
+  Sea \(A \in \borel(E)\) abierto.
+  Entonces \(T_A\) es un tiempo de parada con respecto a \((\eventspp_t)_{t \geq 0}\).
+\end{proposition}
+
+% \end{}
+
+% Book: Brownian Motion      %
+% Authors: Morters and Peres %
+% Page Number: 68            %
+% Theorem Number: 2.51       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Functions of Brownian Motion
+\begin{theorem}
+  Sea \(f : \realNumbers^d \rightarrow \realNumbers\) dos veces continuamente derivable, y \(\{B(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional.
+  Además supongamos que, para todo \(t > 0\) y \(x \in \realNumbers^d\), tenemos \(\Expectation_x \abs{f(B(t))} < \infty\) y \(\Expectation_x \int_0^t \abs{\laplacian f(B(s))} \dd s < \infty\).
+  Entonces el proceso definido por
+  \begin{align}
+    X(t)
+    =
+    f(B(t)) - \frac{1}{2} \int_0^t \laplacian f(B(s)) \dd s
+  \end{align}
+  es una martingala.
+\end{theorem}
+\begin{corollary}
+  Supongamos \(f : \realNumbers^d \rightarrow \realNumbers\) satisface \(\laplacian f(x) = 0\) y \(\Expectation_x \abs{f(B(t))} < \infty\), para todo \(x \in \realNumbers^d\) y \(t > 0\).
+  Entonces el proceso \(\{f(B(t)) : t \geq 0\}\) es una martingala.
+\end{corollary}
+
+% Book: Brownian Motion      %
+% Authors: Morters and Peres %
+% Page Number: 207           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Itô's Formula
+\begin{theorem}[Fórmula de \ito{} Número I]
+  Sea \(f : \realNumbers \rightarrow \realNumbers\) dos veces continuamente derivable tal que \(\Expectation \int_0^t f'(B(s))^2 \dd s < \infty\) para algun \(t > 0\).
+  Entonces, casi seguramente, para todo \(0 \leq s \leq t\),
+  \begin{align}
+    f(B(s)) - f(B(0))
+    =
+    \int_0^s f'(B(u)) \dd B(u)
+    + \frac{1}{2} \int_0^s f''(B(u)) \dd u
+  \end{align}
+\end{theorem}
+% Esta segunda versión no es necesaria
+\begin{theorem}[Fórmula de \ito{} Número II]
+  Supongamos \(\{\zeta(s) : s \geq 0\}\) es un proceso continuo creciente adaptado.
+  Sea \(f : \realNumbers^2 \rightarrow \realNumbers\) dos veces continuamente derivable en la coordenada \(x\) y una vez continuamente derivable en la coordenada \(y\).
+  Asumamos que
+  \begin{align}
+    \Expectation \int_0^t \left[ \partial_x f(B(s), \zeta(s)) \right]^2 \dd s
+    <
+    \infty
+  \end{align}
+  para algún \(t > 0\).
+  Entonces, casi seguramente, para todo \(0 \leq s \leq t\),
+  \begin{align}
+    f(B(s), \zeta(s)) - f(B(0), \zeta(0))
+    =
+    &\int_0^s \partial_x f (B(u), \zeta(u)) \dd B(u)
+    \\
+    &+ \int_0^s \partial_y f(B(u), \zeta(u)) \dd \zeta(u)
+    \\
+    &+ \frac{1}{2} \int_0^s \partial_{x x} f(B(u), \zeta(u)) \dd u
+  \end{align}
+\end{theorem}
+
+Con la misma técnica, obtenemos una versión de la fórmula de \ito para el movimiento Browniano en dimensiones superiores.
+La prueba con sus detalles será un ejercicio, ver el Ejercicio 7.4.
+Para dar una formulación agradable, introducimos algo de notacón para funciones \(f : \realNumbers^{d + m} \rightarrow \realNumbers\), donde interpretamos el argumento como dos vectores, \(x \in \realNumbers^d\) e \(y \in \realNumbers^m\).
+Escribimos \(\partial_j\) para denotar la derivada parcial en la dirección de la coordenada \(j\)--ésima, y
+\begin{align}
+  &\grad_x f = (\partial_1 f, \dots, \partial_d f)
+  &
+  &\grad_y f = (\partial_{d + 1} f, \dots, \partial_{d + m} f)
+\end{align}
+para el vector de derivadas en la dirección de \(x\), respectivamente \(y\).
+Para integrales usamos la notación del producto escalar
+\begin{align}
+  \int_0^t \grad_x f(B(u), \zeta(u)) \cdot \dd B(u)
+  &=
+  \sum_{i = 1}^d \int_0^t \partial_i f(B(u), \zeta(u)) \dd B_i(u)
+  \\
+  \int_0^t \grad_y f(B(u), \zeta(u)) \cdot \dd \zeta(u)
+  &=
+  \sum_{i = 1}^d \int_0^t \partial_{d + i} f(B(u), \zeta(u)) \dd \zeta_i(u)
+\end{align}
+Finalmente, para el Laplaciano en la variable \(x\) escribimos
+\begin{align}
+  \laplacian_x f
+  =
+  \sum_{j = 1}^d \partial_{j j} f
+\end{align}
+% Tanta complejidad es innecesaria
+% Tengo que modificar este teorema 
+% para que no incluya la dependencia del proceso creciente
+\begin{theorem}[Fórmula de \ito{} multidimensional]
+  \label{theorem:ItoFormula_multidimensional}
+  Sea \(\{B(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional y supongamos \(\{\zeta(s) : s \geq 0\}\) es un proceso adaptado, continuo con valores en \(\realNumbers^m\) y componentes crecientes.
+  Sea \(f : \realNumbers^{d + m} \rightarrow \realNumbers\) tal que las derivadas parciales \(\partial_i f\), \(\partial_{j k}\) existen para todo \(1 \leq j, k \leq d\), \(d + 1 \leq i \leq d + m\) y son continuas.
+  Si, para algún \(t > 0\),
+  \begin{align}
+    \Expectation \int_0^t \abs{\grad_x f(B(s), \zeta(s))}^2 \dd s
+    <
+    \infty
+  \end{align}
+  entonces, casi seguramente, para todo \(0 \leq s \leq t\),
+  \begin{align}
+    f(B(s), \zeta(s)) - f(B(0), \zeta(0))
+    =
+    &\int_0^s \grad_x f(B(u), \zeta(u)) \cdot \dd B(u)
+    \nonumber
+    \\
+    &+ \int_0^s \grad_y f(B(u), \zeta(u)) \cdot \dd \zeta(u)
+    \nonumber
+    \\
+    &+ \frac{1}{2} \int_0^s \laplacian_x f(B(u), \zeta(u)) \dd u
+    \label{equation:ItoFormula_multidimensional}
+  \end{align}
+  \begin{remark}
+    Dado que la fórmula de \ito se verifica casi seguramente de forma simultánea para todo tiempo \(s \in [0, t]\), también es válida para tiempos de parada acotados por \(t\).
+    Supongames ahora que \(f : U \rightarrow \realNumbers\) satisface las condiciones de diferenciabilidad en un conjunto abierto \(U\), y \(K \subseteq U\) es compacto.
+    Tomamos una función suave \(g : \realNumbers^m \rightarrow [0, 1]\) con soporte compacto dentro de \(U\), tal que \(g \equiv 1\) sobre \(K\).
+    Entonces \(f^* = f g : \realNumbers^m \rightarrow \realNumbers\) satisface \(f^* = f\) sobre \(K\) y todas las derivadas relevantes se encuentran acotadas, de modo tal que se satisfacen las condiciones del teorema \ref{theorem:ItoFormula_Multidimensional}.
+    Sea \(T\) el primer tiempo de salida de \(K\).
+    Aplicando el teorema \ref{theorem:ItoFormula_multidimensional} a \(f^*\) arroja \eqref{equation:ItoFormula_multidimensional} para \(f\), casi seguramente, para todo tiempo \(s \wedge T\), para \(s \leq t\).
+  \end{remark}
+\end{theorem}
 \end{document}
