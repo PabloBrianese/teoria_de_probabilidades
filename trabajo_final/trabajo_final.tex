@@ -7,18 +7,22 @@
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{bbm}
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
+\newcommand{\morters}{Mörters}
 \newcommand{\cadlag}{càdlàg}
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\characteristic}{\mathbbm{1}}
 \newcommand{\prob}{\mathbb{P}}
 \newcommand{\events}{\mathcal{F}}
 \newcommand{\eventspp}{\events^+}
 \newcommand{\borel}{\mathcal{B}}
 \newcommand{\placeholderParameter}{-}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\naturalNumbers}{\mathbb{N}}
 \newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
 \DeclareMathOperator{\laplacian}{\Delta}
@@ -27,12 +31,14 @@
 % Paired Delimiters %
 %%%%%%%%%%%%%%%%%%%%%
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\|}{\|}
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
 % Theorem environments %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
 \newtheorem{proposition}{Proposición}
+\newtheorem{lemma}{Lema}
 \newtheorem{corollary}{Corolario}
 \theoremstyle{remark}
 \newtheorem{remark}{Observación}
@@ -44,9 +50,194 @@
 
 \begin{document}
 \maketitle
-% Tengo que mirar la sección:
-% 7.1  Stochastic integrals with respect to Brownian motion
 
+% Book: Brownian Motion      %
+% Authors: Morters and Peres %
+% Page Number: 200           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Integrales estocásticas con respecto al movimiento Browniano}
+
+Consideramos el movimiento Browniano en dimensión uno \(\{B(t) : t \geq 0\}\) como una función continua.
+Desafortunadamente, las instancias del movimiento Browniano no son lo suficientemente regulares
+\footnote{Las funciones con respecto a las cuales podemos integrar son las llamadas de \emph{variación acotada}.
+Una de sus propiedades es ser derivables en casi todo punto de su dominio.
+Por su lado, las instancias del movimiento Browniano son, casi seguramente, derivables en ningún punto de su dominio.}
+como para definir integrales de la forma \(\int_0^t f(s) \dd B(s)\) instancia a instancia.
+Sin embargo, existe una via de escape para este dilema, si estamos dispuestos a usar nociones más débiles de límite soportadas en el hecho que los movimientos Brownianos son funciones \emph{aleatorias}.
+Esta es la idea de la \emph{integración estocástica}.
+
+Antes de explicar el procedimiento, estudiamos una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
+% Evitamos una referencia a la integral estocástica de Paley--Wiener
+Denotamos por \((\Omega, \mathcal{A}, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{B(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
+% Propiedad fuerte de Markov?
+
+\begin{definition}
+  Un proceso \(\{X(t, \omega) : t \geq 0, \omega \in \Omega\}\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\)
+\end{definition}
+
+\begin{lemma}
+  Todo proceso adaptado \(\{X(t) : t \geq 0\}\) continuo a derecha o izquierda es progresivamente medible.
+  \footnote{La prueba puede encontrarse como Lemma 7.2, en Brownian Motion de \morters{} y Peres.}
+\end{lemma}
+% La prueba es algo de teoría de la medida. 
+% No parece interesante. No se incluye.
+
+La construcción de las integrales es casi directa.
+Comenzamos integrando procesos de salto progresivamente medibles \(\{H(t, \omega) : t \geq 0, \omega \in \Omega\}\) de la forma
+\begin{align}
+  H(t, \omega)
+  =
+  \sum_{i = 1}^k A_i(\omega)\characteristic_{\left] t_i, t_{i + 1} \right]}(t)
+\end{align}
+para tiempos \(0 \leq t_1 \leq \cdots \leq t_{k + 1}\), y variables \(\events(t_i)\)--medibles \(A_i\).
+En completa analogía con el caso clásico definimos su integral como
+\begin{align}
+  \int_0^{\infty} H(s) \dd B(s)
+  \coloneqq
+  \sum_{i = 1}^k A_i (B(t_{i + 1}) - B(t_i))
+\end{align}
+Ahora sea \(H\) un proceso progresivamente medible que satisface \(\Expectation \int_0^{\infty} H(s)^2 \dd s < \infty\).
+Supongamos que \(H\) puede ser aproximado mediante una familia de procesos de salto progresivamente medibles \(H_n\), \(n \geq 1\), entonces definimos
+\begin{align}
+  \int_0^\infty H(s) \dd B(s)
+  \coloneqq
+  \lim_{n \rightarrow \infty} \int_0^\infty H_n(s) \dd B(s)
+  \label{definition:stochasticIntegralWithRespectToBrownianMotion_norm2Approximation}
+\end{align}
+A esta altura nos concentramos en la convergencia \(L^2\), aunque finalmente veremos que la integral estocástica también puede ser construída como un límite casi seguro, ver ???.
+% Referencia a Remark 7.7
+
+Para la estudiar las aproximaciones por procesos de salto progresivamente medibles, consideramos la familia \(\mathcal{H}\) formada por los procesos progresivamente medibles cuya norma 2 es finita en el sentido que
+% No entiendo por qué H(s) es lebesgue medible, y por qué puedo tomar esperanza de la integral.
+\begin{align}
+  \norm{H}_2^2
+  \coloneqq
+  \Expectation \int_0^{\infty} H(s)^2 \dd s
+  <
+  \infty
+\end{align}
+
+Lo que tenemos que demostrar ahora para completar la definición es que,
+\begin{enumerate}
+  \item
+  \label{lemma:norm2Approximation_densityOfStepProcesses}
+  todo proceso en \(\mathcal{H}\) puede ser aproximado en norma 
+  \(\norm{\placeholderParameter}_2\) 
+  mediante procesos de salto progresivamente medibles;
+  \item
+  \label{lemma:norm2Approximation_sequenceConvergence}
+  para cada secuencia de aproximación el límite en \eqref{definition:stochasticIntegralWithRespectToBrownianMotion_norm2Approximation} existe en el sentido de \(L^2\);
+  \item
+  \label{lemma:norm2Approximation_limitUniqueness}
+  y este límite no depende de la elección de procesos de salto aproximantes.
+\end{enumerate} 
+Esto es lo que verificamos ahora, comenzando con el item \ref{lemma:norm2Approximation_densityOfStepProcesses}.
+\begin{lemma}
+  Para cada proceso \(H \in \mathcal{H}\) existe una secuencia \(\{H_n : n \in \naturalNumbers\}\) de procesos de salto progresivamente medibles tales que \(\lim_{n \rightarrow \infty} \norm{H_n - H}_2 = 0\).
+\end{lemma}
+\begin{proof}
+  Aproximamos el proceso progresivamente medible sucesivamente por
+  \begin{itemize}
+    \item un proceso progresivamente medible acotado,
+    \item un proceso progresivamente medible acotado casi seguramente continuo,
+    \item y finalmente, por un proceso de saltos progresivamente medible.
+  \end{itemize}
+  
+  En \emph{primer} notamos que los procesos eventualmente nulos (esto es, nulos para tiempos \(s\) lo suficientemente grandes) son densos en \(\mathcal{H}\).
+  Dado \(H \in \mathcal{H}\), definimos el corte en un tiempo fijo \(n > 0\) como \(H_n(s, \omega) = H(s, \omega) \characteristic_{[0, n]}(s)\).
+  Claramente \(\lim_{n \rightarrow \infty} \norm{H_n - H}_2 = 0\).
+
+  % Creo que los autores suponen que H \geq 0 pero nunca hicieron explícita esa hipótesis
+  En \emph{segundo} lugar, notamos que los procesos uniformemente acotados son densos entre los elementos de \(\mathcal{H}\) eventualmente nulos.
+  Dado \(H \in \mathcal{H}\) nulo a partir de tiempo \(s_* > 0\) en adelante, lo aproximamos truncando sus valores.
+  Para \(n \in \naturalNumbers\) definimos \(H_n\) como \(H_n(s, \omega) = -n \vee H(s, \omega) \wedge n\).
+  Claramente \(H_n\) es progresivamente medible y \(\lim_{n \rightarrow \infty} \norm{H_n - H}_2 = 0\).
+
+  % estoy finado porque tengo que aplicar o convergencia dominada
+  % pero no tengo claro el espacio de medida.
+
+  Primer consecuencia de la definición de \(H_n\) 
+  \(H(s) = H_n(s)\) \((\forall s \geq s_*)\) \((\forall n \in \naturalNumbers)\)
+
+  Segunda consecuencia de la definición de \(H_n\) 
+  \([\abs{H(s) - H_n(s)} \geq \delta] = [\abs{H(s)} \geq n + \delta]\) \((\forall \delta > 0)\) \((\forall s \geq 0)\) \((\forall n \in \naturalNumbers)\)
+
+  \begin{align}
+    \norm{H - H_n}_2^2
+    &=
+    \Expectation \int_0^{\infty} (H(s) - H_n(s))^2 \dd s
+    \\
+    &=
+    \Expectation \int_0^{s_*} (H(s) - H_n(s))^2 \dd s
+    \\
+    &=
+    \int_0^{s_*} \Expectation \left[ (H(s) - H_n(s))^2 \right] \dd s
+    \\
+    &=
+    \int_0^{s_*} \int_0^{\infty} \prob \left[ (H(s) - H_n(s))^2 > h \right] \dd h \dd s
+  \end{align}
+  Definimos \(I_n(s) \coloneqq \int_0^{\infty} \prob \left[ (H(s) - H_n(s))^2 > h \right] \dd h\).
+  \begin{align}
+    I_n(s)
+    &=
+    \int_0^{\infty} \prob \left[ (H(s) - H_n(s))^2 > h \right] \dd h
+    \\
+    &=
+    \int_0^{\infty} \prob \left[ \abs{H(s) - H_n(s)} > \sqrt{h} \right] \dd h
+    \\
+    &=
+    \int_0^{\infty} \prob \left[ \abs{H(s) - H_n(s)} > u \right] 2 u \dd u
+    \\
+    &=
+    \int_0^{\infty} \prob \left[ \abs{H(s)} > n + u \right] 2 u \dd u
+    \\
+    &=
+    \int_n^{\infty} \prob \left[ \abs{H(s)} > v \right] 2 (v - n) \dd v
+    \\
+    &\leq
+    \int_n^{\infty} \prob \left[ \abs{H(s)} > v \right] 2 v \dd v
+    \\
+    &=
+    \int_n^{\infty} \prob \left[ H(s)^2 > v^2 \right] 2 v \dd v
+    \\
+    &=
+    \int_{n^2}^{\infty} \prob \left[ H(s)^2 > c \right] \dd c
+  \end{align}
+  Entonces \(I_n(s) \leq \)
+  \begin{align}
+    \norm{H - H_n}_2^2
+    &=
+    \int_0^{s_*} 
+      \int_{n^2}^{\infty} 
+        \prob \left[ H(s)^2 > c \right] 
+      \dd c 
+    \dd s
+  \end{align}
+  
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\part{Invarianza conforme del movimiento Browniano planar}
 % \begin{}
 
 % Book: Brownian Motion  %
@@ -363,6 +554,7 @@ Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\ev
   Supongamos \(\{\zeta(s) : s \geq 0\}\) es un proceso continuo creciente adaptado.
   Sea \(f : \realNumbers^2 \rightarrow \realNumbers\) dos veces continuamente derivable en la coordenada \(x\) y una vez continuamente derivable en la coordenada \(y\).
   Asumamos que
+  % Esta condición nos dice algo sobre la integrabilidad de un proceso progresivamente medible
   \begin{align}
     \Expectation \int_0^t \left[ \partial_x f(B(s), \zeta(s)) \right]^2 \dd s
     <
