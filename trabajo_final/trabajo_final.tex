@@ -8,6 +8,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{bbm}
+\usepackage{mathrsfs}
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
@@ -20,6 +21,9 @@
 \newcommand{\events}{\mathcal{F}}
 \newcommand{\eventspp}{\events^+}
 \newcommand{\borel}{\mathcal{B}}
+\newcommand{\brownian}{B}
+\newcommand{\alteredBrownian}{\widetilde{\brownian}}
+\newcommand{\wiener}{W}
 \newcommand{\placeholderParameter}{-}
 \newcommand{\dd}{\mathop{}\!\mathrm{d}}
 \newcommand{\naturalNumbers}{\mathbb{N}}
@@ -53,7 +57,30 @@
 
 % Miré el libro de schreve. no describe la matemática de los procesos progresivamente medibles.
 % Tengo que mirar el artículo chung1965.pdf
- % También podrían ser útiles los libros de Meyer y Dellacherie
+% También podrían ser útiles los libros de Meyer y Dellacherie
+
+% Book: Probability and potential %
+% Authors: Paul Andre Meyer       %
+% Page number: 85                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Measurability of hitting times
+Hemos notado que un proceso puede ser considerado una función definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
+Ahora hacemos uso de esta observación de forma sistemática.
+
+De ese modo, dada una función \(X\) definida en \(\left[ 0, \infty \right[ \times \Omega\) con valores en un espacio medible \((E, \mathscr{E})\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t) : t \geq 0\}\).
+Esto permite decir, por ejemplo, que \emph{\(X\) es un proceso} si la familia \(\{X_t\}\) lo es.
+También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \Omega\) es \emph{progresivamente medible} con respecto a la familia \((\events_t)\) si su función indicadora queda identificada con un proceso progresivamente medible con respectoa esta familia.
+
+% Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
+% y que da lugar a unos procesos llamados 'predecibles'
+
+% Book: Brownian motion and martingales in analysis %
+% Authors: Richard Durrett                          %
+% Page number: 60                                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{}
 
 % Book: Brownian Motion      %
 % Authors: Morters and Peres %
@@ -61,18 +88,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{Integrales estocásticas con respecto al movimiento Browniano}
 
-Consideramos el movimiento Browniano en dimensión uno \(\{B(t) : t \geq 0\}\) como una función continua.
+Consideramos el movimiento Browniano en dimensión uno \(\{\brownian(t) : t \geq 0\}\) como una función continua.
 Desafortunadamente, las instancias del movimiento Browniano no son lo suficientemente regulares
 \footnote{Las funciones con respecto a las cuales podemos integrar son las llamadas de \emph{variación acotada}.
 Una de sus propiedades es ser derivables en casi todo punto de su dominio.
 Por su lado, las instancias del movimiento Browniano son, casi seguramente, derivables en ningún punto de su dominio.}
-como para definir integrales de la forma \(\int_0^t f(s) \dd B(s)\) instancia a instancia.
+como para definir integrales de la forma \(\int_0^t f(s) \dd \brownian(s)\) instancia a instancia.
 Sin embargo, existe una via de escape para este dilema, si estamos dispuestos a usar nociones más débiles de límite soportadas en el hecho que los movimientos Brownianos son funciones \emph{aleatorias}.
 Esta es la idea de la \emph{integración estocástica}.
 
 Antes de explicar el procedimiento, estudiamos una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
 % Evitamos una referencia a la integral estocástica de Paley--Wiener
-Denotamos por \((\Omega, \mathcal{A}, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{B(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
+Denotamos por \((\Omega, \mathcal{A}, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
 % Propiedad fuerte de Markov?
 
 \begin{definition}
@@ -96,16 +123,16 @@ Comenzamos integrando procesos de salto progresivamente medibles \(\{H(t, \omega
 para tiempos \(0 \leq t_1 \leq \cdots \leq t_{k + 1}\), y variables \(\events(t_i)\)--medibles \(A_i\).
 En completa analogía con el caso clásico definimos su integral como
 \begin{align}
-  \int_0^{\infty} H(s) \dd B(s)
+  \int_0^{\infty} H(s) \dd \brownian(s)
   \coloneqq
-  \sum_{i = 1}^k A_i (B(t_{i + 1}) - B(t_i))
+  \sum_{i = 1}^k A_i (\brownian(t_{i + 1}) - \brownian(t_i))
 \end{align}
 Ahora sea \(H\) un proceso progresivamente medible que satisface \(\Expectation \int_0^{\infty} H(s)^2 \dd s < \infty\).
 Supongamos que \(H\) puede ser aproximado mediante una familia de procesos de salto progresivamente medibles \(H_n\), \(n \geq 1\), entonces definimos
 \begin{align}
-  \int_0^\infty H(s) \dd B(s)
+  \int_0^\infty H(s) \dd \brownian(s)
   \coloneqq
-  \lim_{n \rightarrow \infty} \int_0^\infty H_n(s) \dd B(s)
+  \lim_{n \rightarrow \infty} \int_0^\infty H_n(s) \dd \brownian(s)
   \label{definition:stochasticIntegralWithRespectToBrownianMotion_norm2Approximation}
 \end{align}
 A esta altura nos concentramos en la convergencia \(L^2\), aunque finalmente veremos que la integral estocástica también puede ser construída como un límite casi seguro, ver ???.
@@ -220,26 +247,7 @@ Esto es lo que verificamos ahora, comenzando con el item \ref{lemma:norm2Approxi
   
 \end{proof}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% \end{}
 
 \part{Invarianza conforme del movimiento Browniano planar}
 % \begin{}
@@ -248,61 +256,61 @@ Esto es lo que verificamos ahora, comenzando con el item \ref{lemma:norm2Approxi
 % Author: Mörters, Peres %
 % Page Number: 212       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es \emph{analítica}, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f = f_1 + i f_2\) para referirnos a la descomposición de \(f\) en partes real e imaginaria.
-Entonces, por las ecuaciones de Cauchy--Riemann \(\partial_1 f_1 = \partial_2 f_2\) y \(\partial_2 f_1 = - \partial_1 f_2\), tenemos \(\Delta f_1 = \Delta f_2 = 0\).
+Para motivar el resultado supongamos que \(f : \complexNumbers \rightarrow \complexNumbers\) es \emph{analítica}, es decir diferenciable en el sentido complejo en todas partes, y escribamos \(f(x, y) = (u(x, y), v(x, y))\) para referirnos a su representación como función \(f : \realNumbers^2 \rightarrow \realNumbers^2\).
+Entonces, por las ecuaciones de Cauchy--Riemann \(u_x = v_y\) y \(u_y = - v_x\), tenemos \(\Delta u = \Delta v = 0\).
 Entonces la fórmula de \ito{} (si aplica) afirma que casi seguramente, para todo \(t \geq 0\),
 \begin{align}
-  f(B(t))
+  f(\brownian(t))
   =
-  \int_0^t f'(B(s)) \dd B(s)
+  \int_0^t f'(\brownian(s)) \dd \brownian(s)
 \end{align}
-donde \(\dd B(s)\) es una abreviación para \(\dd B_1(s) + i \dd B_2(s)\) con \(B(s) = B_1(s) + i B_2(s)\).
+donde \(\dd \brownian(s)\) es una abreviación para \(\dd (\Re \brownian(s)) + i \dd (\Im \brownian(s))\).
 El lado derecho define un proceso continuo con incrementos independientes, y es al menos plausible que sean gaussianos.
 Más aún, su esperanza es nula y
 \begin{align}
-  \Expectation \left[ \left( \int_0^t f'(B(s)) \dd B(s) \right)^2 \right]
+  \Expectation \left[ \left( \int_0^t f'(\brownian(s)) \dd \brownian(s) \right)^2 \right]
   =
-  \Expectation \int_0^t \abs{f'(B(s))}^2 \dd s
+  \Expectation \int_0^t \abs{f'(\brownian(s))}^2 \dd s
 \end{align}
-sugiriendo que \(\{f(B(t)) : t \geq 0\}\) es un movimiento Browniano `viajando' con la velocidad alterada
+sugiriendo que \(\{f(\brownian(t)) : t \geq 0\}\) es un movimiento Browniano `viajando' con la velocidad alterada
 \begin{align}
   t
   \mapsto
-  \int_0^t \abs{f'(B(s))}^2 \dd s
+  \int_0^t \abs{f'(\brownian(s))}^2 \dd s
 \end{align}
 Para pasar de esta eurística a un poderoso teorema permitimos que la función sea una aplicación analítica \(f : U \rightarrow V\) entre dominios en el plano.
 Recordamos que tal aplicación es \emph{conforme} si es una biyección.
 
 \begin{theorem}
   \label{theorem:ConformalInvarianceOfPlanarBrownianMotion}
-  Sea \(U\) un dominio en el plano complejo, \(x \in U\), y sea \(f : U \rightarrow V\) analítica.
-  Sea \(\{B(t) : t \geq 0\}\) un movimiento Browniano que comienza en \(x\) y
+  Sea \(U\) un dominio en el plano complejo, \(z_0 \in U\), y sea \(f : U \rightarrow V\) analítica.
+  Sea \(\{\brownian(t) : t \geq 0\}\) un movimiento Browniano que comienza en \(z_0\) y
   \begin{align}
     \tau_U
     =
-    \inf \{ t \geq 0 : B(t) \notin U\}
+    \inf \{ t \geq 0 : \brownian(t) \notin U\}
   \end{align}
   su primer tiempo de salida del dominio \(U\).
   Entonces el proceso
-  \(\{f(B(t)) : 0 \leq t \leq \tau_U\}\)  % Este tipo de procesos deben ser los detenidos en el tiempo. O sea f(B(t \wedge \tau_U)) con t \geq 0.
-  es un movimiento Browniano con velocidad alterada, es decir que existe un movimiento Browniano planar \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\) tal que, para todo \(t \in \left[ 0, \tau_U \right[\),
+  \(\{f(\brownian(t)) : 0 \leq t \leq \tau_U\}\)  % Este tipo de procesos deben ser los detenidos en el tiempo. O sea f(\brownian(t \wedge \tau_U)) con t \geq 0.
+  es un movimiento Browniano con velocidad alterada, es decir que existe un movimiento Browniano planar \(\left\{ \alteredBrownian(t) : t \geq 0 \right\}\) tal que, para todo \(t \in \left[ 0, \tau_U \right[\),
   \begin{align}
-    & f(B(t)) = \widetilde{B}(\zeta(t))
+    & f(\brownian(t)) = \alteredBrownian(\zeta(t))
     &
     & \text{donde }
-    \zeta(t) = \int_0^t \abs{f'(B(s))}^2 \dd s
+    \zeta(t) = \int_0^t \abs{f'(\brownian(s))}^2 \dd s
   \end{align}
   Si, adicionalmente, \(f\) es conforme, entonces \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por \(\widehat{B}(t) : t \geq 0\).
 \end{theorem}
 \begin{remark}
-  Notar que, al ser \(f\) diferenciable en el sentido complejo, la derivada \(Df(x)\) no es otra cosa que la multiplicación por el número complejo \(f'(x)\), y \(f\) puede aproximarse localmente alrededor de \(x\) por su tangente \(z \mapsto f(x) + f'(x)(z - x)\).
+  Notar que, al ser \(f\) diferenciable en el sentido complejo, la derivada \(Df(z_0)\) no es otra cosa que la multiplicación por el número complejo \(f'(z_0)\), y \(f\) puede aproximarse localmente alrededor de \(z_0\) por su tangente \(z \mapsto f(z_0) + f'(z_0)(z - z_0)\).
   La derivada de la alteración temporal es
   \begin{align}
-    \partial_t \zeta(t)
+    \zeta'(t)
     =
-    \abs{f'(B(t))}^2
+    \abs{f'(\brownian(t))}^2
     =
-    (\partial_1 f_1(B(t)))^2 + (\partial_2 f_1(B(t)))^2
+    u_x(\brownian(t))^2 + u_y(\brownian(t))^2
   \end{align}
 \end{remark}
 \begin{remark}
@@ -317,7 +325,7 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
   % Esta parte podría irse
   También podemos asumir, sin pérdida de generalidad, que \(f\) es una aplicación entre domninios \emph{acotados}.
   Caso contrario elijamos \(U_n \subseteq K_n \subseteq U\) tales que \(U_n\) es abierto con \(\bigcup_n U_n = U\) y \(K_n\) es compacto, lo cual implica que \(V_n = f(U_n)\) es acotado.
-  Entonces el proceso \(\{f(B(t)) : t \leq \tau_{U_n}\}\) es un movimiento browniano con tiempo alterado para todo \(n\), y esto extiende inmediatamente al proceso \(\{f(B(t)) : t \leq \tau_U\}\).
+  Entonces el proceso \(\{f(\brownian(t)) : t \leq \tau_{U_n}\}\) es un movimiento browniano con tiempo alterado para todo \(n\), y esto extiende inmediatamente al proceso \(\{f(\brownian(t)) : t \leq \tau_U\}\).
 
   El principal argumento de la prueba esta basado en la integración estocástica.
   Recordemos que las ecuaciones de Cauchy--Riemann implican que los vectores \(\nabla f_1\), \(\nabla f_2\) son ortogonales entre sí y cada uno de magnitud \(\abs{f'}\).
@@ -326,57 +334,57 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
     \sigma(t) = \inf \{s \geq 0 : \zeta(s) \geq t\}
   \end{align}
   que representa la inversa de la alteración temporal.
-  Sea \(\{\widetilde{B}(t) : t \geq 0\}\) un movimiento Browniano independiente de \(\{B(t) : t \geq 0\}\), y definamos un proceso \(\{W(t) : t \geq 0\}\) mediante
+  Sea \(\left\{ \alteredBrownian(t) : t \geq 0 \right\}\) un movimiento Browniano independiente de \(\{\brownian(t) : t \geq 0\}\), y definamos un proceso \(\{\wiener(t) : t \geq 0\}\) mediante
   \begin{align}
-    &W(t)
+    &\wiener(t)
     =
-    f(B(\sigma(t) \wedge \tau_U))
-      + \widetilde{B}(t) - \widetilde{B}(t \wedge \zeta(\tau_U))
+    f(\brownian(\sigma(t) \wedge \tau_U))
+      + \alteredBrownian(t) - \alteredBrownian(t \wedge \zeta(\tau_U))
     &&\text{para } t \geq 0
   \end{align}
-  A grades trazos, el proceso \(\{f(B(\sigma(t))) : 0 \leq t \leq \zeta(\tau_U)\}\) llega a su punto final en el instante aleatorio \(\zeta(\tau_U)\) y un movimiento Browniano independiente toma su lugar a partir de ese momento.
-  Denotamos \(\mathcal{G}(t)\) a la \(\sigma\)--álgebra generada por \(\{W(s) : s \leq t\}\).
-  Será suficiente probar que el proceso \(\{W(t) : t \geq 0\}\) es un movimiento Browniano.
+  A grades trazos, el proceso \(\{f(\brownian(\sigma(t))) : 0 \leq t \leq \zeta(\tau_U)\}\) llega a su punto final en el instante aleatorio \(\zeta(\tau_U)\) y un movimiento Browniano independiente toma su lugar a partir de ese momento.
+  Denotamos \(\mathcal{G}(t)\) a la \(\sigma\)--álgebra generada por \(\{\wiener(s) : s \leq t\}\).
+  Será suficiente probar que el proceso \(\{\wiener(t) : t \geq 0\}\) es un movimiento Browniano.
   
   % No puedo decir que es obvio, hay que ser caradura ...
   Es obvio que el proceso es continuo casi seguramente y por tanto basta con mostra que sus distribuciones finito--dimensionales coinciden con las del movimiento Browniano.
   Recordando la transformada de Laplace de la distribución normal bivariada, esto es equivalente a mostrar que, para cualesquiera \(0 \leq s \leq t\) y \(\lambda \in \complexNumbers\),
   \begin{align}
-    \Expectation\left[ \exp \ang{\lambda, W(t)} \mid \mathcal{G}(s) \right]
+    \Expectation\left[ \exp \ang{\lambda, \wiener(t)} \mid \mathcal{G}(s) \right]
     =
-    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, W(s)} \right)
+    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, \wiener(s)} \right)
   \end{align}
   donde hemos usado \(\ang{\placeholderParameter , \placeholderParameter}\) para denotar al producto escalar.
-  Esto se sigue directamente una vez que mostremos que, para \(x \in U\),
+  Esto se sigue directamente una vez que mostremos que, para \(z_0 \in U\),
   \begin{align}
     \label{equation:ConformalInvarianceOfPlanarBrownianMotion_MainEquation}
     \Expectation\left[ 
-      \exp\ang{\lambda, W(t)} 
-      \mid W(s) = f(x)
+      \exp\ang{\lambda, \wiener(t)} 
+      \mid \wiener(s) = f(z_0)
     \right]
     =
-    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, f(x)} \right)
+    \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - s) + \ang{\lambda, f(z_0)} \right)
   \end{align}
   Para simplificar la notación podemos asumirr \(s = 0\).
-  Para la prueba, primero evaluamos la experanza con respecto al movimiento Browniano independiente \(\left\{ \widetilde{B}(t) : t \geq 0 \right\}\), lo cual dá
+  Para la prueba, primero evaluamos la experanza con respecto al movimiento Browniano independiente \(\left\{ \alteredBrownian(t) : t \geq 0 \right\}\), lo cual dá
   \begin{align}
     \Expectation &\left[
-      \exp \ang{\lambda, W(t) 
+      \exp \ang{\lambda, \wiener(t)}
       \mid 
-      W(0) = f(x)} 
+      \wiener(0) = f(z_0) 
     \right]
     \\&=
-    \Expectation_x \exp \left(
-      \ang{\lambda, f(B(\sigma(t), \wedge \tau_U))} 
+    \Expectation_{z_0} \exp \left(
+      \ang{\lambda, f(\brownian(\sigma(t), \wedge \tau_U))} 
       + \frac{1}{2} \abs{\lambda}^2 (t - \zeta(\sigma(t) \wedge \tau_U))
     \right)
   \end{align}
   Usamos la fórmula multidimensional de \ito para la aplicación acotada
   \begin{align}
-    F(x, u)
+    F(z, u)
     =
     \exp\left(
-      \ang{\lambda, f(x)}
+      \ang{\lambda, f(z)}
       + \frac{1}{2} \abs{\lambda}^2 (t - u)
     \right)
   \end{align}
@@ -392,9 +400,9 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
   Más aún, \(\nabla g = 0\) por la analiticidad de \(f\).
   Aplicar \ref{equation:LaplacianOfExponential} da
   \begin{align}
-    \laplacian \exp \ang{\lambda, f(x)}
+    \laplacian \exp \ang{\lambda, f(z)}
     =
-    \abs{\lambda}^2 \abs{f'(x)}^2 \exp \ang{\lambda, f(x)}
+    \abs{\lambda}^2 \abs{f'(z)}^2 \exp \ang{\lambda, f(z)}
   \end{align}
   Más aún, tenemos
   \begin{align}
@@ -402,48 +410,50 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
     =
     - \frac{1}{2} \abs{\lambda}^2 \exp\left( \frac{1}{2} \abs{\lambda}^2 (t - u)\right)
   \end{align}
-  Ahora definimos \(U_n = \{x \in U : \abs{x - y} \geq \frac{1}{n} (\forall y \in \partial U)\}\).
-  Entonces \(\abs{f'(x)}\) se encuentra lejos de cero en \(U_n\) y por lo tanto el tiempo de parada \(T = \sigma(t) \wedge \tau_{U_n}\) es acotado.
-  La fórmula multidimensional de \ito da, casi seguramente,
+  Ahora definimos \(U_n = \{z \in U : \abs{z - w} \geq 1 / n \;(\forall w \in \partial U)\}\).
+  Entonces \(\abs{f'(z)}\) se encuentra lejos de cero en \(U_n\) y por lo tanto el tiempo de parada \(T = \sigma(t) \wedge \tau_{U_n}\) es acotado.
+  La fórmula multidimensional de \ito{} da, casi seguramente,
   \begin{align}
-    F(B(T), \zeta(T))
+    F(\brownian(T), \zeta(T))
     &=
-    F(B(0), \zeta(0))
-    + \int_0^T \grad_x F(B(s), \zeta(s)) \cdot \dd B(s)
+    F(\brownian(0), \zeta(0))
+    + \int_0^T \grad_z F(\brownian(s), \zeta(s)) \cdot \dd \brownian(s)
     \\
     &+
-    \int_0^T \partial_u F(B(s), \zeta(s)) \dd \zeta(s)
-    + \frac{1}{2} \int_0^T \laplacian_x F(B(s), \zeta(s)) \dd s
+    \int_0^T \partial_u F(\brownian(s), \zeta(s)) \dd \zeta(s)
+    + \frac{1}{2} \int_0^T \laplacian_z F(\brownian(s), \zeta(s)) \dd s
   \end{align}
-  Volviendo sobre las ecuaciones para \(\laplacian \exp\), \(\partial_u \exp\), y recordando que \(\dd \zeta(u) = \abs{f'(B(u))}^2 \dd u\) vemos que los dos términos en la segunda línea se cancelan.
+  Volviendo sobre las ecuaciones para \(\laplacian \exp\), \(\partial_u \exp\), y recordando que \(\dd \zeta(s) = \abs{f'(\brownian(s))}^2 \dd s\) vemos que los dos términos en la segunda línea se cancelan.
   Haciendo uso de la convergencia dominada y el hecho que la integral estocástica tiene esperanza nula, ver el Ejercicio 7.2, obtenemos
   \begin{align}
     \Expectation \left[
-      \exp \ang{\lambda, W(t)}
+      \exp \ang{\lambda, \wiener(t)}
       \mid
-      W(0) = f(x)
+      \wiener(0) = f(z_0)
     \right]
     &=
-    \Expectation_x \left[ F(B(\sigma(t) \wedge \tau_U), \zeta(\sigma(t) \wedge \tau_U))\right]
+    \Expectation_{z_0} \left[ F(\brownian(\sigma(t) \wedge \tau_U), \zeta(\sigma(t) \wedge \tau_U))\right]
     \\
     &=
-    \lim_{n \rightarrow \infty} \Expectation_x \left[F(B(T), \zeta(T))\right]
+    \lim_{n \rightarrow \infty} \Expectation_{z_0} \left[F(\brownian(T), \zeta(T))\right]
     \\
     &=
-    F(x, 0)
+    F(z_0, 0)
     \\
     &=
-    \exp \left( \frac{1}{2} \abs{\lambda}^2 t + \ang{\lambda, f(x)} \right)
+    \exp \left( \frac{1}{2} \abs{\lambda}^2 t + \ang{\lambda, f(z_0)} \right)
   \end{align}
   Esto muestra \eqref{equation:ConformalInvarianceOfPlanarBrownianMotion_MainEquation} y así completa la prueba del enunciado principal.
-  Resta observar que, si \(f\) es conforme entonces cuando \(t \uparrow \tau_u\) el punto \(f(B(t))\) converge a un punto en la frontera de \(V\).
-  Por lo tanto \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por el proceso \(\{\widetilde{B}(t) : t \geq 0\}\).
+  Resta observar que, si \(f\) es conforme entonces cuando \(t \uparrow \tau_u\) el punto \(f(\brownian(t))\) converge a un punto en la frontera de \(V\).
+  Por lo tanto \(\zeta(\tau_U)\) es el primer tiempo de salida de \(V\) por el proceso \(\left\{ \alteredBrownian(t) : t \geq 0 \right\}\).
 \end{proof}
 
 % \end{}
 
 \newpage
 {\huge \textbf{Apéndice}}
+
+% \begin{}
 
 % \begin{}
 
@@ -469,13 +479,15 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ecuaciones de Cauchy--Riemann
 \begin{theorem}
-  Una función \(f : U \subseteq \realNumbers^2 \rightarrow \realNumbers^2\) --- \((x, y) \mapsto (u(x, y), v(x, y))\) --- pensada como función de variable compleja es holomorfa en un punto \(z_0 \simeq (x_0, y_0) \in U\) si y sólo si es diferenciable y sus derivadas parciales satisfacen las ecuaciones de Cauchy--Riemann \(u_x = v_y\), \(u_y = - v_x\).
+  Una función \(f : U \subseteq \realNumbers^2 \rightarrow \realNumbers^2\) dada por  \(f(x, y) = (u(x, y), v(x, y))\), pensada como función de variable compleja es holomorfa en un punto si y sólo si es diferenciable y sus derivadas parciales satisfacen las ecuaciones de Cauchy--Riemann \(u_x = v_y\), \(u_y = - v_x\).
 \end{theorem}
 
 % Fuente?
 
 \begin{definition}
-  \(\laplacian f = \partial_1^2 f_1 + \partial_2^2 f_2\)
+  \(f(x, y) = (u(x, y), v(x, y))\)
+
+  \(\laplacian f = \partial_x^2 u + \partial_y^2 v\)
 \end{definition}
 
 \begin{theorem}
@@ -491,7 +503,7 @@ Recordamos que tal aplicación es \emph{conforme} si es una biyección.
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definición de tiempo de parada
 \begin{definition}[Tiempo de parada.]
-Sea \((\events_t)_{t \geq 0}\) una filtración en un espacio \(\Omega\).
+Sea \((\events_t : t \geq 0)\) una filtración en un espacio \(\Omega\).
 Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo de parada si \([T \leq t] \in \events_t\) para todo \(t \geq 0\).
 \end{definition}
 
@@ -501,17 +513,17 @@ Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo
 \textbf{Tiempos de contacto.}
 
 \begin{proposition}
-  Sea \((X_t)_{t \geq 0}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t)_{t \geq 0}\) en la \(\sigma\)--álgebra de Borel \(\borel\).
+  Sea \(\{X_t : t \geq 0\}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t : t \geq 0)\) en la \(\sigma\)--álgebra de Borel \(\borel\).
   Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, E)] = 1\).
-  Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t)_{t \geq 0}\).
+  Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t : t \geq 0)\).
 \end{proposition}
 
-Otra opción es agrandar la filtración \((\events_t)_{t \geq 0}\).
-Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\events_t \subseteq \eventspp_t\), y consideramos la nueva filtración \((\eventspp_t)_{t \geq 0}\).
+Otra opción es agrandar la filtración \((\events_t : t \geq 0)\).
+Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\events_t \subseteq \eventspp_t\), y consideramos la nueva filtración \((\eventspp_t : t \geq 0)\).
 \begin{proposition}
-  Sea \((X_t)_{t \geq 0}\) un proceso \cadlag{} adaptado a \((\eventspp_t)_{t \geq 0}\).
+  Sea \(\{X_t : t \geq 0\}\) un proceso \cadlag{} adaptado a \((\eventspp_t : t \geq 0)\).
   Sea \(A \in \borel(E)\) abierto.
-  Entonces \(T_A\) es un tiempo de parada con respecto a \((\eventspp_t)_{t \geq 0}\).
+  Entonces \(T_A\) es un tiempo de parada con respecto a \((\eventspp_t : t \geq 0)\).
 \end{proposition}
 
 % \end{}
@@ -523,19 +535,19 @@ Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\ev
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Functions of Brownian Motion
 \begin{theorem}
-  Sea \(f : \realNumbers^d \rightarrow \realNumbers\) dos veces continuamente derivable, y \(\{B(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional.
-  Además supongamos que, para todo \(t > 0\) y \(x \in \realNumbers^d\), tenemos \(\Expectation_x \abs{f(B(t))} < \infty\) y \(\Expectation_x \int_0^t \abs{\laplacian f(B(s))} \dd s < \infty\).
+  Sea \(f : \realNumbers^d \rightarrow \realNumbers\) dos veces continuamente derivable, y \(\{\brownian(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional.
+  Además supongamos que, para todo \(t > 0\) y \(x \in \realNumbers^d\), tenemos \(\Expectation_x \abs{f(\brownian(t))} < \infty\) y \(\Expectation_x \int_0^t \abs{\laplacian f(\brownian(s))} \dd s < \infty\).
   Entonces el proceso definido por
   \begin{align}
     X(t)
     =
-    f(B(t)) - \frac{1}{2} \int_0^t \laplacian f(B(s)) \dd s
+    f(\brownian(t)) - \frac{1}{2} \int_0^t \laplacian f(\brownian(s)) \dd s
   \end{align}
   es una martingala.
 \end{theorem}
 \begin{corollary}
-  Supongamos \(f : \realNumbers^d \rightarrow \realNumbers\) satisface \(\laplacian f(x) = 0\) y \(\Expectation_x \abs{f(B(t))} < \infty\), para todo \(x \in \realNumbers^d\) y \(t > 0\).
-  Entonces el proceso \(\{f(B(t)) : t \geq 0\}\) es una martingala.
+  Supongamos \(f : \realNumbers^d \rightarrow \realNumbers\) satisface \(\laplacian f(x) = 0\) y \(\Expectation_x \abs{f(\brownian(t))} < \infty\), para todo \(x \in \realNumbers^d\) y \(t > 0\).
+  Entonces el proceso \(\{f(\brownian(t)) : t \geq 0\}\) es una martingala.
 \end{corollary}
 
 % Book: Brownian Motion      %
@@ -544,13 +556,13 @@ Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\ev
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Itô's Formula
 \begin{theorem}[Fórmula de \ito{} Número I]
-  Sea \(f : \realNumbers \rightarrow \realNumbers\) dos veces continuamente derivable tal que \(\Expectation \int_0^t f'(B(s))^2 \dd s < \infty\) para algun \(t > 0\).
+  Sea \(f : \realNumbers \rightarrow \realNumbers\) dos veces continuamente derivable tal que \(\Expectation \int_0^t f'(\brownian(s))^2 \dd s < \infty\) para algun \(t > 0\).
   Entonces, casi seguramente, para todo \(0 \leq s \leq t\),
   \begin{align}
-    f(B(s)) - f(B(0))
+    f(\brownian(s)) - f(\brownian(0))
     =
-    \int_0^s f'(B(u)) \dd B(u)
-    + \frac{1}{2} \int_0^s f''(B(u)) \dd u
+    \int_0^s f'(\brownian(u)) \dd \brownian(u)
+    + \frac{1}{2} \int_0^s f''(\brownian(u)) \dd u
   \end{align}
 \end{theorem}
 % Esta segunda versión no es necesaria
@@ -560,20 +572,20 @@ Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\ev
   Asumamos que
   % Esta condición nos dice algo sobre la integrabilidad de un proceso progresivamente medible
   \begin{align}
-    \Expectation \int_0^t \left[ \partial_x f(B(s), \zeta(s)) \right]^2 \dd s
+    \Expectation \int_0^t \left[ \partial_x f(\brownian(s), \zeta(s)) \right]^2 \dd s
     <
     \infty
   \end{align}
   para algún \(t > 0\).
   Entonces, casi seguramente, para todo \(0 \leq s \leq t\),
   \begin{align}
-    f(B(s), \zeta(s)) - f(B(0), \zeta(0))
+    f(\brownian(s), \zeta(s)) - f(\brownian(0), \zeta(0))
     =
-    &\int_0^s \partial_x f (B(u), \zeta(u)) \dd B(u)
+    &\int_0^s \partial_x f (\brownian(u), \zeta(u)) \dd \brownian(u)
     \\
-    &+ \int_0^s \partial_y f(B(u), \zeta(u)) \dd \zeta(u)
+    &+ \int_0^s \partial_y f(\brownian(u), \zeta(u)) \dd \zeta(u)
     \\
-    &+ \frac{1}{2} \int_0^s \partial_{x x} f(B(u), \zeta(u)) \dd u
+    &+ \frac{1}{2} \int_0^s \partial_{x x} f(\brownian(u), \zeta(u)) \dd u
   \end{align}
 \end{theorem}
 
@@ -589,13 +601,13 @@ Escribimos \(\partial_j\) para denotar la derivada parcial en la dirección de l
 para el vector de derivadas en la dirección de \(x\), respectivamente \(y\).
 Para integrales usamos la notación del producto escalar
 \begin{align}
-  \int_0^t \grad_x f(B(u), \zeta(u)) \cdot \dd B(u)
+  \int_0^t \grad_x f(\brownian(u), \zeta(u)) \cdot \dd \brownian(u)
   &=
-  \sum_{i = 1}^d \int_0^t \partial_i f(B(u), \zeta(u)) \dd B_i(u)
+  \sum_{i = 1}^d \int_0^t \partial_i f(\brownian(u), \zeta(u)) \dd B_i(u)
   \\
-  \int_0^t \grad_y f(B(u), \zeta(u)) \cdot \dd \zeta(u)
+  \int_0^t \grad_y f(\brownian(u), \zeta(u)) \cdot \dd \zeta(u)
   &=
-  \sum_{i = 1}^d \int_0^t \partial_{d + i} f(B(u), \zeta(u)) \dd \zeta_i(u)
+  \sum_{i = 1}^d \int_0^t \partial_{d + i} f(\brownian(u), \zeta(u)) \dd \zeta_i(u)
 \end{align}
 Finalmente, para el Laplaciano en la variable \(x\) escribimos
 \begin{align}
@@ -608,25 +620,25 @@ Finalmente, para el Laplaciano en la variable \(x\) escribimos
 % para que no incluya la dependencia del proceso creciente
 \begin{theorem}[Fórmula de \ito{} multidimensional]
   \label{theorem:ItoFormula_multidimensional}
-  Sea \(\{B(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional y supongamos \(\{\zeta(s) : s \geq 0\}\) es un proceso adaptado, continuo con valores en \(\realNumbers^m\) y componentes crecientes.
+  Sea \(\{\brownian(t) : t \geq 0\}\) un movimiento Browniano \(d\)--dimensional y supongamos \(\{\zeta(s) : s \geq 0\}\) es un proceso adaptado, continuo con valores en \(\realNumbers^m\) y componentes crecientes.
   Sea \(f : \realNumbers^{d + m} \rightarrow \realNumbers\) tal que las derivadas parciales \(\partial_i f\), \(\partial_{j k}\) existen para todo \(1 \leq j, k \leq d\), \(d + 1 \leq i \leq d + m\) y son continuas.
   Si, para algún \(t > 0\),
   \begin{align}
-    \Expectation \int_0^t \abs{\grad_x f(B(s), \zeta(s))}^2 \dd s
+    \Expectation \int_0^t \abs{\grad_x f(\brownian(s), \zeta(s))}^2 \dd s
     <
     \infty
   \end{align}
   entonces, casi seguramente, para todo \(0 \leq s \leq t\),
   \begin{align}
-    f(B(s), \zeta(s)) - f(B(0), \zeta(0))
+    f(\brownian(s), \zeta(s)) - f(\brownian(0), \zeta(0))
     =
-    &\int_0^s \grad_x f(B(u), \zeta(u)) \cdot \dd B(u)
+    &\int_0^s \grad_x f(\brownian(u), \zeta(u)) \cdot \dd \brownian(u)
     \nonumber
     \\
-    &+ \int_0^s \grad_y f(B(u), \zeta(u)) \cdot \dd \zeta(u)
+    &+ \int_0^s \grad_y f(\brownian(u), \zeta(u)) \cdot \dd \zeta(u)
     \nonumber
     \\
-    &+ \frac{1}{2} \int_0^s \laplacian_x f(B(u), \zeta(u)) \dd u
+    &+ \frac{1}{2} \int_0^s \laplacian_x f(\brownian(u), \zeta(u)) \dd u
     \label{equation:ItoFormula_multidimensional}
   \end{align}
   \begin{remark}
@@ -638,4 +650,6 @@ Finalmente, para el Laplaciano en la variable \(x\) escribimos
     Aplicando el teorema \ref{theorem:ItoFormula_multidimensional} a \(f^*\) arroja \eqref{equation:ItoFormula_multidimensional} para \(f\), casi seguramente, para todo tiempo \(s \wedge T\), para \(s \leq t\).
   \end{remark}
 \end{theorem}
+
+% \end{}
 \end{document}
