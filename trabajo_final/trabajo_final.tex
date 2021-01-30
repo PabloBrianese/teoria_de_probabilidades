@@ -82,37 +82,6 @@
 \begin{document}
 \maketitle
 
-% Miré el libro de schreve. no describe la matemática de los procesos progresivamente medibles.
-% Tengo que mirar el artículo chung1965.pdf
-% También podrían ser útiles los libros de Meyer y Dellacherie
-
-% Book: Probability and potential %
-% Authors: Paul Andre Meyer       %
-% Page number: 85                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% La afirmación recíproca al teorema 49 de este libro es cierta?
-
-% Measurability of hitting times
-Un proceso estocástico \((X(t) : t \geq 0)\) adaptado a una filtración \((\events_t : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
-
-Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\) con valores en un espacio medible \((E, \mathscr{E})\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t) : t \geq 0\}\).%
-\footnote{Esta idea parece formalmente similar a como el producto por un escalar en un espacio vectorial puede considerarse como una función definida sobre el producto tensorial de los escalares con los vectores, o un producto en un anillo puede considerarse como una función definida sobre el cuadrado tensorial del anillo.
-Alguien con más instrucción en álgebra y teoría de categorías debería poder hacer un comentario sobre esto.}
-
-Esto permite decir, por ejemplo, que \emph{\(X\) es un proceso} si la familia \(\{X_t\}\) lo es.
-También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \Omega\) es \emph{progresivamente medible} con respecto a la familia \((\events_t)\) si su función indicadora queda identificada con un proceso progresivamente medible con respectoa esta familia.
-
-Haremos un uso sistemático de esta observación.
-
-
-% Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
-% y que da lugar a unos procesos llamados 'predecibles'
-
-% Book: Brownian motion and martingales in analysis %
-% Authors: Richard Durrett                          %
-% Page number: 60                                   %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % \begin{}
 
 % Book: Brownian Motion      %
@@ -130,7 +99,40 @@ como para definir integrales de la forma \(\int_0^t f(s) \dd \brownian(s)\) inst
 Sin embargo, existe una via de escape para este dilema, si estamos dispuestos a usar nociones más débiles de límite soportadas en el hecho que los movimientos Brownianos son funciones \emph{aleatorias}.
 Esta es la idea de la \emph{integración estocástica}.
 
-Antes de explicar el procedimiento, estudiamos una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
+Antes de explicar el procedimiento, debemos estudiar algo de teoría de la medida sobre una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
+
+SECCIÓN SOBRE PROCESOS PROGRESIVAMENTE MEDIBLES
+% Miré el libro de schreve. no describe la matemática de los procesos progresivamente medibles.
+% Tengo que mirar el artículo chung1965.pdf
+% También podrían ser útiles los libros de Meyer y Dellacherie
+
+% Book: Probability and potential %
+% Authors: Paul Andre Meyer       %
+% Page number: 85                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% La afirmación recíproca al teorema 49 de este libro es cierta?
+
+% Measurability of hitting times
+Haremos uso sistemático de un isomorfismo%
+\footnote{Esta idea parece formalmente similar a como el producto por un escalar en un espacio vectorial puede considerarse como una función definida sobre el producto tensorial de los escalares con los vectores, o un producto en un anillo puede considerarse como una función definida sobre el cuadrado tensorial del anillo.
+Alguien con más instrucción en álgebra y teoría de categorías debería poder hacer un comentario sobre esto.}
+(vago, no formal) que existe entre una visión dinámica y otra estática%
+\footnote{algo así como el punto de vista de Parménides sobre el proceso}
+de los procesos estocásticos.
+Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
+Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t)\}\).
+
+Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si la familia \(\{X(t)\}\) lo es.
+También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \Omega\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora queda identificada con un proceso progresivamente medible con respecto a esta familia.
+
+% Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
+% y que da lugar a unos procesos llamados 'predecibles'
+
+% Book: Brownian motion and martingales in analysis %
+% Authors: Richard Durrett                          %
+% Page number: 60                                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Evitamos una referencia a la integral estocástica de Paley--Wiener
 Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
 % Propiedad fuerte de Markov? Se verifica? Podría no verificarse en una filtración extraña?
