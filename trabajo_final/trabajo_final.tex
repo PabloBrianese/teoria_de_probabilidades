@@ -63,11 +63,12 @@
 % Authors: Paul Andre Meyer       %
 % Page number: 85                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% La afirmación recíproca al teorema 49 de este libro es cierta?
 
 % Measurability of hitting times
 Hemos notado que un proceso puede ser considerado una función definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
 Ahora hacemos uso de esta observación de forma sistemática.
-
+ 
 De ese modo, dada una función \(X\) definida en \(\left[ 0, \infty \right[ \times \Omega\) con valores en un espacio medible \((E, \mathscr{E})\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t) : t \geq 0\}\).
 Esto permite decir, por ejemplo, que \emph{\(X\) es un proceso} si la familia \(\{X_t\}\) lo es.
 También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \Omega\) es \emph{progresivamente medible} con respecto a la familia \((\events_t)\) si su función indicadora queda identificada con un proceso progresivamente medible con respectoa esta familia.
@@ -99,7 +100,7 @@ Esta es la idea de la \emph{integración estocástica}.
 
 Antes de explicar el procedimiento, estudiamos una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
 % Evitamos una referencia a la integral estocástica de Paley--Wiener
-Denotamos por \((\Omega, \mathcal{A}, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
+Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
 % Propiedad fuerte de Markov?
 
 \begin{definition}
