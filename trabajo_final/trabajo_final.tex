@@ -1,4 +1,8 @@
-\documentclass{article}
+% Report document structure %
+% \part{}, \chapter{}, 
+% \section{}, \subsection{}, \subsubsection{}, 
+% \paragraph{}, \subparagraph{}.
+\documentclass{report}
 % Document Packages %
 %%%%%%%%%%%%%%%%%%%%%
 \usepackage[spanish]{babel}
@@ -101,7 +105,7 @@ Esta es la idea de la \emph{integración estocástica}.
 
 Antes de explicar el procedimiento, debemos estudiar algo de teoría de la medida sobre una clase de integrandos razonable que encontraremos en los \emph{procesos progresivamente medibles}.
 
-SECCIÓN SOBRE PROCESOS PROGRESIVAMENTE MEDIBLES
+\section{Procesos progresivamente medibles}
 % Miré el libro de schreve. no describe la matemática de los procesos progresivamente medibles.
 % Tengo que mirar el artículo chung1965.pdf
 % También podrían ser útiles los libros de Meyer y Dellacherie
@@ -117,7 +121,7 @@ Haremos uso sistemático de un isomorfismo%
 \footnote{Esta idea parece formalmente similar a como el producto por un escalar en un espacio vectorial puede considerarse como una función definida sobre el producto tensorial de los escalares con los vectores, o un producto en un anillo puede considerarse como una función definida sobre el cuadrado tensorial del anillo.
 Alguien con más instrucción en álgebra y teoría de categorías debería poder hacer un comentario sobre esto.}
 (vago, no formal) que existe entre una visión dinámica y otra estática%
-\footnote{algo así como el punto de vista de Parménides sobre el proceso}
+\footnote{algo así como el punto de vista del filósofo griego Parménides sobre los procesos estocásticos.}
 de los procesos estocásticos.
 Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
 Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t)\}\).
@@ -148,6 +152,7 @@ Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nue
 % La prueba es algo de teoría de la medida. 
 % No parece interesante. No se incluye.
 
+\section{Construcción de la integral}
 La construcción de las integrales es casi directa.
 Comenzamos integrando procesos de salto progresivamente medibles \(\{H(t, \omega) : t \geq 0, \omega \in \Omega\}\) de la forma
 \begin{align}
