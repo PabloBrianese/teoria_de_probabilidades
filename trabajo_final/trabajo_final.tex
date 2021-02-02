@@ -52,6 +52,7 @@
 \newcommand{\events}{\mathcal{F}}
 \newcommand{\eventspp}{\events^+}
 \newcommand{\borel}{\mathcal{B}}
+\newcommand{\metricSpace}{\mathcal{M}}
 \newcommand{\brownian}{B}
 \newcommand{\alteredBrownian}{\widetilde{\brownian}}
 \newcommand{\wiener}{W}
@@ -121,13 +122,11 @@ Haremos uso sistemático de un isomorfismo%
 \footnote{Esta idea parece formalmente similar a como el producto por un escalar en un espacio vectorial puede considerarse como una función definida sobre el producto tensorial de los escalares con los vectores, o un producto en un anillo puede considerarse como una función definida sobre el cuadrado tensorial del anillo.
 Alguien con más instrucción en álgebra y teoría de categorías debería poder hacer un comentario sobre esto.}
 (vago, no formal) que existe entre una visión dinámica y otra estática%
-\footnote{algo así como el punto de vista del filósofo griego Parménides sobre los procesos estocásticos.}
+\footnote{algo así como el punto de vista del filósofo griego Parménides de Elea sobre los procesos estocásticos.}
 de los procesos estocásticos.
-Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\left[ 0, \infty \right[ \times \Omega\).
+Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\interval{co}{0}{\infty} \times \Omega\).
 Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t)\}\).
-
 Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si la familia \(\{X(t)\}\) lo es.
-También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \Omega\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora queda identificada con un proceso progresivamente medible con respecto a esta familia.
 
 % Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
 % y que da lugar a unos procesos llamados 'predecibles'
@@ -137,13 +136,37 @@ También decimos que un subconjunto \(A\) de \(\left[ 0, \infty \right[ \times \
 % Page number: 60                                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Evitamos una referencia a la integral estocástica de Paley--Wiener
-Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
-% Propiedad fuerte de Markov? Se verifica? Podría no verificarse en una filtración extraña?
-
 \begin{definition}
-  Un proceso \(\{X(t, \omega) : t \geq 0, \omega \in \Omega\}\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\)
+  Un proceso \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) adaptado a una filtración \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+% Hipótesis %
+%%%%%%%%%%%%%
+% Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
+\begin{remark}
+  Los procesos constantes son progresivamente medibles.
+\end{remark}
+% Tarea %
+%%%%%%%%%
+% Devería tener ejemplos triviales y no triviales de procesos progresivamente medibles.
+Usando el correspondencia estático-dinámica de los procesos llegamos a la siguiente noción. 
+\begin{definition}
+  Sea \((\Omega, \events, \prob)\) un espacio de probabilidad filtrado por \((\events(t) : t \geq 0)\).
+  Un subconjunto \(A\) de \(\interval{co}{0}{\infty} \times \Omega\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora \(\characteristic_A : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) queda identificada con un proceso progresivamente medible con respecto a esta familia.
+
+  Escribimos \(E = \interval{co}{0}{\infty} \times \Omega\), y usamos \(\mathscr{E}\) para denotar al conjunto de partes progresivamente medibles de \(E\).
+\end{definition}
+
+\begin{theorem}
+  Los conjuntos progresivamente medibles forman una \(\sigma\)--álgebra.
+\end{theorem}
+\begin{proof}
+  Las funciones características de los conjuntos \(\emptyset\), \(E\) son \({\characteristic_{\emptyset} = 0}\), \({\characteristic_E = 1}\).
+  Luego \(\emptyset, E \in \mathscr{E}\), porque todo proceso constante es progresivamente medible.
+
+  Si \(A \in \mathscr{E}\) es un conjunto progresivamente medible ¿entonces \(E \setminus A \in \mathscr{E}\)? 
+
+  Si \(\{A_n \subseteq E : n \in \naturalNumbers\}\) es una sucesión de procesos progresivamente medibles, entonces ¿\(\bigcap_n A_n \in \mathscr{E}\)?
+\end{proof}
 
 \begin{lemma}
   Todo proceso adaptado \(\{X(t) : t \geq 0\}\) continuo a derecha o izquierda es progresivamente medible.
@@ -153,6 +176,10 @@ Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nue
 % No parece interesante. No se incluye.
 
 \section{Construcción de la integral}
+% Evitamos una referencia a la integral estocástica de Paley--Wiener
+Denotamos por \((\Omega, \events, \prob)\) al espacio de probabilidad en que nuestro movimiento Browniano \(\{\brownian(t) : t \geq 0\}\) está definido y supongamos que \((\events(t) : t \geq 0)\) es una filtración a la que el movimiento Browniano está adaptado tal que la propiedad fuerte de Markov se verifica.
+% Propiedad fuerte de Markov? Se verifica? Podría no verificarse en una filtración extraña?
+
 La construcción de las integrales es casi directa.
 Comenzamos integrando procesos de salto progresivamente medibles \(\{H(t, \omega) : t \geq 0, \omega \in \Omega\}\) de la forma
 \begin{align}
@@ -553,8 +580,8 @@ Una función \(\tau : \Omega \rightarrow \left[ 0, \infty \right[\) es un tiempo
 \textbf{Tiempos de contacto.}
 
 \begin{proposition}
-  Sea \(\{X_t : t \geq 0\}\) un proceso estocástico en el espacio métrico \((E, d)\) adaptado a la filtración \((\events_t : t \geq 0)\) en la \(\sigma\)--álgebra de Borel \(\borel\).
-  Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, E)] = 1\).
+  Sea \(\{X_t : t \geq 0\}\) un proceso estocástico en el espacio métrico \((\metricSpace{}, d)\) adaptado a la filtración \((\events_t : t \geq 0)\) en la \(\sigma\)--álgebra de Borel \(\borel\).
+  Supongamos que dicho proceso tiene trayectorias continuas, es decir \(\prob[ (X_t)_{t \geq 0} \in C(\left[0, \infty \right[, \metricSpace{})] = 1\).
   Entonces, para todo \(A\) cerrado, la función \(T_A\) es un tiempo de parada con respecto a \((\events_t : t \geq 0)\).
 \end{proposition}
 
@@ -562,7 +589,7 @@ Otra opción es agrandar la filtración \((\events_t : t \geq 0)\).
 Definimos, para \(t \geq 0\), \(\eventspp_t = \bigcap_{s > t} \events_s\), \(\events_t \subseteq \eventspp_t\), y consideramos la nueva filtración \((\eventspp_t : t \geq 0)\).
 \begin{proposition}
   Sea \(\{X_t : t \geq 0\}\) un proceso \cadlag{} adaptado a \((\eventspp_t : t \geq 0)\).
-  Sea \(A \in \borel(E)\) abierto.
+  Sea \(A \in \borel(\metricSpace{})\) abierto.
   Entonces \(T_A\) es un tiempo de parada con respecto a \((\eventspp_t : t \geq 0)\).
 \end{proposition}
 
