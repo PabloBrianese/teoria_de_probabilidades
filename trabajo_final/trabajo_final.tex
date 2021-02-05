@@ -142,12 +142,44 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 \begin{definition}
   Un proceso \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) adaptado a una filtración \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+\begin{lemma}
+  Todo proceso adaptado \(\{X(t) : t \geq 0\}\) continuo a derecha o izquierda es progresivamente medible.
+  \footnote{La prueba puede encontrarse como Lemma 7.2, en Brownian Motion de \morters{} y Peres.}
+\end{lemma}
+\begin{proof}
+  Asumamos que el proceso \(\{X(t)\}\) es continuo a derecha.
+  Fijemos \(t > 0\), y consideremos la restricción \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s)\}\).
+  Tomamos finitas muestras del proceso restringido a intervalos regulares de tiempo y propagamos estas muestras al pasado.
+  De este modo, para cada entero positivo \(n\) obtenemos un nuevo proceso estocástico \(\{X_n(s) : 0 \leq s \leq t\}\) dado por
+  \begin{align}
+    X_n(s)
+    =
+    \left\{
+      \begin{aligned}
+        &X(0) 
+          &&\text{para } 
+            s = 0
+          \\
+        &X(t_{k + 1})
+          &&\text{para }
+            t_k < s \leq t_{k + 1}
+      \end{aligned}
+    \right.
+  \end{align}
+  donde \(t_k = k t 2^{- n}\) con \(k \in \{1, \dots, 2^n\}\) junto a 0 son los instantes de muestreo que particionan \(\interval{cc}{0}{t}\) en \(2^n\) intervalos regulares de longitud \(t 2^{- n}\).
+  La aplicación \(X_n : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible. % ???
+  Por continuidad a derecha tenemos \(\lim_{n \rightarrow \infty} X_n(s, \omega) = X(s, \omega)\) para todo \(s \in [0, t]\) y \(\omega \in \Omega\), por tanto el límite \(X\) también es medible según \(\borel([0, t]) \otimes \events(t)\).
+  Esto prueba que \(\{X(t)\}\) es progresivamente medible.
+  El caso continuo a izquierda es análogo.
+\end{proof}
+
 % Hipótesis %
 %%%%%%%%%%%%%
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
 \begin{remark}
   Los procesos constantes son progresivamente medibles.
 \end{remark}
+
 % Tarea %
 %%%%%%%%%
 % Devería tener ejemplos triviales y no triviales de procesos progresivamente medibles.
@@ -169,19 +201,12 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 \begin{proof}
   En primer lugar, la función característica del conjunto \(E\) es \({\characteristic_E = 1}\).
   Luego \(E \in \progressiveAlgebra\), porque todo proceso constante es progresivamente medible.
-  En segundo lugar, \(E \setminus A \in \progressiveAlgebra\) siempre que \(A \in \progressiveAlgebra\).
-  Esto se debe a que, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{E \setminus A}}{E_t}\) es 0 sobre el conjunto \(A \cap E_t\) e igual a 1 sobre el conjunto \((E \setminus A) \cap E_t\), ambos apropiadamente medibles.
+  En segundo lugar, suponer \(A \in \progressiveAlgebra\) nos permite deducir \(E \setminus A \in \progressiveAlgebra\).
+  Esto se debe a que, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{E \setminus A}}{E_t}\) es 0 sobre el conjunto \(A \cap E_t\) e igual a 1 sobre el conjunto \((E \setminus A) \cap E_t\), ambos medibles según la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
   Finalmente, consideramos una sucesión \(\{A_n \in \progressiveAlgebra : n \in \naturalNumbers\}\).
   En este caso, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{(\bigcap_n A_n)}}{E_t}\)
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
 \end{proof}
-
-\begin{lemma}
-  Todo proceso adaptado \(\{X(t) : t \geq 0\}\) continuo a derecha o izquierda es progresivamente medible.
-  \footnote{La prueba puede encontrarse como Lemma 7.2, en Brownian Motion de \morters{} y Peres.}
-\end{lemma}
-% La prueba es algo de teoría de la medida. 
-% No parece interesante. No se incluye.
 
 \section{Construcción de la integral}
 % Evitamos una referencia a la integral estocástica de Paley--Wiener
@@ -720,7 +745,7 @@ Finalmente, para el Laplaciano en la variable \(x\) escribimos
     Dado que la fórmula de \ito se verifica casi seguramente de forma simultánea para todo tiempo \(s \in [0, t]\), también es válida para tiempos de parada acotados por \(t\).
     Supongames ahora que \(f : U \rightarrow \realNumbers\) satisface las condiciones de diferenciabilidad en un conjunto abierto \(U\), y \(K \subseteq U\) es compacto.
     Tomamos una función suave \(g : \realNumbers^m \rightarrow [0, 1]\) con soporte compacto dentro de \(U\), tal que \(g \equiv 1\) sobre \(K\).
-    Entonces \(f^* = f g : \realNumbers^m \rightarrow \realNumbers\) satisface \(f^* = f\) sobre \(K\) y todas las derivadas relevantes se encuentran acotadas, de modo tal que se satisfacen las condiciones del teorema \ref{theorem:ItoFormula_Multidimensional}.
+    Entonces \(f^* = f g : \realNumbers^m \rightarrow \realNumbers\) satisface \(f^* = f\) sobre \(K\) y todas las derivadas relevantes se encuentran acotadas, de modo tal que se satisfacen las condiciones del teorema \ref{theorem:ItoFormula_multidimensional}.
     Sea \(T\) el primer tiempo de salida de \(K\).
     Aplicando el teorema \ref{theorem:ItoFormula_multidimensional} a \(f^*\) arroja \eqref{equation:ItoFormula_multidimensional} para \(f\), casi seguramente, para todo tiempo \(s \wedge T\), para \(s \leq t\).
   \end{remark}
