@@ -83,6 +83,7 @@
 \newtheorem{remark}{Observación}
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}
+\newtheorem{example}{Ejemplo}
 
 \title{Estudio sobre la invarianza conforme del movimiento Browniano planar}
 \author{Pablo Brianese}
@@ -140,8 +141,55 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Un proceso \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) adaptado a una filtración \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Un proceso \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+\begin{example}
+  Los procesos estocásticos constantes son progresivamente medibles.
+  En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
+  Un proceso constante \(X\) sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) tiene función correspondiente \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) constante, al ser esta restringida a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
+\end{example}
+\begin{example}
+  % conviene cambiar este ejemplo.
+  % las variables se pueden propagar hacia el futuro pero no hacia el pasado, para generar procesos progresivamente medibles.
+  Consideremos un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Dado un intervalo de tiempo \(\interval{oc}{t^{\flat}}{t^{\sharp}}\) y una variable \(\events(t^{\sharp})\)--medible \(A\), la función 
+  \begin{align}
+    &X(t, \omega) = A(\omega) \characteristic\left( \interval{oc}{t^{\flat}}{t^{\sharp}} \right)(t)
+    && (\forall (t, \omega) \in \interval{co}{0}{\infty} \times \Omega)
+  \end{align}
+  da lugar a un proceso progresivamente medible.
+  Para probarlo consideremos un instante \(t^* \geq 0\).
+  \newcommand{\restricted}[1]{\overline{#1}}
+  La restricción \(\restricted{X}\) de \(X\) al conjunto \(\interval{cc}{0}{t^*} \times \Omega\) es
+  \begin{align}
+    &\restricted{X}(t, \omega)
+    =
+    \left\{\begin{aligned}
+      &0
+        &&\text{si } t^* \leq t^{\flat} 
+      \\
+      &A(\omega) \characteristic\left( \interval{oc}{t^{\flat}}{t^{\sharp} \wedge t^*} \right) (t) 
+        &&\text{si } t^* > t^{\flat}
+    \end{aligned}\right.
+    && (\forall (t, \omega) \in \interval{cc}{0}{t^*} \times \Omega)
+  \end{align}
+  En el primer caso resulta constante, y \(\borel(\interval{cc}{0}{t^*}) \otimes \events(t^*)\)--medible de forma inmediata.
+  Sobre el segundo caso debemos detenernos.
+  Para aquellos borelianos \(B \in \borel(\realNumbers)\) con \(0 \notin B\), podemos calcular que para todo \((t, \omega) \in \interval{cc}{0}{t^*} \times \Omega\)
+  \begin{align}
+    X(t, \omega) \in B
+    &\leftrightarrow
+      A(\omega) \characteristic\left( \interval{oc}{t^{\flat}}{t^{\sharp} \wedge t^*} \right) (t) \in B
+    \\
+    &\leftrightarrow
+      A(\omega) \in B,\: t^{\flat} < t \leq t^{\sharp} \wedge t^*
+    \\
+    &\leftrightarrow
+      (t, \omega) \in \interval{oc}{t^{\flat}}{t^{\sharp} \wedge t^*} \times [A \in B]
+  \end{align}
+  
+\end{example}
+
 \begin{lemma}
   Todo proceso adaptado \(\{X(t) : t \geq 0\}\) continuo a derecha o izquierda es progresivamente medible.
   \footnote{La prueba puede encontrarse como Lemma 7.2, en Brownian Motion de \morters{} y Peres.}
@@ -170,6 +218,10 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
   \end{align}
   donde \(t_k = k t 2^{- n}\) con \(k \in \{1, \dots, 2^n\}\) junto a 0 son los instantes de muestreo que particionan \(\interval{cc}{0}{t}\) en \(2^n\) intervalos regulares de longitud \(t 2^{- n}\).
   La aplicación \(X_n : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible. % ???
+  
+  Si \(t' \geq t\), \(\left. X_n \right|_{[0, t'] \times \Omega} = X_n\).
+  Para todo \(B \in \borel(\realNumbers)\); si \(0 \notin B\), \(X_n(s, \omega) \in B\) si y solo si \((s, \omega) \in \bigcup_{k = 0}^{2^n - 1} \interval{oc}{t_k}{t_{k + 1}} \times [X_n(t_{k + 1}) \in B]\)
+
   Por continuidad a derecha tenemos \(\lim_{n \rightarrow \infty} X_n(s, \omega) = X(s, \omega)\) para todo \(s \in [0, t]\) y \(\omega \in \Omega\), por tanto el límite \(X\) también es medible según \(\borel([0, t]) \otimes \events(t)\).
   Esto prueba que \(\{X(t)\}\) es progresivamente medible.
   El caso continuo a izquierda es análogo.
