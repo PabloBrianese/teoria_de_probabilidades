@@ -151,6 +151,8 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
   En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
   Un proceso constante \(X\) sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) tiene función correspondiente \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) constante, al ser esta restringida a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
 \end{example}
+
+% Estos ejemplos son importantes
 % \begin{example}
 %   % conviene cambiar este ejemplo.
 %   % las variables se pueden propagar hacia el futuro pero no hacia el pasado, para generar procesos progresivamente medibles.
@@ -272,9 +274,12 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   En segundo lugar, suponer \(A \in \progressiveAlgebra\) nos permite deducir \(E \setminus A \in \progressiveAlgebra\).
   Esto se debe a que, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{E \setminus A}}{E_t}\) es 0 sobre el conjunto \(A \cap E_t\) e igual a 1 sobre el conjunto \((E \setminus A) \cap E_t\), ambos medibles según la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
   Finalmente, consideramos una sucesión \(\{A_n \in \progressiveAlgebra : n \in \naturalNumbers\}\).
-  En este caso, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{(\bigcap_n A_n)}}{E_t}\)
+  En este caso, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{\bigcap_n A_n}}{E_t}\)
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
 \end{proof}
+
+La consecuencia más importante de este teorema es el teorema de convergencia dominada para los procesos progresivamente medibles.
+% tengo que probar que prog está contenida en la sigma algebra producto, para poder dotarla de una medida decente
 
 \section{Construcción de la integral}
 % Evitamos una referencia a la integral estocástica de Paley--Wiener
