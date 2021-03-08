@@ -146,6 +146,12 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 \begin{definition}
   Un proceso estocástico \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+
+% ISSUE
+\begin{lemma}
+  La condición de ser progresivamente medible hace que el proceso sea adaptado.
+\end{lemma}
+
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
   En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
@@ -314,6 +320,15 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   Finalmente, consideramos una sucesión \(\{A_n \in \progressiveAlgebra : n \in \naturalNumbers\}\).
   En este caso, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{\bigcap_n A_n}}{E_t}\)
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
+\end{proof}
+
+\begin{theorem}
+  La sigma álgebra generada por los procesos progresivamente medibles es exactamete \(\progressiveAlgebra\).
+\end{theorem}
+\begin{proof}
+  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(X^{- 1}(A) = \{(t, \omega) \in E : X(t, \omega) \in B\}\).
+  La función \(Y : E \rightarrow \realNumbers\) dada por \(Y = \characteristic_{X^{- 1}(A)}\).
 \end{proof}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
