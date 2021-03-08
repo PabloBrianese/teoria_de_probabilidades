@@ -144,13 +144,28 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Un proceso estocástico \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Dado un espacio de probabilidad \((\Omega, \events, \prob)\) dotado de una filtración \((\events(t) : t \geq 0)\), un proceso estocástico \(\{X(t) : t \geq 0\}\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
 
 % ISSUE
 \begin{lemma}
-  La condición de ser progresivamente medible hace que el proceso sea adaptado.
+  Todo proceso progresivamente medible está adaptado a la filtración de su espacio de probabilidad.
 \end{lemma}
+\begin{proof}
+  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico en un espacio de probabilidad \((\Omega, \events, \prob)\).
+  Sea \((\events(t) : t \geq 0)\) una filtración de la \(\sigma\)--álgebra \(\events\).
+
+  Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) al conjunto \(\interval{cc}{0}{t} \times \Omega\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Para probar que \(X(t)\) es \(\events(t)\)--medible, consideramos un boreliano \(B \in \borel(\realNumbers)\) arbitrario.
+  Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in \interval{cc}{0}{t} \times \Omega : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Escribiendo la preimagen de \(B\) por la función  \(X(t) : \Omega \rightarrow \realNumbers\) como \(S = \{\omega \in \Omega : X(t, \omega) \in B\}\) se aprecia que \(S\) es la \(\Omega\)--sección en \(t\) de \(R\).
+  Es decir, la identidad \(S = \{\omega \in \Omega : (t, \omega) \in R\}\).
+  Luego \(S\) resulta \(\events(t)\)--medible.
+\end{proof}
+
+% Book: Measure Theory
+% Author: Paul Halmos
+% Theme: Product mesure spaces, and sections
 
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
