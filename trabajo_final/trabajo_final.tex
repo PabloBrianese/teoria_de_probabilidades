@@ -53,7 +53,7 @@
 \newcommand{\prob}{\mathbb{P}}
 \newcommand{\events}{\mathcal{F}}
 \newcommand{\eventspp}{\events^+}
-\newcommand{\borel}{\mathcal{B}}
+\newcommand{\borel}{\mathscr{B}}
 \newcommand{\metricSpace}{\mathcal{M}}
 \newcommand{\brownian}{B}
 \newcommand{\alteredBrownian}{\widetilde{\brownian}}
@@ -144,7 +144,7 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Un proceso \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Un proceso estocástico \(\{X(t) : t \geq 0\}\) en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
@@ -152,7 +152,7 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
   Un proceso constante \(X\) sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) tiene función correspondiente \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) constante, al ser esta restringida a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
 \end{example}
 
-La siguiente familia de ejemplos vendrá en forma de lema, por su relevancia y amplitud.
+La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
 
 \begin{lemma}
   \label{lemma:semiContinuousProcessesAreProgressivelyMeasurable}
@@ -287,9 +287,6 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
   Esta sub--familia genera la anterior mediante combinaciones lineales y límites puntuales.
 \end{example}
 
-% TAREA
-TODO PROCESO PROGRESIVAMENTE MEDIBLE ES APROXIMABLE MEDIANTE PROCESOS CONTINUOS A IZQUIERDA.
-
 % Hipótesis %
 %%%%%%%%%%%%%
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
@@ -318,6 +315,87 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   En este caso, para cada \(t \geq 0\), la función \(\restrict{\characteristic_{\bigcap_n A_n}}{E_t}\)
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
 \end{proof}
+
+Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
+
+\begin{lemma}
+  Todo proceso progresivamente medible es el límite puntual de otros eventualmente nulos.
+\end{lemma}
+\begin{proof}
+  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+
+  Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como \(N_t X (s) = X(s) \cdot \characteristic_{[0, t]} (s)\) para todo \(s \geq 0\).
+  Este vuelve a ser un proceso adaptado a \((\events(s) : s \geq 0)\) porque \(N_t X (s) = X(s)\) es \(\events(s)\)--medible, para \(0 \leq s \leq t\); y \(N_t X(s) = 0\) es \(\events(s)\)--medible, para \(s > t\).
+  También debemos constatar que el proceso resultante sea progresivamente medible.
+  Sea \(u \geq 0\), consideramos las restricciones \(X |_u\), \(N_t X |_u\) de los procesos \(X\), \(N_t X\) al conjunto \(\interval{cc}{0}{u} \times \Omega\).
+  Si \(u \leq t\), entonces 
+  \begin{align}
+    &N_t X |_u (s, \omega) 
+    = 
+    X(s, \omega) \cdot \characteristic_{\interval{cc}{0}{t}}(s) 
+    = 
+    X(s, \omega)
+    =
+    X |_u (s, \omega)
+    && (\forall s \in \interval{cc}{0}{u}, \forall \omega \in \Omega)
+  \end{align}
+  En tal caso \(N_t X |_u\) es \(\borel(\interval{cc}{0}{u}) \otimes \events(u)\)--medible porque \(X |_u\) lo es.
+  Si \(u > t\)
+  Para un conjunto boreliano \(B \in \borel(\realNumbers)\)
+  \begin{align}
+    X(s, \omega)
+  \end{align}
+  
+
+  Claramente \(N_t X (s, \omega) \rightarrow X(s, \omega)\) cuando \(t \rightarrow \infty\), para todo \(s \geq 0\), \(\omega \in \Omega\).
+\end{proof}
+
+\begin{lemma}
+  Todo proceso progresivamente medible es el límite puntual de otros uniformemente acotados.
+\end{lemma}
+\begin{proof}
+  Sea \(X(t, \omega)\) con \(t \geq 0\), \(\omega \in \Omega\) la representación estática de un proceso estocástico progresivamente medible.
+  Dada una cota \(M \geq 0\), consideramos una modificación acotada del proceso \(X\), definida como \(C_M X (s, \omega) = (X(s, \omega) \vee - M) \wedge M\) para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Claramente \(C_M X \rightarrow X\) puntualmente cuando \(M \rightarrow \infty\).
+\end{proof}
+
+\begin{lemma}
+  Todo proceso progresivamente medible, eventualmente nulo, y uniformemente acotado, es en casi todas partes el límite de otros procesos continuos en casi todas partes. 
+\end{lemma}
+\begin{proof}
+  Sea \(X(t, \omega)\) con \(t \geq 0\), \(\omega \in \Omega\) la representación estática de un proceso estocástico progresivamente medible.
+  Dada una ventana \(h > 0\), y utilizando la convención \(X(t, \omega) = 0\) para \(t < 0\), definimos \(E_h X (s, \omega) = \frac{1}{h} \int_{s - h}^{s} H(t, \omega) \dd t\) para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Porque el promedio que tomamos solo considera los valores pasados, \(E_h X\) es nuevamente progresivamente medible.
+  
+\end{proof}
+
+\begin{lemma}
+  Para cada proceso progresivamente medible, existe una secuencia de procesos de salto progresivamente medibles que convergen al primero.
+\end{lemma}
+\begin{proof}
+  Aproximamos el proceso progresivamente medible sucesivamente por
+  \begin{itemize}
+    \item un proceso progresivamente medible eventualmente nulo,
+    \item un proceso progresivamente medible eventualmente nulo y acotado uniformemente,
+    \item  un proceso progresivamente medible eventualmente nulo y acotado uniformemente casi seguramente continuo,
+    \item y finalmente, por un proceso de saltos progresivamente medible.
+  \end{itemize}
+  
+  En \emph{primer} notamos que los procesos eventualmente nulos (esto es, nulos para tiempos \(s\) lo suficientemente grandes) son densos en \(\mathcal{H}\).
+  Dado \(H \in \mathcal{H}\), definimos el corte en un tiempo fijo \(n > 0\) como \(H_n(s, \omega) = H(s, \omega) \characteristic_{[0, n]}(s)\).
+  Claramente \(\lim_{n \rightarrow \infty} \norm{H_n - H}_2 = 0\).
+
+  % Creo que los autores suponen que H \geq 0 pero nunca hicieron explícita esa hipótesis
+  En \emph{segundo} lugar, notamos que los procesos uniformemente acotados son densos entre los elementos de \(\mathcal{H}\) eventualmente nulos.
+  Dado \(H \in \mathcal{H}\) nulo a partir de tiempo \(s_* > 0\) en adelante, lo aproximamos truncando sus valores.
+  Para \(n \in \naturalNumbers\) definimos \(H_n\) como \(H_n(s, \omega) = -n \vee H(s, \omega) \wedge n\).
+  Claramente \(H_n\) es progresivamente medible y \(\lim_{n \rightarrow \infty} \norm{H_n - H}_2 = 0\).
+\end{proof}
+
+
+\begin{theorem}
+  Los conjuntos progresivamente medibles pertenecen a la \(\sigma\)--álgebra producto.
+\end{theorem}
 
 La consecuencia más importante de este teorema es el teorema de convergencia dominada para los procesos progresivamente medibles.
 % tengo que probar que prog está contenida en la sigma algebra producto, para poder dotarla de una medida decente
