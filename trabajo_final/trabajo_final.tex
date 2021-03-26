@@ -320,6 +320,29 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   Escribimos \(E = \interval{co}{0}{\infty} \times \Omega\) y \(E_t = \interval{cc}{0}{t} \times \Omega\). Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
 \end{definition}
 
+\begin{example}
+  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
+  La función \(Y : E \rightarrow \realNumbers\) dada por \(Y \coloneqq \characteristic_A\) es un proceso progresivamente medible, y el conjunto \(A\) también lo es.
+\end{example}  
+
+\begin{proof}
+  Fijamos un instante \(t \geq 0\) arbitrario.
+  Calculamos la preimagen
+  \begin{align}
+    \restrict{Y}{E_t}^{- 1} (1)
+    =
+      \{x \in E_t : Y(x) = 1\}
+    =
+      \{x \in E_t : X(x) \in B\}
+    =
+      \restrict{X}{E_t}^{- 1}(B)
+  \end{align}
+  y concluimos que esta es \(\borel([0, t]) \otimes \events(t)\)--medible porque \(X\) es progresivamente medible.
+  Pero \(\restrict{Y}{E_t}\) tiene la totalidad de su imagen contenida en el conjunto \(\{0, 1\}\).
+  Luego esta restricción también es \(\borel([0, t]) \otimes \events(t)\)--medible.
+\end{proof}
+
 % \begin{property}
 %   Un subconjunto \(A\) de \(E\) es progresivamente medible si y solo si \(A \cap E_t \in \borel([0, t]) \otimes \events(t)\) para todo \(t \geq 0\).
 % \end{property}
@@ -337,12 +360,6 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
 \end{proof}
 
-% ISSUE
-\begin{example}
-Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(X^{- 1}(B) = \{(t, \omega) \in E : X(t, \omega) \in B\}\).
-La función \(Y : E \rightarrow \realNumbers\) dada por \(Y = \characteristic_{X^{- 1}(A)}\) es un proceso progresivamente medible.
-\end{example}
 
 % ISSUE
 \begin{theorem}
