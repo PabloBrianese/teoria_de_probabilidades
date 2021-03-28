@@ -321,11 +321,11 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 \end{definition}
 
 \begin{example}
+  \label{example:progressivelyMeasurablePreimage}
   Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
   Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
   Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(Y \coloneqq \characteristic_A\) da lugar a un proceso progresivamente medible.
-\end{example}  
-
+\end{example}
 \begin{proof}
   Fijamos un instante \(t \geq 0\) arbitrario.
   Calculamos la preimagen
@@ -365,33 +365,13 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 \begin{theorem}
   La sigma álgebra generada por los procesos progresivamente medibles es exactamete \(\progressiveAlgebra\).
 \end{theorem}
-
-Sea \(\progressiveAlgebra'\) la \(\sigma\)--álgebra generada por los procesos progresivamente medibles en tanto funciones \(E \rightarrow \realNumbers\).
-Consideremos un conjunto \(A \subseteq E\).
-Si \(A \in \progressiveAlgebra\), entonces \(\characteristic_A : E \rightarrow \realNumbers\) es un proceso progresivamente medible y la descripción \(A = \characteristic_A^{- 1}(\{1\})\) de \(A\) como preimagen del boreliano \(\{1\}\) por esta función característica nos indica que \(A \in \progressiveAlgebra'\).
-
-Recíprocamente, supongamos que \(A \in \progressiveAlgebra'\).
-En este caso existen un proceso progresivamente medible \(X : E \rightarrow \realNumbers\) y un boreliano \(B \in \borel(\realNumbers)\) tales que \(A = X^{- 1}(B)\).
-Corremos nuestra atención hacia este proceso \(X\).
-Nos importa en particular que puede realizarse como el límite puntual de una sucesión de funciones simples \(X_n : E \rightarrow \realNumbers\), \(n \in \naturalNumbers\) dadas por
-\begin{align}
-  X_n(t, \omega)
-  =
-  \left\{
-    \begin{aligned}
-      & x_i && \text{si } x_i \leq X(t, \omega) < x_{i + 1}
-      \\
-      & 0 && \text{caso contrario.}
-    \end{aligned}
-  \right.
-\end{align}
-donde \(x_i = n \cdot i / 2^n\) para \(i \in \{-2^n, \dots, 2^n\}\)
-
 \begin{proof}
-  % Una función medible es límite de funciones simples, cualquiera sea el espacio de medida.
-  % Las funciones simples de la sigma álgebra generada por los procesos progresivamente medibles, son todas medibles según la sigma álgebra \progressiveAlgebra.
-
-  Un conjunto \(A \subseteq E\) pertenece a la \(\sigma\)--álgebra generada por los procesos progresivamente medibles si existe uno de estos procesos
+  Sea \(\progressiveAlgebra'\) la \(\sigma\)--álgebra generada por los procesos progresivamente medibles en tanto funciones \(E \rightarrow \realNumbers\).
+  Consideremos un conjunto \(A \subseteq E\) arbitrario.
+  Si \(A \in \progressiveAlgebra\), entonces \(\characteristic_A : E \rightarrow \realNumbers\) es un proceso progresivamente medible y la descripción \(A = \characteristic_A^{- 1}(\{1\})\) de \(A\) como preimagen del conjunto boreliano \(\{1\}\) por esta función característica nos indica que \(A \in \progressiveAlgebra'\).
+  Recíprocamente, supongamos que \(A \in \progressiveAlgebra'\).
+  En este caso existen un proceso progresivamente medible \(X : E \rightarrow \realNumbers\) y un boreliano \(B \in \borel(\realNumbers)\) tales que \(A = X^{- 1}(B)\).
+  Así como demostramos al tratar la familia de ejemplos \ref{example:progressivelyMeasurablePreimage}, resulta \(A \in \progressiveAlgebra\). 
 \end{proof}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
