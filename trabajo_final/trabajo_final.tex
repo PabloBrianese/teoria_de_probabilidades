@@ -324,22 +324,22 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   \label{example:progressivelyMeasurablePreimage}
   Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
   Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
-  Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(Y \coloneqq \characteristic_A\) da lugar a un proceso progresivamente medible.
+  Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(\characteristic_A\) da lugar a un proceso progresivamente medible.
 \end{example}
 \begin{proof}
   Fijamos un instante \(t \geq 0\) arbitrario.
-  Calculamos la preimagen
+  Calculamos la preimagen por la restricción de la función característica
   \begin{align}
-    \restrict{Y}{E_t}^{- 1} (1)
+    \restrict{\characteristic_A}{E_t}^{- 1} (1)
     =
-      \{x \in E_t : Y(x) = 1\}
+      \{x \in E_t : x \in A\}
     =
       \{x \in E_t : X(x) \in B\}
     =
       \restrict{X}{E_t}^{- 1}(B)
   \end{align}
   y concluimos que esta es \(\borel([0, t]) \otimes \events(t)\)--medible porque \(X\) es progresivamente medible.
-  Pero \(\restrict{Y}{E_t}\) tiene la totalidad de su imagen contenida en el conjunto \(\{0, 1\}\).
+  Pero \(\restrict{\characteristic_A}{E_t}\) tiene la totalidad de su imagen contenida en el conjunto \(\{0, 1\}\).
   Luego esta restricción también es \(\borel([0, t]) \otimes \events(t)\)--medible.
 \end{proof}
 
