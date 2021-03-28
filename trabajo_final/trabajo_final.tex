@@ -320,12 +320,35 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   Escribimos \(E = \interval{co}{0}{\infty} \times \Omega\) y \(E_t = \interval{cc}{0}{t} \times \Omega\). Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
 \end{definition}
 
+\begin{example}
+  \label{example:progressivelyMeasurablePreimage}
+  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
+  Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(Y \coloneqq \characteristic_A\) da lugar a un proceso progresivamente medible.
+\end{example}
+\begin{proof}
+  Fijamos un instante \(t \geq 0\) arbitrario.
+  Calculamos la preimagen
+  \begin{align}
+    \restrict{Y}{E_t}^{- 1} (1)
+    =
+      \{x \in E_t : Y(x) = 1\}
+    =
+      \{x \in E_t : X(x) \in B\}
+    =
+      \restrict{X}{E_t}^{- 1}(B)
+  \end{align}
+  y concluimos que esta es \(\borel([0, t]) \otimes \events(t)\)--medible porque \(X\) es progresivamente medible.
+  Pero \(\restrict{Y}{E_t}\) tiene la totalidad de su imagen contenida en el conjunto \(\{0, 1\}\).
+  Luego esta restricción también es \(\borel([0, t]) \otimes \events(t)\)--medible.
+\end{proof}
+
 % \begin{property}
 %   Un subconjunto \(A\) de \(E\) es progresivamente medible si y solo si \(A \cap E_t \in \borel([0, t]) \otimes \events(t)\) para todo \(t \geq 0\).
 % \end{property}
 
 \begin{theorem}
-  Los conjuntos progresivamente medibles forman una \(\sigma\)--álgebra.
+  Los conjuntos progresivamente medibles forman una \(\sigma\)--álgebra \(\progressiveAlgebra\).
 \end{theorem}
 \begin{proof}
   En primer lugar, la función característica del conjunto \(E\) es \({\characteristic_E = 1}\).
@@ -337,14 +360,18 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
   es 0 sobre el conjunto \(\bigcup_n A_n \cap E_t\) e igual a 1 sobre el conjunto \(\bigcap_n A_n \cap E_t\), ambos apropiadamente medibles.
 \end{proof}
 
+
 % ISSUE
 \begin{theorem}
   La sigma álgebra generada por los procesos progresivamente medibles es exactamete \(\progressiveAlgebra\).
 \end{theorem}
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(X^{- 1}(A) = \{(t, \omega) \in E : X(t, \omega) \in B\}\).
-  La función \(Y : E \rightarrow \realNumbers\) dada por \(Y = \characteristic_{X^{- 1}(A)}\).
+  Sea \(\progressiveAlgebra'\) la \(\sigma\)--álgebra generada por los procesos progresivamente medibles en tanto funciones \(E \rightarrow \realNumbers\).
+  Consideremos un conjunto \(A \subseteq E\) arbitrario.
+  Si \(A \in \progressiveAlgebra\), entonces \(\characteristic_A : E \rightarrow \realNumbers\) es un proceso progresivamente medible y la descripción \(A = \characteristic_A^{- 1}(\{1\})\) de \(A\) como preimagen del conjunto boreliano \(\{1\}\) por esta función característica nos indica que \(A \in \progressiveAlgebra'\).
+  Recíprocamente, supongamos que \(A \in \progressiveAlgebra'\).
+  En este caso existen un proceso progresivamente medible \(X : E \rightarrow \realNumbers\) y un boreliano \(B \in \borel(\realNumbers)\) tales que \(A = X^{- 1}(B)\).
+  Así como demostramos al tratar la familia de ejemplos \ref{example:progressivelyMeasurablePreimage}, resulta \(A \in \progressiveAlgebra\). 
 \end{proof}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
