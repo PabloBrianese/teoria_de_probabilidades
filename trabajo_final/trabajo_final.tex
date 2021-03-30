@@ -409,21 +409,18 @@ Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
   Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
 
   Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como \(N_t X (s) = X(s) \cdot \characteristic_{[0, t]} (s)\) para todo \(s \geq 0\).
-  Este vuelve a ser un proceso adaptado a \((\events(s) : s \geq 0)\) porque \(N_t X (s) = X(s)\) es \(\events(s)\)--medible, para \(0 \leq s \leq t\); y \(N_t X(s) = 0\) es \(\events(s)\)--medible, para \(s > t\).
-  También debemos constatar que el proceso resultante sea progresivamente medible.
-  Sea \(u \geq 0\), consideramos las restricciones \(X |_u\), \(N_t X |_u\) de los procesos \(X\), \(N_t X\) al conjunto \(\interval{cc}{0}{u} \times \Omega\).
-  Si \(u \leq t\), entonces 
+  Para constatar que este es un proceso progresivamente medible fijamos un \(u \geq 0\), consideramos las restricciones de las funciones \(X\), \(N_t X\) al conjunto \(E_u\).
+  Si \(u \leq t\), entonces para todo \((s, \omega) \in E_u\)
   \begin{align}
-    &N_t X |_u (s, \omega) 
+    N_t X |_{E_u} (s, \omega) 
     = 
     X(s, \omega) \cdot \characteristic_{\interval{cc}{0}{t}}(s) 
     = 
     X(s, \omega)
     =
-    X |_u (s, \omega)
-    && (\forall s \in \interval{cc}{0}{u}, \forall \omega \in \Omega)
+    X |_{E_u} (s, \omega)
   \end{align}
-  En tal caso \(N_t X |_u\) es \(\borel(\interval{cc}{0}{u}) \otimes \events(u)\)--medible porque \(X |_u\) lo es.
+  En tal caso \(N_t X |_{E_u}\) es \(\borel(\interval{cc}{0}{u}) \otimes \events(u)\)--medible porque \(X |_{E_u}\) lo es.
   Si \(u > t\)
   Para un conjunto boreliano \(B \in \borel(\realNumbers)\)
   \begin{align}
