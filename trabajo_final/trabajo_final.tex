@@ -443,8 +443,8 @@ Teniendo en cuenta que los procesos constantes son progresivamente medibles, y q
   Todo proceso progresivamente medible, eventualmente nulo, y uniformemente acotado, es en casi todas partes el límite de otros procesos continuos en casi todas partes. 
 \end{lemma}
 \begin{proof}
-  Sea \(X(t, \omega)\) con \(t \geq 0\), \(\omega \in \Omega\) la representación estática de un proceso estocástico progresivamente medible.
-  Dada una ventana \(h > 0\), y utilizando la convención \(X(t, \omega) = 0\) para \(t < 0\), definimos \(E_h X (s, \omega) = \frac{1}{h} \int_{s - h}^{s} H(t, \omega) \dd t\) para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Sea \(X\) un proceso estocástico progresivamente medible, eventualmente nulo y uniformemente acotado.
+  Dada una ventana \(h > 0\), y utilizando la convención \(X(t, \omega) = 0\) para \(t < 0\), definimos \(E_h X (s, \omega) = \frac{1}{h} \int_{s - h}^{s} X(t, \omega) \dd t\) para todo \(s \geq 0\), \(\omega \in \Omega\).
   Porque el promedio que tomamos solo considera los valores pasados, \(E_h X\) es nuevamente progresivamente medible.
   
 \end{proof}
