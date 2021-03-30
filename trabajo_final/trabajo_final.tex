@@ -403,14 +403,14 @@ Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
 
-Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(Y(s, \omega) \coloneqq \characteristic_{\interval{co}{0}{t}}(s)\) define un proceso progresivamente medible, y como explicamos que los procesos progresivamente medibles estan cerrados bajo producto.
+Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(Y(s, \omega) \coloneqq \characteristic_{\interval{co}{0}{t}}(s)\) define un proceso progresivamente medible, y como explicamos que los procesos progresivamente medibles estan cerrados bajo producto en el teorema \(\ref{theorem:algebraOfProgressiveProcesses}\).
 
 \begin{lemma}
   Todo proceso progresivamente medible es el límite puntual de otros eventualmente nulos.
 \end{lemma}
 \begin{proof}
   Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-  Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como el producto de procesos progresivamente medibles \(N_t X (s, \omega) = X(s, \omega) \cdot \characteristic_{[0, t[} (s)\), para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como el producto de procesos progresivamente medibles \(N_t X (s, \omega) \coloneqq X(s, \omega) \cdot \characteristic_{[0, t[} (s)\), para todo \(s \geq 0\), \(\omega \in \Omega\).
   Claramente \(N_t X \rightarrow X\) puntualmente cuando \(t \rightarrow \infty\).
 \end{proof}
 
