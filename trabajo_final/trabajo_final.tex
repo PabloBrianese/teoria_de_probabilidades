@@ -279,6 +279,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
 
 Estos ejemplos son importantes y se deben derivar del lema anterior.
 \begin{example}
+  \label{example:basicProgressiveProcess}
   % conviene cambiar este ejemplo.
   % las variables se pueden propagar hacia el futuro pero no hacia el pasado, para generar procesos progresivamente medibles.
   Consideremos un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
@@ -402,33 +403,15 @@ Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
 
+Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(Y(s, \omega) \coloneqq \characteristic_{\interval{co}{0}{t}}(s)\) define un proceso progresivamente medible, y como explicamos que los procesos progresivamente medibles estan cerrados bajo producto.
+
 \begin{lemma}
   Todo proceso progresivamente medible es el límite puntual de otros eventualmente nulos.
 \end{lemma}
 \begin{proof}
   Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-
-  Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como \(N_t X (s) = X(s) \cdot \characteristic_{[0, t]} (s)\) para todo \(s \geq 0\).
-  Para constatar que este es un proceso progresivamente medible fijamos un \(u \geq 0\), consideramos las restricciones de las funciones \(X\), \(N_t X\) al conjunto \(E_u\).
-  Si \(u \leq t\), entonces para todo \((s, \omega) \in E_u\)
-  \begin{align}
-    N_t X |_{E_u} (s, \omega) 
-    = 
-    X(s, \omega) \cdot \characteristic_{\interval{cc}{0}{t}}(s) 
-    = 
-    X(s, \omega)
-    =
-    X |_{E_u} (s, \omega)
-  \end{align}
-  En tal caso \(N_t X |_{E_u}\) es \(\borel(\interval{cc}{0}{u}) \otimes \events(u)\)--medible porque \(X |_{E_u}\) lo es.
-  Si \(u > t\)
-  Para un conjunto boreliano \(B \in \borel(\realNumbers)\)
-  \begin{align}
-    X(s, \omega)
-  \end{align}
-  
-
-  Claramente \(N_t X (s, \omega) \rightarrow X(s, \omega)\) cuando \(t \rightarrow \infty\), para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como el producto de procesos progresivamente medibles \(N_t X (s, \omega) = X(s, \omega) \cdot \characteristic_{[0, t[} (s)\), para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Claramente \(N_t X \rightarrow X\) puntualmente cuando \(t \rightarrow \infty\).
 \end{proof}
 
 \begin{lemma}
