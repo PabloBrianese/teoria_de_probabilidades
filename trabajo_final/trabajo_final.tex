@@ -380,26 +380,41 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 Que los procesos progresivamente medibles estén determinados como funciones \(\progressiveAlgebra\)--medibles \(E \rightarrow \realNumbers\) nos permite trasladar conocimiento sobre funciones medibles a estos.
-Obtenemos, de forma inmediata, que dado un proceso progresivamente medible \(X\) y una función \(f : \realNumbers \rightarrow \realNumbers\) borel medible, su composición \(f(X)\) es un nuevo proceso progresivamente medible.
-Ejemplos podrían ser: el producto por un escalar \(c X\) (donde \(c \in \realNumbers\)); el valor absoluto \(\abs{X}\) y potencias de este \(\abs{X}^{\alpha}\) (donde \(\alpha > 0\)).
-Más aún, si \(Y\) es un segundo proceso progresivamente medible, entonces podemos decir que 
-\begin{align}
-  & X \cdot Y
-  &&  X + Y
-  &&  X \wedge Y
-  && X \vee Y
-\end{align}
-también son procesos progresivamente medibles.
-Finalmente, si \(\{X_n\}_n\) es una sucesión de procesos progresivamente medibles, entonces las funciones 
-\begin{align}
-  & \inf_n X_n
-  &&  \sup_n X_n
-  &&  \liminf_{n \rightarrow \infty} X_n
-  &&  \limsup_{n \rightarrow \infty} X_n
-\end{align}
-son procesos progresivamente medibles.
-En el sentido contrario, el proceso \(X\) puede expresarse como el límite puntual de una sucesión \(\{X_n\}_n\) de procesos progresivamente medibles simples, que toman sólo finitos valores reales.
-Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
+Obtenemos, de forma inmediata, que 
+
+\begin{theorem}
+  \label{theorem:algebraOfProgressiveProcesses}
+  Los procesos progresivamente medibles forman un álgebra real y un retículo.
+
+  Dado un proceso progresivamente medible \(X\), su producto \(c X\) por un escalar \(c \in \realNumbers\) es un nuevo proceso progresivamente medible.
+  Si \(Y\) es un segundo proceso progresivamente medible, entonces
+  \begin{align}
+    & X \cdot Y
+    &&  X + Y
+    &&  X \wedge Y
+    && X \vee Y
+  \end{align}
+  también son procesos progresivamente medibles.
+\end{theorem}
+
+% esto es una acción de anillo?
+\begin{theorem}
+  Dado un proceso progresivamente medible \(X\) y una función \(f : \realNumbers \rightarrow \realNumbers\) borel medible, su composición \(f(X)\) es un nuevo proceso progresivamente medible.
+\end{theorem}
+
+\begin{theorem}
+  Si \(\{X_n\}_n\) es una sucesión de procesos progresivamente medibles, entonces las funciones 
+  \begin{align}
+    & \inf_n X_n
+    &&  \sup_n X_n
+    &&  \liminf_{n \rightarrow \infty} X_n
+    &&  \limsup_{n \rightarrow \infty} X_n
+  \end{align}
+  son procesos progresivamente medibles.
+
+  En el sentido contrario, un proceso progresivamente medible \(X\) puede expresarse como el límite puntual de una sucesión \(\{X_n\}_n\) de procesos progresivamente medibles simples, que toman sólo finitos valores reales.
+  Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
+\end{theorem}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
 
