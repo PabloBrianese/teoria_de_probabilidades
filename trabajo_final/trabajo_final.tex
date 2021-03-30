@@ -414,12 +414,13 @@ Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(
   Claramente \(N_t X \rightarrow X\) puntualmente cuando \(t \rightarrow \infty\).
 \end{proof}
 
+Teniendo en cuenta que los procesos constantes son progresivamente medibles, y que esta última familia está cerrada por máximos y mínimos, probamos
 \begin{lemma}
   Todo proceso progresivamente medible es el límite puntual de otros uniformemente acotados.
 \end{lemma}
 \begin{proof}
-  Sea \(X(t, \omega)\) con \(t \geq 0\), \(\omega \in \Omega\) la representación estática de un proceso estocástico progresivamente medible.
-  Dada una cota \(M \geq 0\), consideramos una modificación acotada del proceso \(X\), definida como \(C_M X (s, \omega) = (X(s, \omega) \vee - M) \wedge M\) para todo \(s \geq 0\), \(\omega \in \Omega\).
+  Sea \(X\) un proceso estocástico progresivamente medible.
+  Dada una cota \(M \geq 0\), consideramos una modificación acotada del proceso \(X\), definida operando con máximos y mínimos sobre procesos progresivamente medibles como \(C_M X \coloneqq (X \vee - M) \wedge M\).
   Claramente \(C_M X \rightarrow X\) puntualmente cuando \(M \rightarrow \infty\).
 \end{proof}
 
