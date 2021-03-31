@@ -141,6 +141,7 @@ Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} 
 Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si la familia \(\{X(t)\}\) lo es.
 
 Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estocástico \(X\)} pensando que se trata de una función \(\interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) y supondremos la existencia del espacio de probabilidad \((\Omega, \events, \prob)\) junto con su filtración \((\events(t) : t \geq 0)\).
+Además, usaremos la notación \(E = \interval{co}{0}{\infty} \times \Omega\) porque este objeto resulta ubicuo.
 
 % Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
 % y que da lugar a unos procesos llamados 'predecibles'
@@ -151,8 +152,10 @@ Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estoc�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Un proceso estocástico \(X\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Un proceso estocástico \(X\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+
+En lo que sigue escribiremos \(E_t = \interval{cc}{0}{t} \times \Omega\), para cada \(t \geq 0\), al referirnos a estos subconjuntos destacados de \(E\).
 
 \begin{lemma}
   Todo proceso progresivamente medible está adaptado a la filtración de su espacio de probabilidad.
@@ -164,9 +167,9 @@ Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estoc�
 
 \begin{proof}
   Sea \(X\) un proceso estocástico.
-  Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) al conjunto \(\interval{cc}{0}{t} \times \Omega\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : E \rightarrow \realNumbers\) al conjunto \(E_t\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
   Para probar que \(X(t)\) es \(\events(t)\)--medible, consideramos un boreliano \(B \in \borel(\realNumbers)\) arbitrario.
-  Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in \interval{cc}{0}{t} \times \Omega : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in E_t : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
   Escribiendo la preimagen de \(B\) por la función  \(X(t) : \Omega \rightarrow \realNumbers\) como \(S = \{\omega \in \Omega : X(t, \omega) \in B\}\) se aprecia que \(S\) es la \(\Omega\)--sección en \(t\) de \(R\).
   Es decir, la identidad \(S = \{\omega \in \Omega : (t, \omega) \in R\}\).
   Luego \(S\) resulta \(\events(t)\)--medible.
@@ -175,7 +178,7 @@ Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estoc�
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
   En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
-  Un proceso constante \(X\), al ser restringido a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
+  Un proceso constante \(X\), al ser restringido a un conjunto \(E_t\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), cualquiera sea \(t \geq 0\).
 \end{example}
 
 La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
@@ -186,7 +189,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
 \end{lemma}
 \begin{proof}
   Sea \(X\) un proceso continuo a derecha o izquierda.
-  Fijemos \(t > 0\) para considerar la restricción \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
+  Fijemos \(t > 0\) para considerar la restricción \(X : E_t \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
   Debemos probar que esta restricción es medible según \(\borel([0, t]) \otimes \events(t)\).
 
   Para concretar tal objetivo, tomamos finitas muestras del proceso restringido a intervalos regulares de tiempo.
@@ -228,7 +231,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
     \right.
   \end{align}
   donde \(t_k = k \varepsilon\) con \(k \in \{0, 1, \dots, 2^n\}\) son los instantes de muestreo que particionan \(\interval{cc}{0}{t}\) en \(2^n\) intervalos regulares de longitud \(\varepsilon = t 2^{- n}\).
-  Las aplicaciones \(\backPropagation{X}_n, \forwardPropagation{X}_n : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) son medibles según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), porque pueden escribirse como composiciones de funciones apropiadamente medibles
+  Las aplicaciones \(\backPropagation{X}_n, \forwardPropagation{X}_n : E_t \rightarrow \realNumbers\) son medibles según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), porque pueden escribirse como composiciones de funciones apropiadamente medibles
   \begin{align}
     &\begin{tikzcd}
       [
@@ -241,10 +244,10 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
       \arrow[r, mapsto]
         \& (\backPropagation{s}, \omega)
       \\[-2em]
-      \interval{cc}{0}{t} \times \Omega
+      E_t
       \arrow{r}
       \arrow{rd}[swap]{\displaystyle \backPropagation{X}_n}
-        \& \interval{cc}{0}{t} \times \Omega
+        \& E_t
           \arrow{d}{\displaystyle X}
       \\
         \&  \realNumbers
@@ -263,10 +266,10 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
       \arrow[r, mapsto]
         \& (\forwardPropagation{s}, \omega)
       \\[-2em]
-      \interval{cc}{0}{t} \times \Omega
+      E_t
       \arrow{r}
       \arrow{rd}[swap]{\displaystyle \forwardPropagation{X}_n}
-        \& \interval{cc}{0}{t} \times \Omega
+        \& E_t
           \arrow{d}{\displaystyle X}
       \\
         \&  \realNumbers
@@ -290,7 +293,7 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
   Consideremos un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
   Tomamos un intervalo de tiempo \(\interval{co}{a}{b}\) y una variable \(\events(a)\)--medible \(A\).
   La función 
-  \(X(t, \omega) = \characteristic_{\interval{co}{a}{b}}(t) \cdot A(\omega)\) definida para \((t, \omega) \in \interval{co}{0}{\infty} \times \Omega\)
+  \(X(t, \omega) = \characteristic_{\interval{co}{a}{b}}(t) \cdot A(\omega)\) definida para \((t, \omega) \in E\)
   da lugar a un proceso estocástico adaptado a \((\events(t))\)
   \begin{align}
     &X(t)
@@ -321,9 +324,8 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
 Usando la correspondencia estático-dinámica de los procesos llegamos a la siguiente noción. 
 \begin{definition}
   Sea \((\Omega, \events, \prob)\) un espacio de probabilidad filtrado por \((\events(t) : t \geq 0)\).
-  Un subconjunto \(A\) de \(\interval{co}{0}{\infty} \times \Omega\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora \(\characteristic_A : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) queda identificada con un proceso progresivamente medible con respecto a esta familia.
-
-  Escribimos \(E = \interval{co}{0}{\infty} \times \Omega\) y \(E_t = \interval{cc}{0}{t} \times \Omega\). Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
+  Un subconjunto \(A\) de \(E\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora \(\characteristic_A : E \rightarrow \realNumbers\) queda identificada con un proceso progresivamente medible con respecto a esta familia.
+  Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
 \end{definition}
 
 \begin{example}
