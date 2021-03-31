@@ -1,3 +1,5 @@
+% \begin{}
+
 % Report document structure %
 % \part{}, \chapter{}, 
 % \section{}, \subsection{}, \subsubsection{}, 
@@ -91,6 +93,8 @@
 \title{Estudio sobre la invarianza conforme del movimiento Browniano planar}
 \author{Pablo Brianese}
 
+% \end{}
+
 \begin{document}
 \maketitle
 
@@ -131,9 +135,12 @@ Alguien con más instrucción en álgebra y teoría de categorías debería pode
 (vago, no formal) que existe entre una visión dinámica y otra estática%
 \footnote{algo así como el punto de vista del filósofo griego Parménides de Elea sobre los procesos estocásticos.}
 de los procesos estocásticos.
-Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\interval{co}{0}{\infty} \times \Omega\).
+Concretamente, en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\), un proceso estocástico adaptado es una familia de variables aleatorias \(\{X(t) : t \geq 0\}\)
+Esta familia puede ser considerada como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\interval{co}{0}{\infty} \times \Omega\).
 Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t)\}\).
 Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si la familia \(\{X(t)\}\) lo es.
+
+Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estocástico \(X\)} pensando que se trata de una función \(\interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) y supondremos la existencia del espacio de probabilidad \((\Omega, \events, \prob)\) junto con su filtración \((\events(t) : t \geq 0)\).
 
 % Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
 % y que da lugar a unos procesos llamados 'predecibles'
@@ -144,7 +151,7 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Dado un espacio de probabilidad \((\Omega, \events, \prob)\) dotado de una filtración \((\events(t) : t \geq 0)\), un proceso estocástico \(\{X(t) : t \geq 0\}\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Un proceso estocástico \(X\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
 
 \begin{lemma}
@@ -156,9 +163,7 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 % Theme: Product mesure spaces, and sections
 
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico en un espacio de probabilidad \((\Omega, \events, \prob)\).
-  Sea \((\events(t) : t \geq 0)\) una filtración de la \(\sigma\)--álgebra \(\events\).
-
+  Sea \(X\) un proceso estocástico.
   Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) al conjunto \(\interval{cc}{0}{t} \times \Omega\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
   Para probar que \(X(t)\) es \(\events(t)\)--medible, consideramos un boreliano \(B \in \borel(\realNumbers)\) arbitrario.
   Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in \interval{cc}{0}{t} \times \Omega : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
@@ -170,7 +175,7 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
   En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
-  Un proceso constante \(X\) sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) tiene función correspondiente \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) constante, al ser esta restringida a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
+  Un proceso constante \(X\), al ser restringido a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
 \end{example}
 
 La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
@@ -180,8 +185,8 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
   Todo proceso estocástico semi--continuo es progresivamente medible.
 \end{lemma}
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso continuo a derecha o izquierda.
-  Fijemos \(t > 0\), y consideremos la restricción \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
+  Sea \(X\) un proceso continuo a derecha o izquierda.
+  Fijemos \(t > 0\) para considerar la restricción \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
   Debemos probar que esta restricción es medible según \(\borel([0, t]) \otimes \events(t)\).
 
   Para concretar tal objetivo, tomamos finitas muestras del proceso restringido a intervalos regulares de tiempo.
@@ -274,7 +279,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
   En el límite \(n \rightarrow \infty\) obtenemos convergencia puntual, la hipótesis de continuidad a derecha deduce de esto que \(\backPropagation{X}_n \rightarrow X\) y la hipótesis de continuidad a izquierda deduce de esto que \(\forwardPropagation{X}_n \rightarrow X\).
   En ambos casos \(X\) es medible según \(\borel([0, t]) \otimes \events(t)\) al igual que sus aproximaciones.
 
-  Porque \(t > 0\) era arbitrario, se sigue que el proceso irrestricto \(\{X(t)\}\) es progresivamente medible.
+  Porque \(t > 0\) era arbitrario, se sigue que el proceso irrestricto \(X\) es progresivamente medible.
 \end{proof}
 
 Estos ejemplos son importantes y se deben derivar del lema anterior.
@@ -323,8 +328,8 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 
 \begin{example}
   \label{example:progressivelyMeasurablePreimage}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
+  Sea \(X\) un proceso estocástico progresivamente medible.
+  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) pensando al proceso como función \(E \rightarrow \realNumbers\).
   Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(\characteristic_A\) da lugar a un proceso progresivamente medible.
 \end{example}
 \begin{proof}
@@ -424,7 +429,7 @@ Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(
   Todo proceso progresivamente medible es el límite puntual de otros eventualmente nulos.
 \end{lemma}
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Sea \(X\) un proceso estocástico progresivamente medible.
   Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como el producto de procesos progresivamente medibles \(N_t X (s, \omega) \coloneqq X(s, \omega) \cdot \characteristic_{[0, t[} (s)\), para todo \(s \geq 0\), \(\omega \in \Omega\).
   Claramente \(N_t X \rightarrow X\) puntualmente cuando \(t \rightarrow \infty\).
 \end{proof}
@@ -443,7 +448,7 @@ Teniendo en cuenta que los procesos constantes son progresivamente medibles, y q
   Todo proceso progresivamente medible, eventualmente nulo, y uniformemente acotado, es en casi todas partes el límite de otros procesos continuos en casi todas partes. 
 \end{lemma}
 \begin{proof}
-  Sea \(X(t, \omega)\) con \(t \geq 0\), \(\omega \in \Omega\) la representación estática de un proceso estocástico progresivamente medible.
+  Sea \(X\) un proceso estocástico progresivamente medible.
   Dada una ventana \(h > 0\), y utilizando la convención \(X(t, \omega) = 0\) para \(t < 0\), definimos \(E_h X (s, \omega) = \frac{1}{h} \int_{s - h}^{s} H(t, \omega) \dd t\) para todo \(s \geq 0\), \(\omega \in \Omega\).
   Porque el promedio que tomamos solo considera los valores pasados, \(E_h X\) es nuevamente progresivamente medible.
   
