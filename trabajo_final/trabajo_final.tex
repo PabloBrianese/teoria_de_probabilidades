@@ -319,6 +319,37 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
 %%%%%%%%%%%%%
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
 
+\begin{theorem}
+  Las instacias de un proceso progresivamente medible son funciones borel.
+\end{theorem}
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible.
+  Fijemos un evento \(\omega \in \Omega\) y condideremos la función \(f(t) = X(t, \omega)\), \(t \geq 0\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), definimos \(Y \coloneqq f^{- 1}(B)\) y probaremos \(Y \in \borel(\interval{co}{0}{\infty})\).
+
+  Podemos estudiar esta preimagen \(Y\) de forma \emph{progresiva}.
+  Para cada \(n \in \naturalNumbers\), definimos \(Y_n \coloneqq f^{- 1}(B) \cap \interval{cc}{0}{n}\).
+  Por la propiedad aquimedeana de los números reales \(Y = \bigcup_{n \in \naturalNumbers} Y_n\).
+  Fijamos \(n \in \naturalNumbers\) y calculamos 
+  \begin{align}
+    Y_n 
+    = 
+    \{t \in \realNumbers : f(t) \in B\} \cap \interval{cc}{0}{n}
+    = 
+    \{t \in \interval{cc}{0}{n} : X(t, \omega) \in B\}
+  \end{align}
+  Restringiendo a \(X\), obtenemos \(Y_n = \{t \in \interval{cc}{0}{n} : \restrict{X}{E_n}(t, \omega) \in B\}\).
+  Si escribimos \(U \coloneqq \restrict{X}{E_n}^{- 1}(B)\), esta igualdad se lee 
+  \begin{align}
+    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in U\}
+  \end{align}
+  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(U \subseteq E_n\).
+  Pero \(U\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
+  Luego \(Y_n\) es \(\borel(\interval{cc}{0}{n})\)--medible.
+  En conclusión, para cada \(n \in \naturalNumbers\), el conjunto \(Y_n\) pertenece a \(\borel(\interval{co}{0}{\infty})\).
+  Esto demuestra que la preimagen \(Y\) es la unión numerable de boreliano, y es ella misma \(\borel(\interval{co}{0}{\infty})\)--medible.
+\end{proof}
+
 Usando la correspondencia estático-dinámica de los procesos llegamos a la siguiente noción. 
 \begin{definition}
   Sea \((\Omega, \events, \prob)\) un espacio de probabilidad filtrado por \((\events(t) : t \geq 0)\).
