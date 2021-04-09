@@ -320,6 +320,7 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
 
 \begin{theorem}
+  \label{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}
   Las instacias de un proceso progresivamente medible son funciones borel.
 \end{theorem}
 \begin{proof}
@@ -439,6 +440,7 @@ Obtenemos, de forma inmediata, que
 \end{theorem}
 
 \begin{theorem}
+  \label{theorem:limitsOfProgressiveProcesses}
   Si \(\{X_n\}_n\) es una sucesión de procesos progresivamente medibles, entonces las funciones 
   \begin{align}
     & \inf_n X_n
@@ -451,6 +453,55 @@ Obtenemos, de forma inmediata, que
   En el sentido contrario, un proceso progresivamente medible \(X\) puede expresarse como el límite puntual de una sucesión \(\{X_n\}_n\) de procesos progresivamente medibles simples, que toman sólo finitos valores reales.
   Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
 \end{theorem}
+
+Acumulaciones de procesos progresivamente medibles.
+
+Hemos probado (en \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
+Pues bien ¿qué sucedería si estas además fueran integrables?
+Se dá que esta integral vuelve a ser un proceso progresivamente medible.
+
+\begin{theorem}
+  Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
+  \begin{align}
+    \int_0^t X(u) \dd u
+  \end{align}
+  describe un proceso estocástico continuo en la variable \(t\).
+\end{theorem}
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible con trayectorias localmente integrables.
+  Proponemos la definición
+  \begin{align}
+    & Y(t, \omega) \coloneqq \int_0^t X(u, \omega) \dd u
+    && \forall (t, \omega) \in E
+  \end{align}
+  Afirmamos que esta es una función, continua con respecto a la variable \(t\), y, en virtud del lema \ref{lemma:semiContinuousProcessesAreProgressivelyMeasurable}, un proceso progresivamente medible.
+  
+  Para demostrarlo fijemos una instancia con \(\omega \in \Omega\), y concentremonos en la función dada por \(f(t) = X(t, \omega)\).
+  Esta instacia \(f\) resulta ser de borel, y es localmente integrable por hipótesis, esto nos garantiza la existencia de la integral \(F(t) = \int_0^t f(u) \dd u\).
+  Consideremos un instante \(t\), y una sucesión arbitraria \(\{s_k\}_k\) de números nonegativos \(s_0 = 0\), nodecreciente \(s_k \leq s_{k + 1}\), que converge a su supremo \(t\).
+  La integrabilidad local de \(f\) nos permite calcular, para cada \(k \in \naturalNumbers\), usando series e integrales convergentes
+  \begin{align}
+    \int_0^t f(u) \dd u
+    =
+    \sum_{h = 0}^{\infty} \int_{s_h}^{s_{h + 1}} f(u) \dd u
+    =
+    \int_0^{s_k} f(u) \dd u + \sum_{h = k}^{\infty} \int_{s_h}^{s_{h + 1}} f(u) \dd u
+  \end{align}
+  y deducir que \(F(s_k) \rightarrow F(t)\) cuando \(k \rightarrow \infty\).
+  Supongamos ahora que la sucesión es nocreciente, es decir \(s_k \geq s_{k + 1}\) para todo \(k \in \naturalNumbers\) y eliminemos la convención \(s_0 = 0\).
+  En este caso, para todo \(k \in \naturalNumbers\), la diferencia \(F(s_k) - F(t)\) puede escribirse como la cola de una serie convergente
+  \begin{align}
+    \int\limits_0^{s_k} f(u) \dd u - \int\limits_0^t f(u) \dd u
+    =
+    \sum_{h = k}^{\infty} \: \int\limits_{s_{h + 1}}^{s_h} f(u) \dd u
+    =
+    \int\limits_{t}^{s_1} f(u) \dd u - \sum_{h = 1}^{k - 1} \: \int\limits_{s_{h + 1}}^{s_h} f(u) \dd u
+  \end{align}
+  Luego \(F(s_k) \rightarrow F(t)\) cuando \(k \rightarrow \infty\).
+  Dado que la sucesión monótona (nodecreciente o nocreciente) \(\{s_k\}_k\) era arbitraria, se sigue que \(F(s) \rightarrow F(t)\) cuando \(s \rightarrow t\) por los detalles topológicos de la recta real.
+
+  La existencia de las funciones \(F\) implica la buena definición de \(Y\), y la continuida de las mismas prueba que la función es un proceso progresivamente medible con trayectorias continuas.
+\end{proof}
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
 
