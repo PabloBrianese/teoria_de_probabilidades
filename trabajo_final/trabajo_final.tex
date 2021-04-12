@@ -66,6 +66,7 @@
 \newcommand{\naturalNumbers}{\mathbb{N}}
 \newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
+\DeclareMathOperator{\image}{\textnormal{Im}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
@@ -454,9 +455,78 @@ Obtenemos, de forma inmediata, que
   Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
 \end{theorem}
 
+\newpage
 Traslaciones de procesos progresivamente medibles.
 
+La aplicación \((t, \omega) \mapsto ((t - h) \vee 0, \omega)\) es \(\progressiveAlgebra\)--medible?
 
+Sea \(A \in \progressiveAlgebra\) y un desplazamiento \(h > 0\).
+\newcommand{\pro}[1]{{#1}^{\sharp}}
+\newcommand{\pre}[1]{{#1}^{\flat}}
+Trasladamos \(A\) escribiendo \(\pro{A} = \{(\pro{s}, \omega) : (s, \omega) \in A\}\) donde \(\pro{s} = s + h\).
+Tenemos que probar \(\pro{A} \in \progressiveAlgebra\).
+Fijemos \(t \geq 0\) arbitrario.
+Queremos demostrar que \(\pro{A} \cap E_t\) también.
+Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) es medible en cualquier caso.
+Si \(t \geq h\), entonces sabemos que \(A \cap E_{\pre{t}}\) es \(\borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\)--medible, donde \(\pre{t} = t - h\). 
+\begin{align}
+  A' \cap E_t
+  &=
+  \{(s, \omega) \in E_t : (s, \omega) \in \pro{A}\}
+  \\
+  &=
+  \{(\pre{s} + h, \omega) \in E_t : (\pre{s}, \omega) \in A\}
+  \\
+  &=
+  \pro{\{(r, \omega) \in E_{t - h} : (r, \omega) \in A\}}
+\end{align}
+Lo que tenemos que probar es que 
+\begin{align}
+  \borel\left(\interval{cc}{0}{\pre{t}}\right) \otimes \events(\pre{t}) 
+  \xhookrightarrow{\quad \sharp \quad}
+  \borel(\interval{cc}{0}{t}) \otimes \events(t)
+\end{align}
+En un principio, los elementos de la imágen de la aplicación \(\sharp\) son sólo subconjuntos de \(\interval{cc}{0}{t} \times \Omega\).
+Sin embargo, de entrada podemos afirmar que es una inyección.
+Además, todos los elementos de su imágen están contenidos en \(\pro{\left( \interval{cc}{0}{\pre{t}} \times \Omega \right)} = \interval{cc}{h}{t} \times \Omega\), y este conjunto sí es claramente \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+Muy importante, esta función respeta la estructura de \(\sigma\)--álgebra que tiene \(\borel\left(\interval{cc}{0}{\pre{t}}\right) \otimes \events(\pre{t})\).
+
+\begin{itemize}
+  \item \(\pro{\emptyset} = \emptyset\)
+  \item \(\pro{\left( \bigcup_{i \in I} U_i \right)} =  \bigcap_{i \in I} \pro{U_i}\)
+  \item \(\pro{\left( E_{\pre{t}} \setminus U \right)} = \image{\sharp} \setminus \pro{U}\)
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 Acumulaciones de procesos progresivamente medibles.
 
 Hemos probado (en \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
