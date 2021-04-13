@@ -5,12 +5,16 @@
 % \section{}, \subsection{}, \subsubsection{}, 
 % \paragraph{}, \subparagraph{}.
 \documentclass{report}
+
 % Document Packages %
 %%%%%%%%%%%%%%%%%%%%%
 \usepackage[spanish]{babel}
+\usepackage[inline]{enumitem}
+
 % LaTeX Packages %
 %%%%%%%%%%%%%%%%%%
 \usepackage{etoolbox}
+
 % Mathematics Packages %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{mathtools}
@@ -19,11 +23,13 @@
 \usepackage{bbm}
 \usepackage{mathrsfs}
 \usepackage{tikz-cd}
+
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
 \newcommand{\morters}{Mörters}
 \newcommand{\cadlag}{càdlàg}
+
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Intervals \begin{}
@@ -66,10 +72,12 @@
 \newcommand{\naturalNumbers}{\mathbb{N}}
 \newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
+\DeclareMathOperator{\parts}{\mathscr{P}}
 \DeclareMathOperator{\image}{\textnormal{Im}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
+
 % Paired Delimiters %
 %%%%%%%%%%%%%%%%%%%%%
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -77,6 +85,7 @@
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
 % Theorem environments %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
@@ -468,7 +477,10 @@ Tenemos que probar \(\pro{A} \in \progressiveAlgebra\).
 Fijemos \(t \geq 0\) arbitrario.
 Queremos demostrar que \(\pro{A} \cap E_t\) también.
 Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) es medible en cualquier caso.
-Si \(t \geq h\), entonces sabemos que \(A \cap E_{\pre{t}}\) es \(\borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\)--medible, donde \(\pre{t} = t - h\). 
+
+Si \(t = h\), .....
+
+Si \(t > h\), entonces sabemos que \(A \cap E_{\pre{t}}\) es \(\borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\)--medible, donde \(\pre{t} = t - h\). 
 \begin{align}
   A' \cap E_t
   &=
@@ -488,17 +500,28 @@ Lo que tenemos que probar es que
 \end{align}
 En un principio, los elementos de la imágen de la aplicación \(\sharp\) son sólo subconjuntos de \(\interval{cc}{0}{t} \times \Omega\).
 Sin embargo, de entrada podemos afirmar que es una inyección.
-Además, todos los elementos de su imágen están contenidos en \(\pro{\left( \interval{cc}{0}{\pre{t}} \times \Omega \right)} = \interval{cc}{h}{t} \times \Omega\), y este conjunto sí es claramente \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+Además, todos los elementos de su imágen están contenidos en \(\pro{E_{\pre{t}}} = \pro{\left( \interval{cc}{0}{\pre{t}} \times \Omega \right)} = \interval{cc}{h}{t} \times \Omega\), y este conjunto sí es claramente \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
 Muy importante, esta función respeta la estructura de \(\sigma\)--álgebra que tiene \(\borel\left(\interval{cc}{0}{\pre{t}}\right) \otimes \events(\pre{t})\).
 
 \begin{itemize}
-  \item \(\pro{\emptyset} = \emptyset\)
-  \item \(\pro{\left( \bigcup_{i \in I} U_i \right)} =  \bigcap_{i \in I} \pro{U_i}\)
-  \item \(\pro{\left( E_{\pre{t}} \setminus U \right)} = \image{\sharp} \setminus \pro{U}\)
+  \item \(\pro{\emptyset} = \emptyset\) Porque si existiera un par \((\pro{s}, \omega) \in \pro{\emptyset}\), entonces existiría otro \((s, \omega) \in \emptyset\) y llegamos a un absurdo.
+  \item \(\pro{\left( \bigcup_{i \in I} U_i \right)} =  \bigcup_{i \in I} \pro{U_i}\) Porque si \((\pro{s}, \omega) \in \pro{\left( \bigcup_{i \in I} U_i \right)}\)
+  \item \(\pro{\left( E_{\pre{t}} \setminus U \right)} = \pro{E_{\pre{t}}} \setminus \pro{U}\)
 \end{itemize}
 
-
-
+Se ruega paciencia, pues en la presente demostración haremos una seria sobrecarga de los símbolos \(\sharp\) y \(\flat\).
+Cuando tratamos escalares \(s \in \interval{cc}{h}{t}\), definimos \(\pre{s} \coloneqq s - h\), y cuando \(s \in \interval{cc}{0}{\pre{t}}\) definimos \(\pro{s} \coloneqq s + h\).
+De forma similar, cuando tenemos un par \((s, \omega) \in \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{(s, \omega)} \coloneqq (\pre{s}, \omega)\).
+Al tratar conjuntos haremos lo análogo, si \(U \subseteq \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{U} \coloneqq \{\pre{u} : u \in U\}\), y cuando \(V \subseteq \interval{cc}{0}{\pre{t}} \times \Omega\), definimos \(\pro{V} \coloneqq \{\pro{v} : v \in V\}\).
+Notar que \(\interval{cc}{0}{\pre{t}} \times \Omega = E_{\pre{t}}\) y \(\interval{cc}{h}{t} \times \Omega = \pro{E_{\pre{t}}}\).
+Comenzamos observando que \(\sharp : \interval{cc}{0}{\pre{t}} \rightarrow \interval{cc}{h}{t}\)  y, en consecuencia, \(\sharp : E_{\pre{t}} \rightarrow \pro{E_{\pre{t}}}\) son biyecciones.
+Esto es importante porque hace que la función de conjuntos \(\sharp : \parts \left( E_{\pre{t}} \right) \rightarrow \parts \left( \pro{E_{\pre{t}}} \right)\) respete toda operación entre conjuntos.
+Es decir que respeta
+\begin{enumerate*}
+  \item al conjunto vacío, \(\pro{\emptyset} = \emptyset\);
+  \item las uniones arbitrarias de conjuntos, \(\pro{(\bigcup_{i \in I} V_i)} = \bigcup_{i \in I} \pro{V_i}\) para toda familia de conjuntos \(V_i \subseteq E_{\pre{t}}\) indexada por \(i \in I\);
+  \item los complementos, \(\pro{(E_{\pre{t}} \setminus V)} = \pro{E_{\pre{t}}} \setminus \pro{V}\) para todo subconjunto \(V \subseteq E_{\pre{t}}\).
+\end{enumerate*}
 
 
 
