@@ -467,16 +467,38 @@ Obtenemos, de forma inmediata, que
 \newpage
 Traslaciones de procesos progresivamente medibles.
 
+\begin{theorem}
+  Los desplazamientos de conjuntos progresivamente medibles son conjuntos progresivamente medibles. 
+\end{theorem}
+\begin{proof}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \newcommand{\pro}[1]{{#1}^{\sharp}}
+  \newcommand{\pre}[1]{{#1}^{\flat}}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Sea \(A \in \progressiveAlgebra\).
+  Consideramos su desplazamiento en una cantidad \(h > 0\)
+  \begin{align}
+    \pro{A} = \{(s + h, \omega) : (s, \omega) \in A\}
+  \end{align}
+  Para probar \(\pro{A} \in \progressiveAlgebra\), debemos fijar un \(t \geq 0\) arbitrario y comprobar que \(\pro{A} \cap E_t\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) pertenece a toda \(\sigma\)--álgebra.
+  Si \(t = h\), podemos calcular la intersección 
+  \begin{align}
+    \pro{A} \cap E_h 
+    &=
+    \{(s + h, \omega) : (s, \omega) \in A\} \cap \interval{cc}{0}{h} \times \Omega
+    \\
+    &=
+    \{(h, \omega) : (0, \omega) \in A\}
+  \end{align}
+  consiste solamente de aquellos pares
+
+\end{proof}
 La aplicación \((t, \omega) \mapsto ((t - h) \vee 0, \omega)\) es \(\progressiveAlgebra\)--medible?
 
-Sea \(A \in \progressiveAlgebra\) y un desplazamiento \(h > 0\).
 \newcommand{\pro}[1]{{#1}^{\sharp}}
 \newcommand{\pre}[1]{{#1}^{\flat}}
-Trasladamos \(A\) escribiendo \(\pro{A} = \{(\pro{s}, \omega) : (s, \omega) \in A\}\) donde \(\pro{s} = s + h\).
-Tenemos que probar \(\pro{A} \in \progressiveAlgebra\).
-Fijemos \(t \geq 0\) arbitrario.
-Queremos demostrar que \(\pro{A} \cap E_t\) también.
-Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) es medible en cualquier caso.
+
 
 Si \(t = h\), .....
 
@@ -490,7 +512,7 @@ Si \(t > h\), entonces sabemos que \(A \cap E_{\pre{t}}\) es \(\borel(\interval{
   \{(\pre{s} + h, \omega) \in E_t : (\pre{s}, \omega) \in A\}
   \\
   &=
-  \pro{\{(r, \omega) \in E_{t - h} : (r, \omega) \in A\}}
+  \pro{\{(r, \omega) \in E_{\pre{t}} : (r, \omega) \in A\}}
 \end{align}
 Lo que tenemos que probar es que 
 \begin{align}
@@ -501,21 +523,14 @@ Lo que tenemos que probar es que
 En un principio, los elementos de la imágen de la aplicación \(\sharp\) son sólo subconjuntos de \(\interval{cc}{0}{t} \times \Omega\).
 Sin embargo, de entrada podemos afirmar que es una inyección.
 Además, todos los elementos de su imágen están contenidos en \(\pro{E_{\pre{t}}} = \pro{\left( \interval{cc}{0}{\pre{t}} \times \Omega \right)} = \interval{cc}{h}{t} \times \Omega\), y este conjunto sí es claramente \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
-Muy importante, esta función respeta la estructura de \(\sigma\)--álgebra que tiene \(\borel\left(\interval{cc}{0}{\pre{t}}\right) \otimes \events(\pre{t})\).
-
-\begin{itemize}
-  \item \(\pro{\emptyset} = \emptyset\) Porque si existiera un par \((\pro{s}, \omega) \in \pro{\emptyset}\), entonces existiría otro \((s, \omega) \in \emptyset\) y llegamos a un absurdo.
-  \item \(\pro{\left( \bigcup_{i \in I} U_i \right)} =  \bigcup_{i \in I} \pro{U_i}\) Porque si \((\pro{s}, \omega) \in \pro{\left( \bigcup_{i \in I} U_i \right)}\)
-  \item \(\pro{\left( E_{\pre{t}} \setminus U \right)} = \pro{E_{\pre{t}}} \setminus \pro{U}\)
-\end{itemize}
 
 Se ruega paciencia, pues en la presente demostración haremos una seria sobrecarga de los símbolos \(\sharp\) y \(\flat\).
 Cuando tratamos escalares \(s \in \interval{cc}{h}{t}\), definimos \(\pre{s} \coloneqq s - h\), y cuando \(s \in \interval{cc}{0}{\pre{t}}\) definimos \(\pro{s} \coloneqq s + h\).
-De forma similar, cuando tenemos un par \((s, \omega) \in \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{(s, \omega)} \coloneqq (\pre{s}, \omega)\).
+De forma similar, cuando tenemos un par \((s, \omega) \in \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{(s, \omega)} \coloneqq (\pre{s}, \omega)\), y si \((s, \omega) \in \interval{cc}{0}{\pre{t}} \times \Omega\) definimos \(\pro{(s, \omega)} \coloneqq (\pro{s}, \omega)\).
 Al tratar conjuntos haremos lo análogo, si \(U \subseteq \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{U} \coloneqq \{\pre{u} : u \in U\}\), y cuando \(V \subseteq \interval{cc}{0}{\pre{t}} \times \Omega\), definimos \(\pro{V} \coloneqq \{\pro{v} : v \in V\}\).
 Notar que \(\interval{cc}{0}{\pre{t}} \times \Omega = E_{\pre{t}}\) y \(\interval{cc}{h}{t} \times \Omega = \pro{E_{\pre{t}}}\).
 Comenzamos observando que \(\sharp : \interval{cc}{0}{\pre{t}} \rightarrow \interval{cc}{h}{t}\)  y, en consecuencia, \(\sharp : E_{\pre{t}} \rightarrow \pro{E_{\pre{t}}}\) son biyecciones.
-Esto es importante porque hace que la función de conjuntos \(\sharp : \parts \left( E_{\pre{t}} \right) \rightarrow \parts \left( \pro{E_{\pre{t}}} \right)\) respete toda operación entre conjuntos.
+Esto es importante porque hace que la función de conjuntos \(\sharp : \parts ( E_{\pre{t}} ) \rightarrow \parts ( \pro{E_{\pre{t}}} )\) respete toda operación entre conjuntos.
 Es decir que respeta
 \begin{enumerate*}
   \item al conjunto vacío, \(\pro{\emptyset} = \emptyset\);
