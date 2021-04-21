@@ -467,15 +467,19 @@ Obtenemos, de forma inmediata, que
 \newpage
 Traslaciones de procesos progresivamente medibles.
 
+% EXPLICAR LOS SÍMBOLOS \(\sharp, \flat\) ACÁ, ANTES DE LAS PRUEBAS.
+
 \begin{theorem}
   \label{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}
   Los desplazamientos hacia adelante en el tiempo de conjuntos progresivamente medibles son conjuntos progresivamente medibles. 
 \end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pro}[1]{{#1}^{\sharp}}
+\newcommand{\pre}[1]{{#1}^{\flat}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{proof}
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \newcommand{\pro}[1]{{#1}^{\sharp}}
-  \newcommand{\pre}[1]{{#1}^{\flat}}
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   Sea \(A \in \progressiveAlgebra\).
   Consideramos su desplazamiento en una cantidad \(h > 0\)
   \begin{align}
@@ -531,80 +535,105 @@ Traslaciones de procesos progresivamente medibles.
   Aquí \(\pro{I} \subseteq \interval{cc}{h}{t}\) vuelve a ser un intervalo, y \(F\) resulta \(\events(t)\)--medible porque \(\events(\pre{t}) \subseteq \events(t)\), de modo tal que \(\pro{P} \in \borel(\interval{cc}{h}{t}) \otimes \events(t)\).
   Es valioso reflexionar sobre este punto para darse cuenta de por qué la anticipación de un conjunto progresivamente medible no vuelve a ser uno, pero si su retrazo.
   En fin, el resultado concreto de este razonamiento abstracto es que \(\pro{(A \cap E_{\pre{t}})} = \pro{A} \cap E_t\) es un conjunto \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible porque \(A \cap E_{\pre{t}}\) es \(\borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\)--medible, y esto último es así por la hipótesis \(A \in \progressiveAlgebra\).
-
-  \begin{corollary}
-    Los desplazamientos hacia adelante en el tiempo de procesos progresivamente medibles son procesos progresivamente medibles.
-  \end{corollary}
-
-  \begin{proof}
-    Sea \(X\) un proceso progresivamente medible y \(S_h X\), con \(h \geq 0\), su desplazamiento hacia adelante en el tiempo.
-    Por definición
-    \begin{align}
-      S_h X (t)
-      =
-      \left\{\begin{aligned}
-        &0 
-          &&\text{si } 
-          t < h
-        \\
-        &X(t - h) 
-          &&\text{si } 
-          t \geq h
-      \end{aligned}\right. 
-    \end{align}
-    
-    Sea \(B \in \borel(\realNumbers)\) un boreliano.
-    Si 0 no es uno de sus elementos, entonces 
-    \begin{align}
-      S_h X ^{- 1} (B)
-      &=
-      \{
-        (t, \omega) \in E 
-        : 
-        S_h X (t, \omega) \in B
-      \}
-      \\
-      &=
-      \{
-        (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
-        : 
-        X (t - h, \omega) \in B
-      \}
-    \end{align}
-    Siguiendo la notación de \(\sharp\) y \(\flat\), podemos escribir
-    \begin{align}
-      S_h X ^{- 1} (B)
-      &=
-      \{
-        \pro{(\pre{t}, \omega)} \in \interval{co}{h}{\infty} \times \Omega 
-        :
-        X (\pre{t}, \omega) \in B
-      \}
-      \\
-      &=
-      \pro{
-        \{
-          a \in \interval{co}{0}{\infty} \times \Omega 
-          :
-          X (a) \in B
-        \}
-      }
-      \\
-      &=
-      \pro{X^{- 1}(B)}
-    \end{align}
-    Esta igualdad hace que \(S_h X^{- 1} (B) \in \progressiveAlgebra\), viendo el dato \(X^{- 1} (B) \in \progressiveAlgebra\) a la luz del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
-    Por otra parte, si 0 pertenece a \(B\)
-    
-  \end{proof}
-
-
-
-
-
-
 \end{proof}
 
+\begin{corollary}
+  Los desplazamientos hacia adelante en el tiempo de procesos progresivamente medibles son procesos progresivamente medibles.
+\end{corollary}
+
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible y \(S_h X\), con \(h \geq 0\), su desplazamiento hacia adelante en el tiempo.
+  Definimos
+  \begin{align}
+    S_h X (t)
+    =
+    \left\{\begin{aligned}
+      &0 
+        &&\text{si } 
+        t < h
+      \\
+      &X(t - h) 
+        &&\text{si } 
+        t \geq h
+    \end{aligned}\right. 
+  \end{align}
+  
+  Sea \(B \in \borel(\realNumbers)\) un boreliano.
+  Si 0 no es uno de sus elementos, entonces \(S_h X\) no toca al conjunto \(B\) antes del tiempo \(h\), y en consecuencia
+  \begin{align}
+    S_h X ^{- 1} (B)
+    =
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      S_h X (t, \omega) \in B
+    \}
+  \end{align}
+  Siguiendo la notación de \(\sharp\) y \(\flat\), podemos calcular
+  \begin{equation}
+  \begin{aligned}
+    \label{midProof:shiftedProcessPreimage}
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      &: 
+      S_h X (t, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      X (t - h, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      \pro{(\pre{t}, \omega)} \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      X (\pre{t}, \omega) \in B
+    \}
+    \\
+    &=
+    \pro{
+      \{
+        a \in E 
+        :
+        X (a) \in B
+      \}
+    }
+    \\
+    &=
+    \pro{X^{- 1}(B)}
+  \end{aligned}
+  \end{equation}
+  Esta igualdad hace que \(S_h X^{- 1} (B) \in \progressiveAlgebra\), viendo el dato \(X^{- 1} (B) \in \progressiveAlgebra\) a la luz del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+
+  Seguimos tratando el caso particular \(B = \{0\}\).
+  Aquí la preimagen \(S_h X ^ {- 1} (0) = \{a \in E : S_h X (a) = 0\}\) puede separarse en dos trozos. 
+  Antes del instante \(h\) tenemos tal conjunto
+  \(
+    \{
+      a \in \interval{co}{0}{h} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \)
+  que resulta ser igual a \(\interval{co}{0}{h} \times \Omega\), porque la definición de \(S_h X\) hace evidente que la función es nula para todo \(a \in \interval{co}{0}{h} \times \Omega\).
+  Lo que sucede a partir del instante \(h\) queda escrito en el conjunto 
+  \(
+    \{
+      a \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \),
+  el cual puede entenderse repitiendo el cálculo \ref{midProof:shiftedProcessPreimage} paso por paso hasta llegar al resultado \(\pro{X^{- 1}(0)}\).
+  El primero trozo \(\interval{co}{0}{h} \times \Omega\) es progresivamente medible porque da origen a un proceso continuo a derecha (como vimos en el lema \ref{lemma:semiContinuousProcessesAreProgressivelyMeasurable});
+  por su parte, el desplazamiento \(\pro{X^{- 1}(0)}\) es progresivamente medible en virtud del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+  A su vez, la unión de estos conjuntos, \(S_h X^{- 1} (0)\), es progresivamente medible porque \(\progressiveAlgebra\) es una \(\sigma\)--álgebra.
+   
+  Finalmente, la demostración de progresividad en el caso de los borelianos \(B \in \borel(\realNumbers)\) que tienen a 0 entre sus elementos puede reducirse a los dos casos anteriores tras observar \(S_h X ^{- 1} (B) = S_h X ^{- 1} (B {\setminus} 0) \cup S_h X ^{- 1} (0)\).
+\end{proof}
 
 
 
