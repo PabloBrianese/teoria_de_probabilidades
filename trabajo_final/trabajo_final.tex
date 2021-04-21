@@ -5,12 +5,16 @@
 % \section{}, \subsection{}, \subsubsection{}, 
 % \paragraph{}, \subparagraph{}.
 \documentclass{report}
+
 % Document Packages %
 %%%%%%%%%%%%%%%%%%%%%
 \usepackage[spanish]{babel}
+\usepackage[inline]{enumitem}
+
 % LaTeX Packages %
 %%%%%%%%%%%%%%%%%%
 \usepackage{etoolbox}
+
 % Mathematics Packages %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{mathtools}
@@ -19,11 +23,13 @@
 \usepackage{bbm}
 \usepackage{mathrsfs}
 \usepackage{tikz-cd}
+
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
 \newcommand{\morters}{Mörters}
 \newcommand{\cadlag}{càdlàg}
+
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Intervals \begin{}
@@ -66,9 +72,12 @@
 \newcommand{\naturalNumbers}{\mathbb{N}}
 \newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
+\DeclareMathOperator{\parts}{\mathscr{P}}
+\DeclareMathOperator{\image}{\textnormal{Im}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
+
 % Paired Delimiters %
 %%%%%%%%%%%%%%%%%%%%%
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -76,6 +85,7 @@
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
 % Theorem environments %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
@@ -454,6 +464,204 @@ Obtenemos, de forma inmediata, que
   Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
 \end{theorem}
 
+\newpage
+Traslaciones de procesos progresivamente medibles.
+
+% EXPLICAR LOS SÍMBOLOS \(\sharp, \flat\) ACÁ, ANTES DE LAS PRUEBAS.
+
+\begin{theorem}
+  \label{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}
+  Los desplazamientos hacia adelante en el tiempo de conjuntos progresivamente medibles son conjuntos progresivamente medibles. 
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pro}[1]{{#1}^{\sharp}}
+\newcommand{\pre}[1]{{#1}^{\flat}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proof}
+  Sea \(A \in \progressiveAlgebra\).
+  Consideramos su desplazamiento en una cantidad \(h > 0\)
+  \begin{align}
+    \pro{A} = \{(s + h, \omega) : (s, \omega) \in A\}
+  \end{align}
+  Para probar \(\pro{A} \in \progressiveAlgebra\), debemos fijar un \(t \geq 0\) arbitrario y comprobar que \(\pro{A} \cap E_t\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) pertenece a toda \(\sigma\)--álgebra.
+  Debemos detenernos con cuidado en el caso no trivial \(t \geq h\) para poder hacer consideraciones globales.
+  
+  Se ruega paciencia, pues en la presente demostración haremos una seria sobrecarga de los símbolos \(\sharp\) y \(\flat\).
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+  % AGREGAR LA CUESTION 
+  % CON LOS INTERVALOS
+  %%%%%%%%%%%%%%%%%%%%%%%%%
+  Cuando tratamos escalares \(s \in \interval{cc}{h}{t}\), definimos \(\pre{s} \coloneqq s - h\), y cuando \(s \in \interval{cc}{0}{\pre{t}}\) definimos \(\pro{s} \coloneqq s + h\).
+  Lo mismo haremos con conjuntos de escalares, si \(J \subseteq \interval{cc}{h}{t}\) definimos \(\pre{J} \coloneqq \{\pre{j} : J \in U\}\), y cuando \(I \subseteq \interval{cc}{0}{\pre{t}}\) definimos \(\pro{I} \coloneqq \{\pro{i} : i \in I\}\).
+  De forma similar, cuando tenemos un par \((s, \omega) \in \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{(s, \omega)} \coloneqq (\pre{s}, \omega)\), y si \((s, \omega) \in \interval{cc}{0}{\pre{t}} \times \Omega\) definimos \(\pro{(s, \omega)} \coloneqq (\pro{s}, \omega)\).
+  Al tratar conjuntos haremos lo análogo, si \(U \subseteq \interval{cc}{h}{t} \times \Omega\) definimos \(\pre{U} \coloneqq \{\pre{u} : u \in U\}\), y cuando \(V \subseteq \interval{cc}{0}{\pre{t}} \times \Omega\), definimos \(\pro{V} \coloneqq \{\pro{v} : v \in V\}\).
+  Notar que \(\interval{cc}{0}{\pre{t}} \times \Omega = E_{\pre{t}}\) y \(\interval{cc}{h}{t} \times \Omega = \pro{E_{\pre{t}}}\).
+  
+  ¿Por qué es necesario todo esto?
+  Pues porque nos permite llegar al significado último del simple cálculo inicial
+  \begin{align}
+    \pro{A} \cap E_t
+    &=
+    \{(s, \omega) \in E_t : (s, \omega) \in \pro{A}\}
+    =
+    \{(s, \omega) \in E_t : (\pre{s}, \omega) \in A\}
+    \\
+    &=
+    \{\pro{(\pre{s}, \omega)} \in E_t : (\pre{s}, \omega) \in A\}
+    \\
+    &=
+    \{\pro{a} \in E_t : a \in A\}
+    =
+    \pro{\{a \in E_{\pre{t}} : a \in A\}}
+    \\
+    &=
+    \pro{(A \cap E_{\pre{t}})}
+  \end{align}
+  Que sin embargo encontraremos mediante un razonamiento abstracto.
+  Comenzamos observando que \(\sharp : \interval{cc}{0}{\pre{t}} \rightarrow \interval{cc}{h}{t}\)  y, en consecuencia, \(\sharp : E_{\pre{t}} \rightarrow \pro{E_{\pre{t}}}\) son biyecciones.
+  Esto es importante porque hace que la función de conjuntos \(\sharp : \parts ( E_{\pre{t}} ) \rightarrow \parts ( \pro{E_{\pre{t}}} )\) se comporta bien con las operaciones entre conjuntos.
+  Es decir que respeta
+  \begin{enumerate*}
+    \item al conjunto vacío, \(\pro{\emptyset} = \emptyset\);
+    \item las uniones arbitrarias de conjuntos, \(\pro{\bigcup\{V : V \in \mathcal{V}\}} = \bigcup \{ \pro{V} : V \in \mathcal{V}\}\) para toda familia \(\mathcal{V}\) de conjuntos \(V \subseteq E_{\pre{t}}\);
+    \item los complementos, \(\pro{(E_{\pre{t}} \setminus V)} = \pro{E_{\pre{t}}} \setminus \pro{V}\) para todo subconjunto \(V \subseteq E_{\pre{t}}\).
+  \end{enumerate*}
+  Estos límites estructurales hacen que podamos demostrar que la función de conjuntos \(\sharp : \parts(E_{\pre{t}}) \rightarrow \parts(\pro{E_{\pre{t}}})\) da lugar a una restricción \(\sharp : \borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t}) \rightarrow \borel(\interval{cc}{h}{t}) \otimes \events(t)\) solamente verificando la relación \(\pro{P} \in \borel(\interval{cc}{h}{t}) \otimes \events(t)\) sobre unos \(P \in \borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\) que generen la \(\sigma\)--álgebra completa.
+  La familia de conjuntos \(P\) que elegimos es la de aquellos de la forma \(P = I \times F\) donde \(I \subseteq \interval{cc}{0}{\pre{t}}\) es un intervalo y \(F \in \events(\pre{t})\).
+  En efecto, si \(P\) es rectangular de esta manera, se dá la identidad \(\pro{P} = \pro{I} \times F\).
+  Aquí \(\pro{I} \subseteq \interval{cc}{h}{t}\) vuelve a ser un intervalo, y \(F\) resulta \(\events(t)\)--medible porque \(\events(\pre{t}) \subseteq \events(t)\), de modo tal que \(\pro{P} \in \borel(\interval{cc}{h}{t}) \otimes \events(t)\).
+  Es valioso reflexionar sobre este punto para darse cuenta de por qué la anticipación de un conjunto progresivamente medible no vuelve a ser uno, pero si su retrazo.
+  En fin, el resultado concreto de este razonamiento abstracto es que \(\pro{(A \cap E_{\pre{t}})} = \pro{A} \cap E_t\) es un conjunto \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible porque \(A \cap E_{\pre{t}}\) es \(\borel(\interval{cc}{0}{\pre{t}}) \otimes \events(\pre{t})\)--medible, y esto último es así por la hipótesis \(A \in \progressiveAlgebra\).
+\end{proof}
+
+\begin{corollary}
+  Los desplazamientos hacia adelante en el tiempo de procesos progresivamente medibles son procesos progresivamente medibles.
+\end{corollary}
+
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible y \(S_h X\), con \(h \geq 0\), su desplazamiento hacia adelante en el tiempo.
+  Definimos
+  \begin{align}
+    S_h X (t)
+    =
+    \left\{\begin{aligned}
+      &0 
+        &&\text{si } 
+        t < h
+      \\
+      &X(t - h) 
+        &&\text{si } 
+        t \geq h
+    \end{aligned}\right. 
+  \end{align}
+  
+  Sea \(B \in \borel(\realNumbers)\) un boreliano.
+  Si 0 no es uno de sus elementos, entonces \(S_h X\) no toca al conjunto \(B\) antes del tiempo \(h\), y en consecuencia
+  \begin{align}
+    S_h X ^{- 1} (B)
+    =
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      S_h X (t, \omega) \in B
+    \}
+  \end{align}
+  Siguiendo la notación de \(\sharp\) y \(\flat\), podemos calcular
+  \begin{equation}
+  \begin{aligned}
+    \label{midProof:shiftedProcessPreimage}
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      &: 
+      S_h X (t, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      X (t - h, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      \pro{(\pre{t}, \omega)} \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      X (\pre{t}, \omega) \in B
+    \}
+    \\
+    &=
+    \pro{
+      \{
+        a \in E 
+        :
+        X (a) \in B
+      \}
+    }
+    \\
+    &=
+    \pro{X^{- 1}(B)}
+  \end{aligned}
+  \end{equation}
+  Esta igualdad hace que \(S_h X^{- 1} (B) \in \progressiveAlgebra\), viendo el dato \(X^{- 1} (B) \in \progressiveAlgebra\) a la luz del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+
+  Seguimos tratando el caso particular \(B = \{0\}\).
+  Aquí la preimagen \(S_h X ^ {- 1} (0) = \{a \in E : S_h X (a) = 0\}\) puede separarse en dos trozos. 
+  Antes del instante \(h\) tenemos tal conjunto
+  \(
+    \{
+      a \in \interval{co}{0}{h} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \)
+  que resulta ser igual a \(\interval{co}{0}{h} \times \Omega\), porque la definición de \(S_h X\) hace evidente que la función es nula para todo \(a \in \interval{co}{0}{h} \times \Omega\).
+  Lo que sucede a partir del instante \(h\) queda escrito en el conjunto 
+  \(
+    \{
+      a \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \),
+  el cual puede entenderse repitiendo el cálculo \ref{midProof:shiftedProcessPreimage} paso por paso hasta llegar al resultado \(\pro{X^{- 1}(0)}\).
+  El primero trozo \(\interval{co}{0}{h} \times \Omega\) es progresivamente medible porque da origen a un proceso continuo a derecha (como vimos en el lema \ref{lemma:semiContinuousProcessesAreProgressivelyMeasurable});
+  por su parte, el desplazamiento \(\pro{X^{- 1}(0)}\) es progresivamente medible en virtud del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+  A su vez, la unión de estos conjuntos, \(S_h X^{- 1} (0)\), es progresivamente medible porque \(\progressiveAlgebra\) es una \(\sigma\)--álgebra.
+   
+  Finalmente, la demostración de progresividad en el caso de los borelianos \(B \in \borel(\realNumbers)\) que tienen a 0 entre sus elementos puede reducirse a los dos casos anteriores tras observar \(S_h X ^{- 1} (B) = S_h X ^{- 1} (B {\setminus} 0) \cup S_h X ^{- 1} (0)\).
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 Acumulaciones de procesos progresivamente medibles.
 
 Hemos probado (en \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
