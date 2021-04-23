@@ -189,6 +189,27 @@ En lo que sigue escribiremos \(E_t = \interval{cc}{0}{t} \times \Omega\), para c
   Un proceso constante \(X\), al ser restringido a un conjunto \(E_t\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), cualquiera sea \(t \geq 0\).
 \end{example}
 
+\begin{example}
+  Cada funcion borel medible \(f : \interval{co}{0}{\infty} \rightarrow \realNumbers\) da lugar a un proceso progresivamente medible definido como \(X(t, \omega) = f(t)\) \((\forall (t, \omega) \in E)\).
+  Sucede porque hay un diagrama conmutativo 
+  \newcommand{\measureableFunctions}{\mathcal{M}}
+  \begin{equation}
+  \begin{tikzcd}[ampersand replacement=\&]
+    \measureableFunctions(\borel(\interval{co}{0}{\infty}))
+    \arrow[rr, hook] \arrow[d, two heads]
+    \&\& \realNumbers^{\interval{co}{0}{\infty} \times \Omega}
+    \arrow[d, two heads] 
+    \\
+    \measureableFunctions(\borel(\interval{cc}{0}{t}))
+    \arrow[r, hook]
+    \&\measureableFunctions(\borel(\interval{cc}{0}{t}) \otimes \events(t))
+    \arrow{r}{\subset}
+    \& \realNumbers^{\interval{cc}{0}{t} \times \Omega}
+  \end{tikzcd}
+  \end{equation}
+  donde las flechas \(\hookrightarrow\) son extensiones triviales que añaden una variable muda, y las flechas \(\twoheadrightarrow\) son restricciones del dominio.
+\end{example}
+
 La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
 
 \begin{lemma}
