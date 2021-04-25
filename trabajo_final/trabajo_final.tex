@@ -210,6 +210,38 @@ En lo que sigue escribiremos \(E_t = \interval{cc}{0}{t} \times \Omega\), para c
   donde las flechas \(\hookrightarrow\) son extensiones triviales que añaden una variable muda, y las flechas \(\twoheadrightarrow\) son restricciones del dominio.
 \end{example}
 
+\begin{theorem}
+  \label{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}
+  Las instacias de un proceso progresivamente medible son funciones borel.
+\end{theorem}
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible.
+  Fijemos un evento \(\omega \in \Omega\) y condideremos la función \(f(t) = X(t, \omega)\), \(t \geq 0\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), definimos \(Y \coloneqq f^{- 1}(B)\) y probaremos \(Y \in \borel(\interval{co}{0}{\infty})\).
+
+  Podemos estudiar esta preimagen \(Y\) de forma \emph{progresiva}.
+  Para cada \(n \in \naturalNumbers\), definimos \(Y_n \coloneqq f^{- 1}(B) \cap \interval{cc}{0}{n}\).
+  Por la propiedad aquimedeana de los números reales \(Y = \bigcup_{n \in \naturalNumbers} Y_n\).
+  Fijamos \(n \in \naturalNumbers\) y calculamos 
+  \begin{align}
+    Y_n 
+    = 
+    \{t \in \realNumbers : f(t) \in B\} \cap \interval{cc}{0}{n}
+    = 
+    \{t \in \interval{cc}{0}{n} : X(t, \omega) \in B\}
+  \end{align}
+  Restringiendo a \(X\), obtenemos \(Y_n = \{t \in \interval{cc}{0}{n} : \restrict{X}{E_n}(t, \omega) \in B\}\).
+  Si escribimos \(U \coloneqq \restrict{X}{E_n}^{- 1}(B)\), esta igualdad se lee 
+  \begin{align}
+    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in U\}
+  \end{align}
+  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(U \subseteq E_n\).
+  Pero \(U\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
+  Luego \(Y_n\) es \(\borel(\interval{cc}{0}{n})\)--medible.
+  En conclusión, para cada \(n \in \naturalNumbers\), el conjunto \(Y_n\) pertenece a \(\borel(\interval{co}{0}{\infty})\).
+  Esto demuestra que la preimagen \(Y\) es la unión numerable de boreliano, y es ella misma \(\borel(\interval{co}{0}{\infty})\)--medible.
+\end{proof}
+
 La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
 
 \begin{lemma}
@@ -350,37 +382,7 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
 %%%%%%%%%%%%%
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
 
-\begin{theorem}
-  \label{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}
-  Las instacias de un proceso progresivamente medible son funciones borel.
-\end{theorem}
-\begin{proof}
-  Sea \(X\) un proceso progresivamente medible.
-  Fijemos un evento \(\omega \in \Omega\) y condideremos la función \(f(t) = X(t, \omega)\), \(t \geq 0\).
-  Dado un boreliano \(B \in \borel(\realNumbers)\), definimos \(Y \coloneqq f^{- 1}(B)\) y probaremos \(Y \in \borel(\interval{co}{0}{\infty})\).
-
-  Podemos estudiar esta preimagen \(Y\) de forma \emph{progresiva}.
-  Para cada \(n \in \naturalNumbers\), definimos \(Y_n \coloneqq f^{- 1}(B) \cap \interval{cc}{0}{n}\).
-  Por la propiedad aquimedeana de los números reales \(Y = \bigcup_{n \in \naturalNumbers} Y_n\).
-  Fijamos \(n \in \naturalNumbers\) y calculamos 
-  \begin{align}
-    Y_n 
-    = 
-    \{t \in \realNumbers : f(t) \in B\} \cap \interval{cc}{0}{n}
-    = 
-    \{t \in \interval{cc}{0}{n} : X(t, \omega) \in B\}
-  \end{align}
-  Restringiendo a \(X\), obtenemos \(Y_n = \{t \in \interval{cc}{0}{n} : \restrict{X}{E_n}(t, \omega) \in B\}\).
-  Si escribimos \(U \coloneqq \restrict{X}{E_n}^{- 1}(B)\), esta igualdad se lee 
-  \begin{align}
-    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in U\}
-  \end{align}
-  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(U \subseteq E_n\).
-  Pero \(U\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
-  Luego \(Y_n\) es \(\borel(\interval{cc}{0}{n})\)--medible.
-  En conclusión, para cada \(n \in \naturalNumbers\), el conjunto \(Y_n\) pertenece a \(\borel(\interval{co}{0}{\infty})\).
-  Esto demuestra que la preimagen \(Y\) es la unión numerable de boreliano, y es ella misma \(\borel(\interval{co}{0}{\infty})\)--medible.
-\end{proof}
+\subsection{Conjuntos progresivamente medibles}
 
 Usando la correspondencia estático-dinámica de los procesos llegamos a la siguiente noción. 
 \begin{definition}
@@ -485,8 +487,7 @@ Obtenemos, de forma inmediata, que
   Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
 \end{theorem}
 
-\newpage
-Traslaciones de procesos progresivamente medibles.
+\subsection{Desplazamiento de procesos progresivamente medibles}
 
 % EXPLICAR LOS SÍMBOLOS \(\sharp, \flat\) ACÁ, ANTES DE LAS PRUEBAS.
 
@@ -682,14 +683,14 @@ Traslaciones de procesos progresivamente medibles.
 
 
 
-\newpage
-Acumulaciones de procesos progresivamente medibles.
+\subsection{Acumulaciones de procesos progresivamente medibles}
 
-Hemos probado (en \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
+Hemos probado (en el teorema \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
 Pues bien ¿qué sucedería si estas además fueran integrables?
 Se dá que esta integral vuelve a ser un proceso progresivamente medible.
 
-\begin{theorem}
+\begin{theorem}[Acumulación]
+  \label{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}
   Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
   \begin{align}
     \int_0^t X(u) \dd u
@@ -732,7 +733,43 @@ Se dá que esta integral vuelve a ser un proceso progresivamente medible.
   La existencia de las funciones \(F\) implica la buena definición de \(Y\), y la continuida de las mismas prueba que la función es un proceso progresivamente medible con trayectorias continuas.
 \end{proof}
 
-Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
+Continuando con las acumulaciones de procesos progresivamente medibles llegamos a
+\begin{corollary}
+  \label{corollary:windowedIntegralOfProgressivelyMeasurableProcess}
+  Si \(X\) es un proceso progresivamente medible con instancias localmente integrables, entonces la fórmula
+  \begin{align}
+    \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h \geq 0\) es un desplazamiento, da lugar a un proceso continuo.
+  Porque \(X\) no está definido para valores de \(u\) negativos, interpretamos que \(X(u) = 0\) si \(u < 0\).
+\end{corollary}
+\begin{proof}
+  Una correcta interpretación de la fórmula, teniendo en mente la interpretación \(X(u) = 0\) cuando \(u < 0\), sería
+  \begin{align}
+    \int_{t- h}^t X(u) \dd u
+    =
+    \int_0^t X(u) \dd u
+    -
+    \int_0^{t - h} X(u) \dd u
+    =
+    I(t) - S_h I (t)
+  \end{align}
+  donde \(I(t) = \int_0^t X(u) \dd u\) \((\forall t \geq 0)\).
+  Sabemos que \(I\) es un proceso continuo por el teorema \ref{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}.
+  Adicionalmente, se sigue de esto que su corrimiento \(S_h I\) resulta continuo porque \(I(0) = 0\). 
+\end{proof}
+
+  Una modificación muy simple del previo corolario \ref{corollary:windowedIntegralOfProgressivelyMeasurableProcess} es la media móvil de un proceso estocástico
+
+\begin{corollary}[Media movil]
+  Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
+  \begin{align}
+    \frac{1}{h} \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h > 0\) es un desplazamiento, da lugar a un proceso continuo.
+\end{corollary}
+
+\subsection{Aproximación de procesos progresivamente medibles}
 
 Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(Y(s, \omega) \coloneqq \characteristic_{\interval{co}{0}{t}}(s)\) define un proceso progresivamente medible, y como explicamos que los procesos progresivamente medibles estan cerrados bajo producto en el teorema \(\ref{theorem:algebraOfProgressiveProcesses}\).
 
