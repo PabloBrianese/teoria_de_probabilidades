@@ -231,12 +231,12 @@ En lo que sigue escribiremos \(E_t = \interval{cc}{0}{t} \times \Omega\), para c
     \{t \in \interval{cc}{0}{n} : X(t, \omega) \in B\}
   \end{align}
   Restringiendo a \(X\), obtenemos \(Y_n = \{t \in \interval{cc}{0}{n} : \restrict{X}{E_n}(t, \omega) \in B\}\).
-  Si escribimos \(U \coloneqq \restrict{X}{E_n}^{- 1}(B)\), esta igualdad se lee 
+  Esta igualdad puede leerse como 
   \begin{align}
-    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in U\}
+    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in \restrict{X}{E_n}^{- 1}(B)\}
   \end{align}
-  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(U \subseteq E_n\).
-  Pero \(U\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
+  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(\restrict{X}{E_n}^{- 1}(B) \subseteq E_n\).
+  Pero \(\restrict{X}{E_n}^{- 1}(B)\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
   Luego \(Y_n\) es \(\borel(\interval{cc}{0}{n})\)--medible.
   En conclusión, para cada \(n \in \naturalNumbers\), el conjunto \(Y_n\) pertenece a \(\borel(\interval{co}{0}{\infty})\).
   Esto demuestra que la preimagen \(Y\) es la unión numerable de boreliano, y es ella misma \(\borel(\interval{co}{0}{\infty})\)--medible.
