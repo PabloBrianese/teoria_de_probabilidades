@@ -685,11 +685,12 @@ Traslaciones de procesos progresivamente medibles.
 \newpage
 Acumulaciones de procesos progresivamente medibles.
 
-Hemos probado (en \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
+Hemos probado (en el teorema \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
 Pues bien ¿qué sucedería si estas además fueran integrables?
 Se dá que esta integral vuelve a ser un proceso progresivamente medible.
 
 \begin{theorem}
+  \label{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}
   Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
   \begin{align}
     \int_0^t X(u) \dd u
@@ -731,6 +732,67 @@ Se dá que esta integral vuelve a ser un proceso progresivamente medible.
 
   La existencia de las funciones \(F\) implica la buena definición de \(Y\), y la continuida de las mismas prueba que la función es un proceso progresivamente medible con trayectorias continuas.
 \end{proof}
+
+Continuando con las acumulaciones de procesos progresivamente medibles llegamos a
+\begin{corollary}
+  \label{corollary:windowedIntegralOfProgressivelyMeasurableProcess}
+  Si \(X\) es un proceso progresivamente medible con instancias localmente integrables, entonces la fórmula
+  \begin{align}
+    \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h \geq 0\) es un desplazamiento, da lugar a un proceso continuo.
+  Porque \(X\) no está definido para valores de \(u\) negativos, interpretamos que \(X(u) = 0\) si \(u < 0\).
+\end{corollary}
+\begin{proof}
+  Una correcta interpretación de la fórmula, teniendo en mente la interpretación \(X(u) = 0\) cuando \(u < 0\), sería
+  \begin{align}
+    \int_{t- h}^t X(u) \dd u
+    =
+    \int_0^t X(u) \dd u
+    -
+    \int_0^{t - h} X(u) \dd u
+    =
+    I(t) - S_h I (t)
+  \end{align}
+  donde \(I(t) = \int_0^t X(u) \dd u\) \((\forall t \geq 0)\).
+  Sabemos que \(I\) es un proceso continuo por el teorema \ref{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}.
+  Adicionalmente, se sigue de esto que su corrimiento \(S_h I\) resulta continuo porque \(I(0) = 0\). 
+\end{proof}
+
+\begin{corollary}
+  Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
+  \begin{align}
+    \frac{1}{h} \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h > 0\) es un desplazamiento, da lugar a un proceso continuo.
+\end{corollary}
+\begin{proof}
+  Basta con recordar que los procesos constantes son progresivamente medibles, ver el pasado corolario \ref{corollary:windowedIntegralOfProgressivelyMeasurableProcess}, y usar el teorema \ref{theorem:algebraOfProgressiveProcesses} diciendo que el producto de procesos progresivamente medibles es otro de ellos.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
 
 Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
 
