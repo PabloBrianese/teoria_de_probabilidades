@@ -1,14 +1,20 @@
+% \begin{}
+
 % Report document structure %
 % \part{}, \chapter{}, 
 % \section{}, \subsection{}, \subsubsection{}, 
 % \paragraph{}, \subparagraph{}.
 \documentclass{report}
+
 % Document Packages %
 %%%%%%%%%%%%%%%%%%%%%
 \usepackage[spanish]{babel}
+\usepackage[inline]{enumitem}
+
 % LaTeX Packages %
 %%%%%%%%%%%%%%%%%%
 \usepackage{etoolbox}
+
 % Mathematics Packages %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{mathtools}
@@ -17,11 +23,13 @@
 \usepackage{bbm}
 \usepackage{mathrsfs}
 \usepackage{tikz-cd}
+
 % Text Abreviation %
 %%%%%%%%%%%%%%%%%%%%
 \newcommand{\ito}{Itô}
 \newcommand{\morters}{Mörters}
 \newcommand{\cadlag}{càdlàg}
+
 % Mathematics Notation %
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Intervals \begin{}
@@ -64,9 +72,12 @@
 \newcommand{\naturalNumbers}{\mathbb{N}}
 \newcommand{\realNumbers}{\mathbb{R}}
 \newcommand{\complexNumbers}{\mathbb{C}}
+\DeclareMathOperator{\parts}{\mathscr{P}}
+\DeclareMathOperator{\image}{\textnormal{Im}}
 \DeclareMathOperator{\laplacian}{\Delta}
 \DeclareMathOperator{\grad}{\nabla}
 \DeclareMathOperator{\Expectation}{\mathbb{E}}
+
 % Paired Delimiters %
 %%%%%%%%%%%%%%%%%%%%%
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
@@ -74,6 +85,7 @@
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
 % Theorem environments %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \theoremstyle{plain}
@@ -90,6 +102,8 @@
 
 \title{Estudio sobre la invarianza conforme del movimiento Browniano planar}
 \author{Pablo Brianese}
+
+% \end{}
 
 \begin{document}
 \maketitle
@@ -125,15 +139,17 @@ Antes de explicar el procedimiento, debemos estudiar algo de teoría de la medid
 % La afirmación recíproca al teorema 49 de este libro es cierta?
 
 % Measurability of hitting times
-Haremos uso sistemático de un isomorfismo%
-\footnote{Esta idea parece formalmente similar a como el producto por un escalar en un espacio vectorial puede considerarse como una función definida sobre el producto tensorial de los escalares con los vectores, o un producto en un anillo puede considerarse como una función definida sobre el cuadrado tensorial del anillo.
-Alguien con más instrucción en álgebra y teoría de categorías debería poder hacer un comentario sobre esto.}
+Haremos uso sistemático de un isomorfismo
 (vago, no formal) que existe entre una visión dinámica y otra estática%
 \footnote{algo así como el punto de vista del filósofo griego Parménides de Elea sobre los procesos estocásticos.}
 de los procesos estocásticos.
-Concretamente, un proceso estocástico \(\{X(t) : t \geq 0\}\) adaptado a una filtración \((\events(t) : t \geq 0)\) en un espacio de probabilidad \((\Omega, \events, \prob)\) puede ser considerado como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\interval{co}{0}{\infty} \times \Omega\).
+Concretamente, en un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\), un proceso estocástico adaptado es una familia de variables aleatorias \(\{X(t) : t \geq 0\}\)
+Esta familia puede ser considerada como una función \(X\) dada por \(X(t, \omega) = X(t)(\omega)\) definida en el producto cartesiano \(\interval{co}{0}{\infty} \times \Omega\).
 Recíprocamente, dada una función \(X\) definida en \(\interval{co}{0}{\infty} \times \Omega\), denotamos por \(X(t)\) la aplicación parcial \(\omega \mapsto X(t, \omega)\), e \emph{identificamos} la función \(X\) con la familia de aplicaciones parciales \(\{X(t)\}\).
 Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si la familia \(\{X(t)\}\) lo es.
+
+Con este isomorfismo en mente, hablaremos simplemente de \emph{un proceso estocástico \(X\)} pensando que se trata de una función \(\interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) y supondremos la existencia del espacio de probabilidad \((\Omega, \events, \prob)\) junto con su filtración \((\events(t) : t \geq 0)\).
+Además, usaremos la notación \(E = \interval{co}{0}{\infty} \times \Omega\) porque este objeto resulta ubicuo.
 
 % Creo que esta sigma álgebra es la misma de la que hablan en la siguiente referencia,
 % y que da lugar a unos procesos llamados 'predecibles'
@@ -144,8 +160,10 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  Dado un espacio de probabilidad \((\Omega, \events, \prob)\) dotado de una filtración \((\events(t) : t \geq 0)\), un proceso estocástico \(\{X(t) : t \geq 0\}\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : [0, t] \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
+  Un proceso estocástico \(X\) es llamado \emph{progresivamente medible} si para todo \(t \geq 0\) la aplicación restringida \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) es medible con respecto a la \(\sigma\)--álgebra \(\borel([0, t]) \otimes \events(t)\).
 \end{definition}
+
+En lo que sigue escribiremos \(E_t = \interval{cc}{0}{t} \times \Omega\), para cada \(t \geq 0\), al referirnos a estos subconjuntos destacados de \(E\).
 
 \begin{lemma}
   Todo proceso progresivamente medible está adaptado a la filtración de su espacio de probabilidad.
@@ -156,12 +174,10 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 % Theme: Product mesure spaces, and sections
 
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico en un espacio de probabilidad \((\Omega, \events, \prob)\).
-  Sea \((\events(t) : t \geq 0)\) una filtración de la \(\sigma\)--álgebra \(\events\).
-
-  Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) al conjunto \(\interval{cc}{0}{t} \times \Omega\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Sea \(X\) un proceso estocástico.
+  Fijemos un instante \(t \geq 0\) cualquiera, y supongamos que la restricción de \(X : E \rightarrow \realNumbers\) al conjunto \(E_t\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
   Para probar que \(X(t)\) es \(\events(t)\)--medible, consideramos un boreliano \(B \in \borel(\realNumbers)\) arbitrario.
-  Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in \interval{cc}{0}{t} \times \Omega : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Sabemos, por hipótesis, que la preimagen \(R = \{(s, \omega) \in E_t : X(s, \omega) \in B\}\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
   Escribiendo la preimagen de \(B\) por la función  \(X(t) : \Omega \rightarrow \realNumbers\) como \(S = \{\omega \in \Omega : X(t, \omega) \in B\}\) se aprecia que \(S\) es la \(\Omega\)--sección en \(t\) de \(R\).
   Es decir, la identidad \(S = \{\omega \in \Omega : (t, \omega) \in R\}\).
   Luego \(S\) resulta \(\events(t)\)--medible.
@@ -170,8 +186,61 @@ Esto permite decir, por ejemplo, que la función \(X\) \emph{es un proceso} si l
 \begin{example}
   Los procesos estocásticos constantes son progresivamente medibles.
   En efecto, esto es una consecuencia de la medibilidad de las funciones constantes.
-  Un proceso constante \(X\) sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\) tiene función correspondiente \(X : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) constante, al ser esta restringida a un conjunto \(\interval{cc}{0}{t} \times \Omega\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\) cualquiera sea \(t \geq 0\).
+  Un proceso constante \(X\), al ser restringido a un conjunto \(E_t\) también resulta constante y por tanto medible según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), cualquiera sea \(t \geq 0\).
 \end{example}
+
+\begin{example}
+  Cada funcion borel medible \(f : \interval{co}{0}{\infty} \rightarrow \realNumbers\) da lugar a un proceso progresivamente medible definido como \(X(t, \omega) = f(t)\) \((\forall (t, \omega) \in E)\).
+  Sucede porque hay un diagrama conmutativo 
+  \newcommand{\measureableFunctions}{\mathcal{M}}
+  \begin{equation}
+  \begin{tikzcd}[ampersand replacement=\&]
+    \measureableFunctions(\borel(\interval{co}{0}{\infty}))
+    \arrow[rr, hook] \arrow[d, two heads]
+    \&\& \realNumbers^{\interval{co}{0}{\infty} \times \Omega}
+    \arrow[d, two heads] 
+    \\
+    \measureableFunctions(\borel(\interval{cc}{0}{t}))
+    \arrow[r, hook]
+    \&\measureableFunctions(\borel(\interval{cc}{0}{t}) \otimes \events(t))
+    \arrow{r}{\subset}
+    \& \realNumbers^{\interval{cc}{0}{t} \times \Omega}
+  \end{tikzcd}
+  \end{equation}
+  donde las flechas \(\hookrightarrow\) son extensiones triviales que añaden una variable muda, y las flechas \(\twoheadrightarrow\) son restricciones del dominio.
+\end{example}
+
+\begin{theorem}
+  \label{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}
+  Las instacias de un proceso progresivamente medible son funciones borel.
+\end{theorem}
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible.
+  Fijemos un evento \(\omega \in \Omega\) y condideremos la función \(f(t) = X(t, \omega)\), \(t \geq 0\).
+  Dado un boreliano \(B \in \borel(\realNumbers)\), definimos \(Y \coloneqq f^{- 1}(B)\) y probaremos \(Y \in \borel(\interval{co}{0}{\infty})\).
+
+  Podemos estudiar esta preimagen \(Y\) de forma \emph{progresiva}.
+  Para cada \(n \in \naturalNumbers\), definimos \(Y_n \coloneqq f^{- 1}(B) \cap \interval{cc}{0}{n}\).
+  Por la propiedad aquimedeana de los números reales \(Y = \bigcup_{n \in \naturalNumbers} Y_n\).
+  Fijamos \(n \in \naturalNumbers\) y calculamos 
+  \begin{align}
+    Y_n 
+    = 
+    \{t \in \realNumbers : f(t) \in B\} \cap \interval{cc}{0}{n}
+    = 
+    \{t \in \interval{cc}{0}{n} : X(t, \omega) \in B\}
+  \end{align}
+  Restringiendo a \(X\), obtenemos \(Y_n = \{t \in \interval{cc}{0}{n} : \restrict{X}{E_n}(t, \omega) \in B\}\).
+  Esta igualdad puede leerse como 
+  \begin{align}
+    Y_n = \{t \in \interval{cc}{0}{n} : (t, \omega) \in \restrict{X}{E_n}^{- 1}(B)\}
+  \end{align}
+  En palabras, la ecuación dice que \(Y_n \subseteq \interval{cc}{0}{n}\) es una \(\interval{cc}{0}{n}\)--sección en \(\omega \in \Omega\) del conjunto \(\restrict{X}{E_n}^{- 1}(B) \subseteq E_n\).
+  Pero \(\restrict{X}{E_n}^{- 1}(B)\) es \(\borel(\interval{cc}{0}{n}) \otimes \events(n)\)--medible porque \(X\) es progresivamente medible.
+  Luego \(Y_n\) es \(\borel(\interval{cc}{0}{n})\)--medible.
+  En conclusión, para cada \(n \in \naturalNumbers\), el conjunto \(Y_n\) pertenece a \(\borel(\interval{co}{0}{\infty})\).
+  Esto demuestra que la preimagen \(Y\) es la unión numerable de boreliano, y es ella misma \(\borel(\interval{co}{0}{\infty})\)--medible.
+\end{proof}
 
 La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amplitud.
 
@@ -180,8 +249,8 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
   Todo proceso estocástico semi--continuo es progresivamente medible.
 \end{lemma}
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso continuo a derecha o izquierda.
-  Fijemos \(t > 0\), y consideremos la restricción \(X : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
+  Sea \(X\) un proceso continuo a derecha o izquierda.
+  Fijemos \(t > 0\) para considerar la restricción \(X : E_t \rightarrow \realNumbers\) y su correspondiente proceso \(\{X(s) : 0 \leq s \leq t\}\).
   Debemos probar que esta restricción es medible según \(\borel([0, t]) \otimes \events(t)\).
 
   Para concretar tal objetivo, tomamos finitas muestras del proceso restringido a intervalos regulares de tiempo.
@@ -223,7 +292,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
     \right.
   \end{align}
   donde \(t_k = k \varepsilon\) con \(k \in \{0, 1, \dots, 2^n\}\) son los instantes de muestreo que particionan \(\interval{cc}{0}{t}\) en \(2^n\) intervalos regulares de longitud \(\varepsilon = t 2^{- n}\).
-  Las aplicaciones \(\backPropagation{X}_n, \forwardPropagation{X}_n : \interval{cc}{0}{t} \times \Omega \rightarrow \realNumbers\) son medibles según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), porque pueden escribirse como composiciones de funciones apropiadamente medibles
+  Las aplicaciones \(\backPropagation{X}_n, \forwardPropagation{X}_n : E_t \rightarrow \realNumbers\) son medibles según \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\), porque pueden escribirse como composiciones de funciones apropiadamente medibles
   \begin{align}
     &\begin{tikzcd}
       [
@@ -236,10 +305,10 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
       \arrow[r, mapsto]
         \& (\backPropagation{s}, \omega)
       \\[-2em]
-      \interval{cc}{0}{t} \times \Omega
+      E_t
       \arrow{r}
       \arrow{rd}[swap]{\displaystyle \backPropagation{X}_n}
-        \& \interval{cc}{0}{t} \times \Omega
+        \& E_t
           \arrow{d}{\displaystyle X}
       \\
         \&  \realNumbers
@@ -258,10 +327,10 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
       \arrow[r, mapsto]
         \& (\forwardPropagation{s}, \omega)
       \\[-2em]
-      \interval{cc}{0}{t} \times \Omega
+      E_t
       \arrow{r}
       \arrow{rd}[swap]{\displaystyle \forwardPropagation{X}_n}
-        \& \interval{cc}{0}{t} \times \Omega
+        \& E_t
           \arrow{d}{\displaystyle X}
       \\
         \&  \realNumbers
@@ -274,7 +343,7 @@ La siguiente familia de ejemplos viene en forma de lema, por su relevancia y amp
   En el límite \(n \rightarrow \infty\) obtenemos convergencia puntual, la hipótesis de continuidad a derecha deduce de esto que \(\backPropagation{X}_n \rightarrow X\) y la hipótesis de continuidad a izquierda deduce de esto que \(\forwardPropagation{X}_n \rightarrow X\).
   En ambos casos \(X\) es medible según \(\borel([0, t]) \otimes \events(t)\) al igual que sus aproximaciones.
 
-  Porque \(t > 0\) era arbitrario, se sigue que el proceso irrestricto \(\{X(t)\}\) es progresivamente medible.
+  Porque \(t > 0\) era arbitrario, se sigue que el proceso irrestricto \(X\) es progresivamente medible.
 \end{proof}
 
 Estos ejemplos son importantes y se deben derivar del lema anterior.
@@ -285,7 +354,7 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
   Consideremos un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
   Tomamos un intervalo de tiempo \(\interval{co}{a}{b}\) y una variable \(\events(a)\)--medible \(A\).
   La función 
-  \(X(t, \omega) = \characteristic_{\interval{co}{a}{b}}(t) \cdot A(\omega)\) definida para \((t, \omega) \in \interval{co}{0}{\infty} \times \Omega\)
+  \(X(t, \omega) = \characteristic_{\interval{co}{a}{b}}(t) \cdot A(\omega)\) definida para \((t, \omega) \in E\)
   da lugar a un proceso estocástico adaptado a \((\events(t))\)
   \begin{align}
     &X(t)
@@ -313,18 +382,19 @@ Estos ejemplos son importantes y se deben derivar del lema anterior.
 %%%%%%%%%%%%%
 % Mi hipótesis sobre la naturaleza de los procesos progresivamente medibles es que forman la \(\sigma\)--álgebra del producto, en una categoría de espacios filtrados, entre la recta filtrada por \(\borel(t)\) y un espacio de probabilidad filtrado por \(\events(t)\).
 
+\subsection{Conjuntos progresivamente medibles}
+
 Usando la correspondencia estático-dinámica de los procesos llegamos a la siguiente noción. 
 \begin{definition}
   Sea \((\Omega, \events, \prob)\) un espacio de probabilidad filtrado por \((\events(t) : t \geq 0)\).
-  Un subconjunto \(A\) de \(\interval{co}{0}{\infty} \times \Omega\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora \(\characteristic_A : \interval{co}{0}{\infty} \times \Omega \rightarrow \realNumbers\) queda identificada con un proceso progresivamente medible con respecto a esta familia.
-
-  Escribimos \(E = \interval{co}{0}{\infty} \times \Omega\) y \(E_t = \interval{cc}{0}{t} \times \Omega\). Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
+  Un subconjunto \(A\) de \(E\) \emph{es progresivamente medible} con respecto a la filtración \((\events(t))\) si su función indicadora \(\characteristic_A : E \rightarrow \realNumbers\) queda identificada con un proceso progresivamente medible con respecto a esta familia.
+  Usamos \(\progressiveAlgebra\) para denotar al conjunto de partes progresivamente medibles de \(E\).
 \end{definition}
 
 \begin{example}
   \label{example:progressivelyMeasurablePreimage}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
-  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) por la función \(X : E \rightarrow \realNumbers\).
+  Sea \(X\) un proceso estocástico progresivamente medible.
+  Dado un boreliano \(B \in \borel(\realNumbers)\), consideramos su preimagen \(A \coloneqq X^{- 1}(B)\) pensando al proceso como función \(E \rightarrow \realNumbers\).
   Entonces el conjunto \(A\) es progresivamente medible porque su función característica \(\characteristic_A\) da lugar a un proceso progresivamente medible.
 \end{example}
 \begin{proof}
@@ -349,7 +419,7 @@ Usando la correspondencia estático-dinámica de los procesos llegamos a la sigu
 % \end{property}
 
 \begin{theorem}
-  Los conjuntos progresivamente medibles forman una \(\sigma\)--álgebra \(\progressiveAlgebra\).
+  Los conjuntos progresivamente medibles forman una \(\sigma\)--álgebra.
 \end{theorem}
 \begin{proof}
   En primer lugar, la función característica del conjunto \(E\) es \({\characteristic_E = 1}\).
@@ -403,6 +473,7 @@ Obtenemos, de forma inmediata, que
 \end{theorem}
 
 \begin{theorem}
+  \label{theorem:limitsOfProgressiveProcesses}
   Si \(\{X_n\}_n\) es una sucesión de procesos progresivamente medibles, entonces las funciones 
   \begin{align}
     & \inf_n X_n
@@ -416,7 +487,337 @@ Obtenemos, de forma inmediata, que
   Si suponemos \(X \geq 0\), puede asumirse que la sucesión convergente \(\{X_n\}_n\) es nonegativa y nodecreciente \(0 \leq X_1 \leq X_2 \leq \cdots\).
 \end{theorem}
 
-Estructura interna de la \(\sigma\)--álgebra \(\progressiveAlgebra\).
+\subsection{Desplazamiento de procesos progresivamente medibles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pro}[1]{{#1}^{\sharp}}
+\newcommand{\pre}[1]{{#1}^{\flat}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% EXPLICAR LOS SÍMBOLOS \(\sharp, \flat\) ACÁ, ANTES DE LAS PRUEBAS.
+
+Se ruega paciencia, pues en la presente sección haremos una seria sobrecarga de los símbolos \(\sharp\) y \(\flat\).
+Sus definiciones dependen de un desplazamiento \(h \geq 0\), por lo cual podríamos escribir \(\sharp h\) y \(\flat h\) para ser más precisos, pero con suerte no habra lugar a confusión en el texto.
+Cuando tratamos escalares \(s \geq h\), definimos \(\pre{s} \coloneqq s - h\), y cuando \(s \geq 0\) definimos \(\pro{s} \coloneqq s + h\).
+Lo mismo haremos con conjuntos de escalares, si \(J \subseteq \interval{co}{h}{\infty}\) definimos \(\pre{J} \coloneqq \{\pre{j} : j \in J\}\), y cuando \(I \subseteq \interval{co}{0}{\infty}\) definimos \(\pro{I} \coloneqq \{\pro{i} : i \in I\}\).
+De forma similar, cuando tenemos un par \((s, \omega) \in \interval{co}{h}{\infty} \times \Omega\) definimos \(\pre{(s, \omega)} \coloneqq (\pre{s}, \omega)\), y si \((s, \omega) \in \interval{co}{0}{\infty} \times \Omega\) definimos \(\pro{(s, \omega)} \coloneqq (\pro{s}, \omega)\).
+Al tratar conjuntos de pares haremos lo análogo, si \(U \subseteq \interval{co}{h}{\infty} \times \Omega\) definimos \(\pre{U} \coloneqq \{\pre{u} : u \in U\}\), y cuando \(V \subseteq \interval{co}{0}{\infty} \times \Omega\), definimos \(\pro{V} \coloneqq \{\pro{v} : v \in V\}\).
+
+Nuestro primer lema es muy sencillo y, como la mayoría de los que le siguen, no requiere de prueba.
+Sin embargo, este muestra la razón por la cual es necesario el tratamiento y el cuidado que le dedicamos al desplazamiento de conjuntos progresivamente medibles, es el punto del cual emana la complejidad.
+
+\begin{lemma}
+  \label{lemma:filtrationDelay}
+  Dada una filtración \((\events(t) : t \geq 0)\) de una \(\sigma\)--álgebra, entonces \(\events(t) \subseteq \events(\pro{t})\) para todo \(t \geq 0\).
+\end{lemma}
+
+\begin{lemma}
+  \label{lemma:intervalDelay}
+  Si \(I \subseteq \interval{co}{0}{\infty}\) es un intervalo, entonces \(\pro{I}\) también es un intervalo.
+\end{lemma}
+
+\begin{lemma}
+  \label{lemma:rectangularDelay}
+  Si \(B \subseteq \interval{co}{0}{\infty}\) y \(S \subseteq \Omega\), entonces \(\pro{(B \times S)} = \pro{B} \times S\).
+\end{lemma}
+\begin{proof}
+  Dado que \(\sharp : B \rightarrow \pro{B}\) es una biyección
+  \begin{align}
+    \pro{(B \times S)}
+    &=
+    \{\pro{(b, \omega)} : b \in B, \omega \in S\}
+    \\
+    &=
+    \{(\pro{b}, \omega) : b \in B, \omega \in S\}
+    \\
+    &=
+    \{(c, \omega) : c \in \pro{B}, \omega \in S\}
+    \\
+    &=
+    \pro{B} \times S
+  \end{align}
+\end{proof}
+
+
+\begin{lemma}
+  \label{lemma:sharpSetFunction}
+  Para todo \(t \geq 0\), la función de conjuntos 
+  \(
+    \sharp
+    : 
+    \parts( E_t ) 
+    \rightarrow 
+    \parts( \pro{E_t} ) 
+  \)
+  satisface
+  \begin{enumerate}
+    \item \(\pro{\emptyset} = \emptyset\);
+    \item \(\pro{\left( \bigcup_{V \in \mathcal{V}} V \right)} = \bigcup_{V \in \mathcal{V}} \pro{V}\) para toda familia \(\mathcal{V}\) de conjuntos \(V \subseteq E_t\);
+    \item \(\pro{(E_t \setminus V)} = \pro{E_t} \setminus \pro{V}\) para todo subconjunto \(V \subseteq E_t\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  La razón de estas fórmulas es que \(\sharp : E_t \rightarrow \pro{E_t}\) es una biyección.
+  Y esto se debe a que \(\sharp : \interval{cc}{0}{t} \rightarrow \interval{cc}{h}{t}\) es una biyección.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:sigmaAlgebraDelay}
+  La función de conjuntos \(\sharp : \parts(E_t) \rightarrow \parts(\pro{E_{t}})\) da lugar a una restricción \(\sharp : \borel(\interval{cc}{0}{t}) \otimes \events(t) \rightarrow \borel(\interval{cc}{h}{\pro{t}}) \otimes \events(\pro{t})\). 
+\end{lemma}
+\begin{proof}
+  Por los límites estructurales impuestos en \ref{lemma:sharpSetFunction}, basta verificar la relación \(\pro{P} \in \borel(\interval{cc}{h}{\pro{t}}) \otimes \events(\pro{t})\) sobre unos \(P \in \borel(\interval{cc}{0}{t}) \otimes \events(t)\) que generen la \(\sigma\)--álgebra \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\).
+  La familia de conjuntos \(P\) que elegimos es la de aquellos de la forma \(P = I \times F\) donde \(I \subseteq \interval{cc}{0}{t}\) es un intervalo y \(F \in \events(t)\).
+  En efecto, si \(P\) es rectangular como en \ref{lemma:rectangularDelay}, se dá la identidad \(\pro{P} = \pro{I} \times F\).
+  Aquí \(\pro{I} \subseteq \interval{cc}{h}{\pro{t}}\) vuelve a ser un intervalo como en \ref{lemma:intervalDelay}, y \(F\) resulta \(\events(\pro{t})\)--medible porque \(\events(t) \subseteq \events(\pro{t})\) como en \ref{lemma:filtrationDelay}.
+  Por lo tanto \(\pro{P} \in \borel(\interval{cc}{h}{\pro{t}}) \otimes \events(\pro{t})\).
+\end{proof}
+
+\begin{theorem}
+  \label{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}
+  Los desplazamientos hacia adelante en el tiempo de conjuntos progresivamente medibles son conjuntos progresivamente medibles. 
+\end{theorem}
+
+\begin{proof}
+  Dado \(A \in \progressiveAlgebra\), consideramos su desplazamiento \(\pro{A}\) en una cantidad \(h > 0\).
+  Para probar \(\pro{A} \in \progressiveAlgebra\), debemos fijar un \(t \geq 0\) arbitrario y comprobar que \(\pro{A} \cap E_t\) es \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible.
+  Si \(t < h\), entonces \(\pro{A} \cap E_t = \emptyset\) pertenece a toda \(\sigma\)--álgebra.
+  Debemos detenernos con cuidado en el caso no trivial \(t \geq h\).
+  Calculamos
+  \begin{align}
+    \pro{A} \cap E_t
+    &=
+    \{(s, \omega) \in E_t : (s, \omega) \in \pro{A}\}
+    =
+    \{(s, \omega) \in E_t : (\pre{s}, \omega) \in A\}
+    \\
+    &=
+    \{\pro{(\pre{s}, \omega)} \in E_t : (\pre{s}, \omega) \in A\}
+    \\
+    &=
+    \{\pro{a} \in E_t : a \in A\}
+    =
+    \pro{\{a \in E_{\pre{t}} : a \in A\}}
+    \\
+    &=
+    \pro{(A \cap E_{\pre{t}})}
+  \end{align}
+  Resulta que \(\pro{(A \cap E_{\pre{t}})} = \pro{A} \cap E_t\) es un conjunto \(\borel(\interval{cc}{0}{t}) \otimes \events(t)\)--medible porque, como en \ref{lemma:sigmaAlgebraDelay}, es el desplazamiento de \(A \cap E_{\pre{t}}\), un conjunto \(\borel\!\left(\interval{cc}{0}{\pre{t}}\right) \otimes \events(\pre{t})\)--medible debido a la hipótesis \(A \in \progressiveAlgebra\), .
+\end{proof}
+
+\begin{corollary}
+  Los desplazamientos hacia adelante en el tiempo de procesos progresivamente medibles son procesos progresivamente medibles.
+\end{corollary}
+
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible y \(S_h X\), con \(h \geq 0\), su desplazamiento hacia adelante en el tiempo.
+  Definimos
+  \begin{align}
+    S_h X (t)
+    =
+    \left\{\begin{aligned}
+      &0 
+        &&\text{si } 
+        t < h
+      \\
+      &X(t - h) 
+        &&\text{si } 
+        t \geq h
+    \end{aligned}\right. 
+  \end{align}
+  
+  Sea \(B \in \borel(\realNumbers)\) un boreliano.
+  Si 0 no es uno de sus elementos, entonces \(S_h X\) no toca al conjunto \(B\) antes del tiempo \(h\), y en consecuencia
+  \begin{align}
+    S_h X ^{- 1} (B)
+    =
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      S_h X (t, \omega) \in B
+    \}
+  \end{align}
+  Siguiendo la notación de \(\sharp\) y \(\flat\), podemos calcular
+  \begin{equation}
+  \begin{aligned}
+    \label{midProof:shiftedProcessPreimage}
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      &: 
+      S_h X (t, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      (t, \omega) \in \interval{co}{h}{\infty} \times \Omega 
+      : 
+      X (t - h, \omega) \in B
+    \}
+    \\
+    &=
+    \{
+      \pro{(\pre{t}, \omega)} \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      X (\pre{t}, \omega) \in B
+    \}
+    \\
+    &=
+    \pro{
+      \{
+        a \in E 
+        :
+        X (a) \in B
+      \}
+    }
+    \\
+    &=
+    \pro{X^{- 1}(B)}
+  \end{aligned}
+  \end{equation}
+  Esta igualdad hace que \(S_h X^{- 1} (B) \in \progressiveAlgebra\), viendo el dato \(X^{- 1} (B) \in \progressiveAlgebra\) a la luz del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+
+  Seguimos tratando el caso particular \(B = \{0\}\).
+  Aquí la preimagen \(S_h X ^ {- 1} (0) = \{a \in E : S_h X (a) = 0\}\) puede separarse en dos trozos. 
+  Antes del instante \(h\) tenemos tal conjunto
+  \(
+    \{
+      a \in \interval{co}{0}{h} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \)
+  que resulta ser igual a \(\interval{co}{0}{h} \times \Omega\), porque la definición de \(S_h X\) hace evidente que la función es nula para todo \(a \in \interval{co}{0}{h} \times \Omega\).
+  Lo que sucede a partir del instante \(h\) queda escrito en el conjunto 
+  \(
+    \{
+      a \in \interval{co}{h}{\infty} \times \Omega 
+      :
+      S_h X (a) = 0
+    \}
+  \),
+  el cual puede entenderse repitiendo el cálculo \ref{midProof:shiftedProcessPreimage} paso por paso hasta llegar al resultado \(\pro{X^{- 1}(0)}\).
+  El primero trozo \(\interval{co}{0}{h} \times \Omega\) es progresivamente medible porque da origen a un proceso continuo a derecha (como vimos en el lema \ref{lemma:semiContinuousProcessesAreProgressivelyMeasurable});
+  por su parte, el desplazamiento \(\pro{X^{- 1}(0)}\) es progresivamente medible en virtud del teorema \ref{theorem:delayedProgressivelyMeasurableSetsArePreogressivelyMeasurable}.
+  A su vez, la unión de estos conjuntos, \(S_h X^{- 1} (0)\), es progresivamente medible porque \(\progressiveAlgebra\) es una \(\sigma\)--álgebra.
+   
+  Finalmente, la demostración de progresividad en el caso de los borelianos \(B \in \borel(\realNumbers)\) que tienen a 0 entre sus elementos puede reducirse a los dos casos anteriores tras observar \(S_h X ^{- 1} (B) = S_h X ^{- 1} (B {\setminus} 0) \cup S_h X ^{- 1} (0)\).
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Acumulaciones de procesos progresivamente medibles}
+
+Hemos probado (en el teorema \ref{theorem:instacesOfProgressivelyMeasurableProcessesAreBorelFunctions}) que las trayectorias de un proceso progresivamente medible son funciones borel.
+Pues bien ¿qué sucedería si estas además fueran integrables?
+Se dá que esta integral vuelve a ser un proceso progresivamente medible.
+
+\begin{theorem}[Acumulación]
+  \label{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}
+  Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
+  \begin{align}
+    \int_0^t X(u) \dd u
+  \end{align}
+  describe un proceso estocástico continuo en la variable \(t\).
+\end{theorem}
+\begin{proof}
+  Sea \(X\) un proceso progresivamente medible con trayectorias localmente integrables.
+  Proponemos la definición
+  \begin{align}
+    & Y(t, \omega) \coloneqq \int_0^t X(u, \omega) \dd u
+    && \forall (t, \omega) \in E
+  \end{align}
+  Afirmamos que esta es una función, continua con respecto a la variable \(t\), y, en virtud del lema \ref{lemma:semiContinuousProcessesAreProgressivelyMeasurable}, un proceso progresivamente medible.
+  
+  Para demostrarlo fijemos una instancia con \(\omega \in \Omega\), y concentremonos en la función dada por \(f(t) = X(t, \omega)\).
+  Esta instacia \(f\) resulta ser de borel, y es localmente integrable por hipótesis, esto nos garantiza la existencia de la integral \(F(t) = \int_0^t f(u) \dd u\).
+  Consideremos un instante \(t\), y una sucesión arbitraria \(\{s_k\}_k\) de números nonegativos \(s_0 = 0\), nodecreciente \(s_k \leq s_{k + 1}\), que converge a su supremo \(t\).
+  La integrabilidad local de \(f\) nos permite calcular, para cada \(k \in \naturalNumbers\), usando series e integrales convergentes
+  \begin{align}
+    \int_0^t f(u) \dd u
+    =
+    \sum_{h = 0}^{\infty} \int_{s_h}^{s_{h + 1}} f(u) \dd u
+    =
+    \int_0^{s_k} f(u) \dd u + \sum_{h = k}^{\infty} \int_{s_h}^{s_{h + 1}} f(u) \dd u
+  \end{align}
+  y deducir que \(F(s_k) \rightarrow F(t)\) cuando \(k \rightarrow \infty\).
+  Supongamos ahora que la sucesión es nocreciente, es decir \(s_k \geq s_{k + 1}\) para todo \(k \in \naturalNumbers\) y eliminemos la convención \(s_0 = 0\).
+  En este caso, para todo \(k \in \naturalNumbers\), la diferencia \(F(s_k) - F(t)\) puede escribirse como la cola de una serie convergente
+  \begin{align}
+    \int\limits_0^{s_k} f(u) \dd u - \int\limits_0^t f(u) \dd u
+    =
+    \sum_{h = k}^{\infty} \: \int\limits_{s_{h + 1}}^{s_h} f(u) \dd u
+    =
+    \int\limits_{t}^{s_1} f(u) \dd u - \sum_{h = 1}^{k - 1} \: \int\limits_{s_{h + 1}}^{s_h} f(u) \dd u
+  \end{align}
+  Luego \(F(s_k) \rightarrow F(t)\) cuando \(k \rightarrow \infty\).
+  Dado que la sucesión monótona (nodecreciente o nocreciente) \(\{s_k\}_k\) era arbitraria, se sigue que \(F(s) \rightarrow F(t)\) cuando \(s \rightarrow t\) por los detalles topológicos de la recta real.
+
+  La existencia de las funciones \(F\) implica la buena definición de \(Y\), y la continuida de las mismas prueba que la función es un proceso progresivamente medible con trayectorias continuas.
+\end{proof}
+
+Continuando con las acumulaciones de procesos progresivamente medibles llegamos a
+\begin{corollary}
+  \label{corollary:windowedIntegralOfProgressivelyMeasurableProcess}
+  Si \(X\) es un proceso progresivamente medible con instancias localmente integrables, entonces la fórmula
+  \begin{align}
+    \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h \geq 0\) es un desplazamiento, da lugar a un proceso continuo.
+  Porque \(X\) no está definido para valores de \(u\) negativos, interpretamos que \(X(u) = 0\) si \(u < 0\).
+\end{corollary}
+\begin{proof}
+  Una correcta interpretación de la fórmula, teniendo en mente la interpretación \(X(u) = 0\) cuando \(u < 0\), sería
+  \begin{align}
+    \int_{t- h}^t X(u) \dd u
+    =
+    \int_0^t X(u) \dd u
+    -
+    \int_0^{t - h} X(u) \dd u
+    =
+    I(t) - S_h I (t)
+  \end{align}
+  donde \(I(t) = \int_0^t X(u) \dd u\) \((\forall t \geq 0)\).
+  Sabemos que \(I\) es un proceso continuo por el teorema \ref{theorem:integralOfLocallyIntegrableProgressivelyMeasurableProcess}.
+  Adicionalmente, se sigue de esto que su corrimiento \(S_h I\) resulta continuo porque \(I(0) = 0\). 
+\end{proof}
+
+  Una modificación muy simple del previo corolario \ref{corollary:windowedIntegralOfProgressivelyMeasurableProcess} es la media móvil de un proceso estocástico
+
+\begin{corollary}[Media movil]
+  \label{corollary:movingAverageProgressivelyMeasurableProcess}
+  Si \(X\) es un proceso progresivamente medible con instacias localmente integrables, entonces la fórmula
+  \begin{align}
+    \frac{1}{h} \int_{t - h}^t X(u) \dd u
+  \end{align}
+  donde \(h > 0\) es un desplazamiento, da lugar a un proceso continuo.
+\end{corollary}
+
+\subsection{Aproximación de procesos progresivamente medibles}
 
 Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(Y(s, \omega) \coloneqq \characteristic_{\interval{co}{0}{t}}(s)\) define un proceso progresivamente medible, y como explicamos que los procesos progresivamente medibles estan cerrados bajo producto en el teorema \(\ref{theorem:algebraOfProgressiveProcesses}\).
 
@@ -424,7 +825,7 @@ Recordemos como en el ejemplo \ref{example:basicProgressiveProcess} vimos que \(
   Todo proceso progresivamente medible es el límite puntual de otros eventualmente nulos.
 \end{lemma}
 \begin{proof}
-  Sea \(\{X(t) : t \geq 0\}\) un proceso estocástico progresivamente medible sobre un espacio de probabilidad \((\Omega, \events, \prob)\) filtrado por \((\events(t) : t \geq 0)\).
+  Sea \(X\) un proceso estocástico progresivamente medible.
   Dado un instante \(t \geq 0\), consideramos una modificación eventualmente nula del proceso, definida como el producto de procesos progresivamente medibles \(N_t X (s, \omega) \coloneqq X(s, \omega) \cdot \characteristic_{[0, t[} (s)\), para todo \(s \geq 0\), \(\omega \in \Omega\).
   Claramente \(N_t X \rightarrow X\) puntualmente cuando \(t \rightarrow \infty\).
 \end{proof}
